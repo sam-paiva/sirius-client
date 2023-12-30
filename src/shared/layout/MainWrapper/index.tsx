@@ -10,7 +10,7 @@ const MainWrapper: React.FC = () => {
   return (
     <BrowserRouter>
       <NavigationBar isAuthenticated={isAuthenticated} />
-      <main className="flex justify-start flex-col h-[100%]">
+      <main className="flex justify-start flex-col">
         <Router />
       </main>
     </BrowserRouter>

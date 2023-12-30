@@ -8,7 +8,11 @@ export const logoutAction = createAsyncThunk(
     try {
       const response = await userApi.logout();
 
-      if (response.status === 200) return response.data;
+      if (response.status === 200) {
+        window.location.href = '/home';
+        window.location.reload();
+        return response.data;
+      }
 
       return thunkAPI.rejectWithValue({});
     } catch (error) {
@@ -23,7 +27,7 @@ export const loginCallbackAction = createAsyncThunk(
     try {
       const token = getDecodedToken();
 
-      if (token && token.roles) {
+      if (token && token.role) {
         navigate('/admin');
         return thunkAPI.fulfillWithValue({});
       }
@@ -35,3 +39,19 @@ export const loginCallbackAction = createAsyncThunk(
     }
   }
 );
+
+export const addRoleAction = createAsyncThunk("users/add-role", async ({ role, navigate }: any, thunkApi) => {
+  try {
+
+    const response = await userApi.addRole(role);
+
+    if (response.status === 204) {
+      navigate('/admin')
+      return response.data;
+    }
+
+    return thunkApi.rejectWithValue({});
+  } catch (error) {
+    return thunkApi.rejectWithValue({});
+  }
+})

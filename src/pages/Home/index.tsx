@@ -39,7 +39,7 @@ const Home: React.FC = () => {
           />
         </animated.div>
       </div>
-      <div className="flex flex-col justify-center mx-auto max-w-screen-lg px-8 w-[100%] mt-14">
+      <div className="flex flex-col justify-center mx-auto my-0 max-w-5xl px-8 w-[100%] mt-14">
         <h1>Posted Jobs</h1>
         <div className="mt-12">
           <JobCard />

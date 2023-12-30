@@ -3,6 +3,9 @@ import axios from 'axios';
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 console.log(import.meta.env.VITE_API_URL);
@@ -44,3 +47,7 @@ api.interceptors.response.use(
 export const logout = () => {
   return api.post('/auth/logout');
 };
+
+export const addRole = (role: string) => {
+  return api.patch('/auth/add-role', `"${role}"`);
+}

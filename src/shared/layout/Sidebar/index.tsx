@@ -2,10 +2,10 @@ import React from 'react';
 
 const Sidebar: React.FC = () => {
   return (
-    <div className=" min-h-0 flex-1 flex overflow-hidden">
+    <div className="flex flex-col justify-center mx-auto my-0 max-w-5xl px-8 w-[100%] mt-14">
       <nav
         aria-label="Sidebar"
-        className="hidden lg:block flex-shrink-0 bg-gray-800 overflow-y-auto"
+        className="flex-shrink-0 bg-gray-800 overflow-y-auto"
       >
         <div className="relative w-20 flex space-y-16 flex-col p-3">
           <a href="#" className="text-gray-400 hover:text-red-700">

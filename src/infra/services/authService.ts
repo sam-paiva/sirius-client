@@ -1,7 +1,12 @@
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
-import { AppDispatch } from '../../store';
-import { logoutAction } from '../../store/users/usersActions';
+
+interface UserClaims {
+  Picture: string | null;
+  given_name: string;
+  unique_name: string;
+  role: string;
+}
 
 const getJwtToken = () => Cookies.get('Token');
 
@@ -16,7 +21,7 @@ export const checkifUserIsAuthenticated = () => {
   return false;
 };
 
-export const getDecodedToken = () => {
+export const getDecodedToken = (): UserClaims | null => {
   const token = getJwtToken();
   if (!token) {
     return null;
@@ -25,8 +30,4 @@ export const getDecodedToken = () => {
   const decodedToken = jwtDecode<any>(getJwtToken()!);
 
   return decodedToken;
-};
-
-export const logout = (dispatch: AppDispatch) => {
-  dispatch(logoutAction());
 };

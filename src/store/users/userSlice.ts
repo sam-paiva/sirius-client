@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { checkifUserIsAuthenticated } from '../../infra/services/authService';
-import { loginCallbackAction, logoutAction } from './usersActions';
+import { addRoleAction, loginCallbackAction, logoutAction } from './usersActions';
 
 interface State {
   isLoading: boolean;
@@ -47,6 +47,19 @@ export const usersSlice = createSlice({
     builder.addCase(loginCallbackAction.fulfilled, (state) => {
       state.isLoading = false;
       state.isAuthenticated = true;
+    });
+
+
+    builder.addCase(addRoleAction.pending, (state) => {
+      state.isLoading = true;
+    });
+
+    builder.addCase(addRoleAction.rejected, (state) => {
+      state.isLoading = false;
+    });
+
+    builder.addCase(addRoleAction.fulfilled, (state) => {
+      state.isLoading = false;
     });
   },
 });

@@ -33,7 +33,7 @@ const SignIn: React.FC = () => {
 
   const signInWithGoogle = () => {
     window.open(
-      `${apiURL}/auth/signin-google`,
+      `${apiURL}/auth/google-signin`,
       '_blank',
       'location=yes,height=570,width=520,scrollbars=yes,status=yes'
     );

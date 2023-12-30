@@ -8,10 +8,9 @@ import SignIn from '../../pages/SignIn';
 import { checkifUserIsAuthenticated } from '../services/authService';
 
 const ProtectedRoute = ({ children }: any) => {
-  // Check if the user is authenticated (you can replace this logic with your authentication check)
   const isAuthenticated = checkifUserIsAuthenticated();
 
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  return isAuthenticated ? children : <Navigate to="/home" />;
 };
 
 const routes = [
@@ -37,11 +36,11 @@ const routes = [
   },
   {
     path: '/admin',
-    element: <Admin />,
+    element: <ProtectedRoute><Admin /></ProtectedRoute>,
   },
   {
     path: '/collect-info',
-    element: <CollectUserInfo />,
+    element: <ProtectedRoute><CollectUserInfo /></ProtectedRoute>,
   },
 ];
 
