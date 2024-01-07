@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import * as userApi from '../../infra/services/authApi';
-import { getDecodedToken } from '../../infra/services/authService';
+import * as userApi from '../../infra/services/auth/authApi';
+import { getDecodedToken } from '../../infra/services/auth/authService';
 
 export const logoutAction = createAsyncThunk(
   'users/logout',

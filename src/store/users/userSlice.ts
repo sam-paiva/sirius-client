@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { checkifUserIsAuthenticated } from '../../infra/services/authService';
+import { checkifUserIsAuthenticated } from '../../infra/services/auth/authService';
 import { addRoleAction, loginCallbackAction, logoutAction } from './usersActions';
 
 interface State {

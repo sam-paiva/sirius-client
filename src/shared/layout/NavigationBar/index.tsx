@@ -1,16 +1,13 @@
 import {
-  Button,
   Image,
   Navbar,
   NavbarBrand,
   NavbarContent,
-  NavbarItem,
+  NavbarItem
 } from '@nextui-org/react';
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../../assets/background-dark.png';
-import { useAppDispatch } from '../../../hooks/storeHooks';
-import { logoutAction } from '../../../store/users/usersActions';
 
 interface Props {
   isAuthenticated: boolean;
@@ -18,7 +15,6 @@ interface Props {
 
 const NavigationBar: React.FC<Props> = ({ isAuthenticated }) => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const location = useLocation();
   let currentPathName = location.pathname;
   let isSignIn = currentPathName === 'sign-in';
@@ -38,13 +34,7 @@ const NavigationBar: React.FC<Props> = ({ isAuthenticated }) => {
             />
           </NavbarBrand>
           <NavbarContent className="sm:flex gap-4" justify="center">
-            {!isSignIn && (
-              <NavbarItem>
-                <Link className="text-black sm:hidden" color="foreground" to="/">
-                  I want to post
-                </Link>
-              </NavbarItem>
-            )}
+
             {!isSignIn && (
               <NavbarItem>
                 <Link className="text-black" color="foreground" to="/about">
@@ -63,12 +53,7 @@ const NavigationBar: React.FC<Props> = ({ isAuthenticated }) => {
           <NavbarContent justify="end">
             {!isAuthenticated && !isSignIn && (
               <NavbarItem className="lg:flex">
-                <Link to="/sign-in">Login</Link>
-              </NavbarItem>
-            )}
-            {isAuthenticated && (
-              <NavbarItem className="lg:flex">
-                <Button onClick={() => dispatch(logoutAction())}>Logout</Button>
+                <Link to="/sign-in">Sign In</Link>
               </NavbarItem>
             )}
           </NavbarContent>

@@ -20,6 +20,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -43,6 +44,7 @@ body {
 body {
   min-height: 100vh;
 }
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
@@ -53,10 +55,28 @@ h1 {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
+  }
+}
+
+.ql-container {
+  height: auto !important;
+  min-height: 400px;
+  color: #333;
+  font-weight: 500;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+button {
+  &:disabled {
+    background-color: #dddddd; /* Grey */
+    color: #666666; /* Dark grey */
+    cursor: not-allowed;
   }
 }

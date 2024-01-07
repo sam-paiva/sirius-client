@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 
 interface UserClaims {
-  Picture: string | null;
+  picture: string | null;
   given_name: string;
   unique_name: string;
   role: string;

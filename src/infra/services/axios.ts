@@ -1,14 +1,15 @@
 import axios from 'axios';
+import { logout } from './auth/authApi';
+
+console.log(import.meta.env.VITE_API_URL);
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
   headers: {
-    'Content-Type': 'application/json',
-  },
+    'Content-Type': 'application/json'
+  }
 });
-
-console.log(import.meta.env.VITE_API_URL);
 
 api.interceptors.response.use(
   (response) => {
@@ -20,7 +21,9 @@ api.interceptors.response.use(
 
       if (error?.response?.status === 401 && !config?.sent) {
         config.sent = true;
+
         logout().then(() => {
+          window.location.href = 'home';
           window.location.reload();
         });
 
@@ -31,23 +34,4 @@ api.interceptors.response.use(
   }
 );
 
-// api.interceptors.request.use(
-//   async (config) => {
-//     if (!config.headers!.Authorization) {
-//       config.headers!.Authorization = `Bearer ${await getToken()!}`;
-//     }
-
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
-
-export const logout = () => {
-  return api.post('/auth/logout');
-};
-
-export const addRole = (role: string) => {
-  return api.patch('/auth/add-role', `"${role}"`);
-}
+export default api;
