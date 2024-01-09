@@ -1,13 +1,24 @@
 import { Avatar, Card, CardBody, CardHeader, Divider } from '@nextui-org/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks/storeHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { getDecodedToken } from '../../infra/services/auth/authService';
+import JobCard from '../../shared/components/JobCard';
+import { Spinner } from '../../shared/components/Spinner';
+import { getJobsByUserAction } from '../../store/jobs/jobsActions';
 import { logoutAction } from '../../store/users/usersActions';
 
 const Admin: React.FC = () => {
   const user = getDecodedToken()!;
   const dispatch = useAppDispatch();
+  const userJobs = useAppSelector((c) => c.jobs.userJobs);
+  const isLoading = useAppSelector((c) => c.jobs.isLoading);
+
+  console.log(userJobs);
+
+  useEffect(() => {
+    dispatch(getJobsByUserAction());
+  }, []);
 
   return (
     <div className="flex flex-col justify-center mx-auto my-0 max-w-5xl px-8 w-[100%] mt-14">
@@ -32,8 +43,8 @@ const Admin: React.FC = () => {
           </Card>
         </div>
 
-        <div className="col-span-3 bg-gray-500 h-[1200px]">
-          <p>Test</p>
+        <div className="col-span-3">
+          {!isLoading && userJobs.length > 0 ? userJobs.map((job, key) => <JobCard key={key} job={job} />) : <Spinner />}
         </div>
       </div>
     </div>

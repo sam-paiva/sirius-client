@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { useAppSelector } from '../../../hooks/storeHooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/storeHooks';
 import Router from '../../../infra/routes';
+import { getJobsAction } from '../../../store/jobs/jobsActions';
 import NavigationBar from '../NavigationBar';
 
 const MainWrapper: React.FC = () => {
   const isAuthenticated = useAppSelector((c) => c.users.isAuthenticated);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getJobsAction());
+  }, []);
 
   return (
     <BrowserRouter>

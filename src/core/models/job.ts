@@ -1,10 +1,15 @@
+import { ContractTypes } from '../enums/contractTypes';
+
 export interface Job {
-    jobDescription: string;
-    jobTitle: string;
-    tags: string[];
-    budget: string;
-    id: string;
-    userId: string;
-    applications: [];
-    location: Location;
+  description: string;
+  title: string;
+  tags: string[];
+  budget: string;
+  id: string;
+  userId: string;
+  applications: [];
+  location: Location;
+  createdDate: string;
+  company: string;
+  contractType: ContractTypes;
 }
