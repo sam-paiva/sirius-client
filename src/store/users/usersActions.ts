@@ -18,16 +18,15 @@ export const logoutAction = createAsyncThunk('users/logout', async (_, thunkAPI)
   }
 });
 
-export const loginCallbackAction = createAsyncThunk('users/loginCallback', async (navigate: any, thunkAPI) => {
+export const loginCallbackAction = createAsyncThunk('users/loginCallback', async ({ navigate, from }: any, thunkAPI) => {
   try {
     const token = getDecodedToken();
+    if (token) {
+      if (from && from !== '/home') navigate(from);
+      else navigate('/admin');
 
-    if (token && token.role) {
-      navigate('/admin');
       return thunkAPI.fulfillWithValue({});
     }
-
-    navigate('/collect-info');
     return thunkAPI.fulfillWithValue({});
   } catch (error) {
     return thunkAPI.rejectWithValue({});

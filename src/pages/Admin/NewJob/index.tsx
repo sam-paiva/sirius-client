@@ -7,7 +7,7 @@ import 'react-quill/dist/quill.snow.css';
 import { useNavigate } from 'react-router-dom';
 import { ContractTypes } from '../../../core/enums/contractTypes';
 import { PositionLevels } from '../../../core/enums/positionLevels';
-import { useAppDispatch, useAppSelector } from '../../../hooks/storeHooks';
+import { useAppDispatch, useAppSelector } from '../../../core/hooks/storeHooks';
 import { AddJobRequest } from '../../../infra/services/jobs/requests/addJobRequest';
 import MessageBanner from '../../../shared/components/MessageBanner';
 import { Spinner } from '../../../shared/components/Spinner';
@@ -23,6 +23,7 @@ interface FormValues {
   companyName: string;
   contractType: ContractTypes;
   positionLevel: PositionLevels;
+  positionUrl: string;
 }
 
 const NewJob: React.FC = () => {
@@ -31,7 +32,7 @@ const NewJob: React.FC = () => {
   const [tagValue, setTagValue] = useState('');
   const [description, setDescription] = useState('');
   const problems = useAppSelector((c) => c.jobs.createJobsProblems);
-  console.log(problems);
+
   const {
     register,
     handleSubmit,
@@ -58,6 +59,10 @@ const NewJob: React.FC = () => {
 
   const handleKeyDown = (e: any) => {
     if (e.key === 'Enter' && tagValue.trim() !== '') {
+      if (tags.some((c) => c === tagValue)) {
+        showToast('Tag already included', 'warning');
+        return;
+      }
       setTags([...tags, tagValue.trim()]);
       setTagValue('');
     }
@@ -83,7 +88,8 @@ const NewJob: React.FC = () => {
       positionLevels: Number(data.positionLevel) as PositionLevels,
       tags: tags,
       city: data.city,
-      country: data.country
+      country: data.country,
+      positionUrl: data.positionUrl
     };
 
     dispatch(addJobAction({ request, navigate }));
@@ -214,6 +220,15 @@ const NewJob: React.FC = () => {
                   type="text"
                   label="City"
                   placeholder=""
+                />
+                <Input
+                  isRequired
+                  isInvalid={errors.positionUrl?.message ? true : false}
+                  required
+                  {...register('positionUrl', { required: requiredMessage, maxLength: 50 })}
+                  type="text"
+                  label="Position URL"
+                  placeholder="paste here the position's URL from your website"
                 />
                 <div className="group flex flex-col w-full">
                   <h2 className="mb-8 mt-10">Job Description*</h2>

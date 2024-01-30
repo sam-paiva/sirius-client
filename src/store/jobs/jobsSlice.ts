@@ -1,20 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Job } from '../../core/models/job';
 import { Problem } from '../../core/models/problem';
-import { addJobAction, getJobsAction, getJobsByUserAction } from './jobsActions';
+import { addJobAction, getJobByIdAction, getJobsAction, getJobsByUserAction } from './jobsActions';
 
 interface State {
   isLoading: boolean;
   userJobs: Job[];
   jobs: Job[];
   createJobsProblems: Problem[];
+  selectedJob: Job | null;
 }
 
 const initialState: State = {
   isLoading: false,
   userJobs: [],
   createJobsProblems: [],
-  jobs: []
+  jobs: [],
+  selectedJob: null
 };
 
 export const jobsSlice = createSlice({
@@ -61,6 +63,20 @@ export const jobsSlice = createSlice({
     builder.addCase(getJobsAction.fulfilled, (state, action) => {
       state.isLoading = false;
       state.jobs = action.payload;
+    });
+
+    builder.addCase(getJobByIdAction.pending, (state) => {
+      state.isLoading = true;
+    });
+
+    builder.addCase(getJobByIdAction.rejected, (state) => {
+      state.isLoading = false;
+      state.selectedJob = null;
+    });
+
+    builder.addCase(getJobByIdAction.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.selectedJob = action.payload ?? null;
     });
   }
 });

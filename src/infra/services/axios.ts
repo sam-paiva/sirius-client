@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { logout } from './auth/authApi';
+import { checkifUserIsAuthenticated } from './auth/authService';
 
 console.log(import.meta.env.VITE_API_URL);
 
@@ -19,7 +20,7 @@ api.interceptors.response.use(
     if (error.response) {
       const config = error?.config;
 
-      if (error?.response?.status === 401 && !config?.sent) {
+      if ((error?.response?.status === 401 || !checkifUserIsAuthenticated()) && !config?.sent) {
         config.sent = true;
 
         logout().then(() => {

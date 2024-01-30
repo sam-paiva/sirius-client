@@ -1,4 +1,5 @@
 import { ContractTypes } from '../enums/contractTypes';
+import { PositionLevels } from '../enums/positionLevels';
 
 export interface Job {
   description: string;
@@ -7,9 +8,10 @@ export interface Job {
   budget: string;
   id: string;
   userId: string;
-  applications: [];
   location: Location;
   createdDate: string;
   company: string;
   contractType: ContractTypes;
+  positionLevel: PositionLevels;
+  positionUrl: string;
 }

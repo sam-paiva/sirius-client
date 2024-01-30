@@ -1,9 +1,13 @@
 import React, { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 const Callback: React.FC = () => {
-  useEffect(() => {
-    window.opener.postMessage({}, window.location.origin);
+  const [searchParams, _] = useSearchParams();
+  const redirectUrl = searchParams.get('returnUrl');
 
-    // Close the child window (optional)
+  useEffect(() => {
+    localStorage.setItem('redirect_url', redirectUrl!);
+    window.opener.postMessage(redirectUrl, window.location.origin);
+
     window.close();
   }, []);
 

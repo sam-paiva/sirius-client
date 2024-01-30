@@ -10,5 +10,6 @@ export interface AddJobRequest {
   city: string;
   contractType: ContractTypes;
   positionLevels: PositionLevels;
-  companyName: string;
+  companyName?: string;
+  positionUrl: string;
 }

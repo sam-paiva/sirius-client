@@ -2,10 +2,11 @@ import { Card, CardBody, CardFooter, CardHeader, Divider, Link } from '@nextui-o
 import moment from 'moment';
 import React from 'react';
 import { BsBuilding } from 'react-icons/bs';
-import { GiMoneyStack } from 'react-icons/gi';
+import { GiAncientSword, GiMoneyStack } from 'react-icons/gi';
 import { IoLocationOutline } from 'react-icons/io5';
 import { LiaFileContractSolid } from 'react-icons/lia';
 import { ContractTypes } from '../../../core/enums/contractTypes';
+import { PositionLevels } from '../../../core/enums/positionLevels';
 import { Job } from '../../../core/models/job';
 import { getEnumKey } from '../../utils/enumUtils';
 import Badge from '../Badge';
@@ -19,7 +20,7 @@ const JobCard: React.FC<Props> = ({ job }) => {
     <Card className="mb-6 max-h-[400px]">
       <CardHeader className="flex gap-3">
         <div className="flex flex-col gap-2">
-          <p className=" text-2xl text-sky-500 font-bold">{job.title}</p>
+          <h1 className="text-2xl text-sky-500 font-bold">{job.title}</h1>
           <Badge content={moment(job.createdDate).fromNow()} />
         </div>
       </CardHeader>
@@ -28,7 +29,7 @@ const JobCard: React.FC<Props> = ({ job }) => {
         <div className="flex items-start w-[100%] gap-3">
           <div className="flex items-center gap-1">
             <GiMoneyStack />
-            <span className="text-gray-500">{job.budget}</span>
+            <span className="text-gray-500">{job.budget ?? 'Not Informed'}</span>
           </div>
           <div className="flex items-center gap-1">
             <IoLocationOutline />
@@ -43,6 +44,10 @@ const JobCard: React.FC<Props> = ({ job }) => {
           <div className="flex items-center gap-1">
             <LiaFileContractSolid />
             <span className="text-gray-500">{getEnumKey(ContractTypes, job.contractType)}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <GiAncientSword />
+            <span className="text-gray-500">{getEnumKey(PositionLevels, job.positionLevel)}</span>
           </div>
         </div>
 
@@ -63,7 +68,7 @@ const JobCard: React.FC<Props> = ({ job }) => {
       </CardBody>
       <Divider />
       <CardFooter>
-        <Link isExternal showAnchorIcon href="https://github.com/nextui-org/nextui">
+        <Link isExternal showAnchorIcon href={`/position-details/${job.id}`}>
           View Details
         </Link>
       </CardFooter>

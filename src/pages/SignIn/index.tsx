@@ -1,7 +1,7 @@
 import { Button } from '@nextui-org/react';
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks/storeHooks';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../core/hooks/storeHooks';
 import GoogleIcon from '../../shared/Icons/GoogleIcon';
 import { loginCallbackAction } from '../../store/users/usersActions';
 
@@ -10,9 +10,11 @@ const SignIn: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleUnload = () => {
-    dispatch(loginCallbackAction(navigate));
+    const redirectUrl = localStorage.getItem('redirect_url');
+    dispatch(loginCallbackAction({ navigate, from: redirectUrl }));
   };
 
   useEffect(() => {
@@ -33,7 +35,7 @@ const SignIn: React.FC = () => {
 
   const signInWithGoogle = () => {
     window.open(
-      `${apiURL}/auth/google-signin`,
+      `${apiURL}/auth/google-signin?returnUrl=${location.state.from ?? ''}`,
       '_blank',
       'location=yes,height=570,width=520,scrollbars=yes,status=yes'
     );
@@ -45,13 +47,7 @@ const SignIn: React.FC = () => {
         <div className="my-8 p-5 text-center w-[100%]">
           <div>
             <form onSubmit={signInWithGoogle}>
-              <Button
-                type="submit"
-                radius="full"
-                isIconOnly={false}
-                color="default"
-                aria-label="sign in with google"
-              >
+              <Button type="submit" radius="full" isIconOnly={false} color="default" aria-label="sign in with google">
                 <GoogleIcon />
                 Continue with Google
               </Button>

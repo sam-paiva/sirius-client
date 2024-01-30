@@ -8,7 +8,7 @@ import MainWrapper from './shared/layout/MainWrapper/index.tsx';
 import { store } from './store/index.ts';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+  <React.Fragment>
     <Provider store={store}>
       <ToastContainer
         position="top-right"
@@ -24,5 +24,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       />
       <MainWrapper />
     </Provider>
-  </React.StrictMode>
+  </React.Fragment>
 );

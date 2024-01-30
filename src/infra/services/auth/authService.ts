@@ -6,6 +6,7 @@ interface UserClaims {
   given_name: string;
   unique_name: string;
   role: string;
+  sub: string;
 }
 
 const getJwtToken = () => Cookies.get('Token');
