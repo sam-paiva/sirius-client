@@ -44,7 +44,7 @@ const NavigationBar: React.FC<Props> = ({ isAuthenticated }) => {
             )}
             {isAuthenticated && (
               <NavbarItem isActive>
-                <Link to="/admin" aria-current="page">
+                <Link to="/profile" aria-current="page">
                   Profile
                 </Link>
               </NavbarItem>

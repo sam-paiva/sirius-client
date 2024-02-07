@@ -1,15 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { checkifUserIsAuthenticated } from '../../infra/services/auth/authService';
-import { addRoleAction, loginCallbackAction, logoutAction } from './usersActions';
+import { createCompanyAction, getUserBundlesAction, loginCallbackAction, logoutAction } from './usersActions';
 
 interface State {
   isLoading: boolean;
   isAuthenticated: boolean;
+  userBundles: UserBundle[];
 }
 
 const initialState: State = {
   isLoading: false,
   isAuthenticated: checkifUserIsAuthenticated() ? true : false,
+  userBundles: []
 };
 
 export const usersSlice = createSlice({
@@ -19,6 +21,9 @@ export const usersSlice = createSlice({
     loginSuccessAction(state) {
       state.isAuthenticated = true;
     },
+    updateBundlesAfterPayment: (state, action) => {
+      state.userBundles.push(action.payload);
+    }
   },
   extraReducers: (builder) => {
     // Add reducers for additional action types here, and handle loading state as needed
@@ -49,21 +54,33 @@ export const usersSlice = createSlice({
       state.isAuthenticated = true;
     });
 
-
-    builder.addCase(addRoleAction.pending, (state) => {
+    builder.addCase(getUserBundlesAction.pending, (state) => {
       state.isLoading = true;
     });
 
-    builder.addCase(addRoleAction.rejected, (state) => {
+    builder.addCase(getUserBundlesAction.rejected, (state) => {
       state.isLoading = false;
     });
 
-    builder.addCase(addRoleAction.fulfilled, (state) => {
+    builder.addCase(getUserBundlesAction.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.userBundles = action.payload;
+    });
+
+    builder.addCase(createCompanyAction.pending, (state) => {
+      state.isLoading = true;
+    });
+
+    builder.addCase(createCompanyAction.rejected, (state) => {
       state.isLoading = false;
     });
-  },
+
+    builder.addCase(createCompanyAction.fulfilled, (state, action) => {
+      state.isLoading = false;
+    });
+  }
 });
 
-export const { loginSuccessAction } = usersSlice.actions;
+export const { loginSuccessAction, updateBundlesAfterPayment } = usersSlice.actions;
 
 export default usersSlice.reducer;

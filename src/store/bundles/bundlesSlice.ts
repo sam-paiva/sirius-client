@@ -32,4 +32,6 @@ export const bundlesSlice = createSlice({
   }
 });
 
+export const {} = bundlesSlice.actions;
+
 export default bundlesSlice.reducer;

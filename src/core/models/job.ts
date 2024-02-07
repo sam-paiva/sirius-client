@@ -10,8 +10,11 @@ export interface Job {
   userId: string;
   location: Location;
   createdDate: string;
-  company: string;
+  companyName: string;
   contractType: ContractTypes;
   positionLevel: PositionLevels;
   positionUrl: string;
+  companyWebsite: string;
+  companyLogo: string;
+  selectedBundle: string;
 }

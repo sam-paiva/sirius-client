@@ -1,14 +1,15 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import About from '../../pages/About';
-import Admin from '../../pages/Admin';
-import MyBundles from '../../pages/Admin/MyBundles';
-import NewJob from '../../pages/Admin/NewJob';
 import Callback from '../../pages/Callback';
 import Checkout from '../../pages/Checkout';
 import CheckoutSuccess from '../../pages/Checkout/CheckoutSuccess';
+import Companies from '../../pages/Companies';
 import Home from '../../pages/Home';
-import PositionDetails from '../../pages/PositionDetails';
+import PositionDetails from '../../pages/JobDetails';
+import PostJob from '../../pages/PostJob';
 import Prices from '../../pages/Prices';
+import Admin from '../../pages/Profile';
+import MyBundles from '../../pages/Profile/MyBundles';
 import SignIn from '../../pages/SignIn';
 import { checkifUserIsAuthenticated } from '../services/auth/authService';
 
@@ -58,7 +59,7 @@ const routes: CustomRoute[] = [
     children: []
   },
   {
-    path: '/admin',
+    path: '/profile',
     element: (
       <ProtectedRoute>
         <Admin />
@@ -67,10 +68,10 @@ const routes: CustomRoute[] = [
     children: []
   },
   {
-    path: '/admin/new-job',
+    path: '/post-job',
     element: (
       <ProtectedRoute>
-        <NewJob />
+        <PostJob />
       </ProtectedRoute>
     ),
     children: []
@@ -95,7 +96,7 @@ const routes: CustomRoute[] = [
     children: []
   },
   {
-    path: '/admin/bundles',
+    path: '/profile/bundles',
     element: (
       <ProtectedRoute>
         <MyBundles />
@@ -108,6 +109,15 @@ const routes: CustomRoute[] = [
     element: (
       <ProtectedRoute>
         <CheckoutSuccess />
+      </ProtectedRoute>
+    ),
+    children: []
+  },
+  {
+    path: '/companies',
+    element: (
+      <ProtectedRoute>
+        <Companies />
       </ProtectedRoute>
     ),
     children: []

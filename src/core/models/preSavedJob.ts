@@ -1,9 +1,9 @@
-import { ContractTypes } from '../../../../core/enums/contractTypes';
-import { PositionLevels } from '../../../../core/enums/positionLevels';
+import { ContractTypes } from '../enums/contractTypes';
+import { PositionLevels } from '../enums/positionLevels';
 
-export interface AddJobRequest {
-  jobTitle: string;
-  jobDescription: string;
+export interface PreSavedJob {
+  title: string;
+  description: string;
   tags?: string[];
   budget?: string;
   country: string;

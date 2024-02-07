@@ -19,7 +19,7 @@ const PriceCard: React.FC<Props> = (props) => {
       <CardBody className="text-gray-600">{props.description}</CardBody>
       <CardFooter>
         <Button onClick={() => props.handleSubmit(props.selectedId)} className="bg-sky-500 text-white w-[100%] text-xl">
-          Try now
+          Buy now
         </Button>
       </CardFooter>
     </Card>

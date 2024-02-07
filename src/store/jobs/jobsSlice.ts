@@ -1,7 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { ContractTypes } from '../../core/enums/contractTypes';
+import { PositionLevels } from '../../core/enums/positionLevels';
 import { Job } from '../../core/models/job';
 import { Problem } from '../../core/models/problem';
 import { addJobAction, getJobByIdAction, getJobsAction, getJobsByUserAction } from './jobsActions';
+
+interface PreSavedJob {
+  jobTitle: string;
+  jobDescription: string;
+  tags?: string[];
+  budget?: string;
+  country: string;
+  city: string;
+  contractType: ContractTypes;
+  positionLevels: PositionLevels;
+  companyName?: string;
+  positionUrl: string;
+  companyWebsite: string | null;
+  companyLogo: string | null;
+  userBundleId: string;
+}
 
 interface State {
   isLoading: boolean;
@@ -9,6 +27,7 @@ interface State {
   jobs: Job[];
   createJobsProblems: Problem[];
   selectedJob: Job | null;
+  preSavedJob: PreSavedJob | null;
 }
 
 const initialState: State = {
@@ -16,13 +35,18 @@ const initialState: State = {
   userJobs: [],
   createJobsProblems: [],
   jobs: [],
-  selectedJob: null
+  selectedJob: null,
+  preSavedJob: null
 };
 
 export const jobsSlice = createSlice({
   name: 'jobs',
   initialState,
-  reducers: {},
+  reducers: {
+    preSaveJobAction: (state, action) => {
+      state.preSavedJob = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(addJobAction.pending, (state) => {
       state.isLoading = true;
@@ -81,6 +105,6 @@ export const jobsSlice = createSlice({
   }
 });
 
-export const {} = jobsSlice.actions;
+export const { preSaveJobAction } = jobsSlice.actions;
 
 export default jobsSlice.reducer;
