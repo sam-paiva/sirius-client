@@ -9,13 +9,12 @@ import { ContractTypes } from '../../core/enums/contractTypes';
 import { PositionLevels } from '../../core/enums/positionLevels';
 import { useAppDispatch, useAppSelector } from '../../core/hooks/storeHooks';
 import { PreSavedJob } from '../../core/models/preSavedJob';
+import { addJobAction } from '../../core/store/jobs/jobsActions';
 import { AddJobRequest } from '../../infra/services/jobs/requests/addJobRequest';
 import MessageBanner from '../../shared/components/MessageBanner';
 import { Spinner } from '../../shared/components/Spinner';
-import { readFileAsBase64 } from '../../shared/utils/fileUtils';
 import { isValidUUID } from '../../shared/utils/stringUtils';
 import { showToast } from '../../shared/utils/toast';
-import { addJobAction } from '../../store/jobs/jobsActions';
 import Form, { FormValues } from './Form';
 import PreviewModal from './PreviewModal';
 
@@ -29,9 +28,9 @@ const PostJob: React.FC = () => {
   const userBundles = useAppSelector((c) => c.users.userBundles);
   const [selectedBundle, setSelectedBundle] = useState<string | null>(null);
   const [companyLogo, setCompanyLogo] = useState<File | null>(null);
-  const [base64Logo, setBase64Logo] = useState<string | null>(null);
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [preSavedJob, setPreSaveJob] = useState<PreSavedJob | null>(null);
+  const [selectedCompanyId, setSelectedCompanyId] = useState<string | null>(null);
 
   const handleDrop = (e: any) => {
     e.preventDefault();
@@ -53,7 +52,6 @@ const PostJob: React.FC = () => {
 
   const handleFile = (file: any) => {
     setCompanyLogo(file);
-    readFileAsBase64(file, setBase64Logo);
   };
 
   const handleDragOver = (e: any) => {
@@ -101,9 +99,10 @@ const PostJob: React.FC = () => {
       city: data.city,
       country: data.country,
       positionUrl: data.positionUrl,
-      companyLogo: base64Logo,
+      companyLogo: companyLogo,
       companyWebsite: data.companyWebsite,
-      userBundleId: selectedBundle!
+      userBundleId: selectedBundle!,
+      companyId: selectedCompanyId
     };
 
     setPreSaveJob(job);
@@ -117,16 +116,17 @@ const PostJob: React.FC = () => {
       jobTitle: preSavedJob!.title!,
       jobDescription: getHtml()!,
       budget: preSavedJob?.budget,
-      companyName: preSavedJob?.companyName,
+      companyName: preSavedJob?.companyName!,
       contractType: Number(preSavedJob?.contractType) as ContractTypes,
       positionLevels: Number(preSavedJob?.positionLevels) as PositionLevels,
       tags: tags,
       city: preSavedJob!.city,
       country: preSavedJob!.country,
       positionUrl: preSavedJob!.positionUrl,
-      companyLogo: base64Logo,
+      companyLogo: companyLogo,
       companyWebsite: preSavedJob!.companyWebsite,
-      userBundleId: selectedBundle!
+      userBundleId: selectedBundle!,
+      companyId: selectedCompanyId
     };
 
     dispatch(addJobAction({ request, navigate }));
@@ -137,13 +137,6 @@ const PostJob: React.FC = () => {
       const quill = quillRef.current.getEditor();
       const htmlContent = quill.root.innerHTML;
       return htmlContent;
-    }
-  };
-
-  const handleFormKeyDown = (e: any) => {
-    // Prevent form submission when Enter key is pressed
-    if (e.key === 'Enter') {
-      e.preventDefault();
     }
   };
 
@@ -174,11 +167,13 @@ const PostJob: React.FC = () => {
             </div>
             {problems.length > 0 && <MessageBanner problems={problems} />}
             <Select placeholder="Select a ticket" className="max-w-xs w-[100%] mt-8" onChange={(e) => setSelectedBundle(e.target.value)}>
-              {userBundles.map((bundle) => (
-                <SelectItem key={bundle.id} value={bundle.id}>
-                  {getSelectBundleDescription(bundle)}
-                </SelectItem>
-              ))}
+              {userBundles
+                .filter((c) => c.remainingPositions > 0)
+                .map((bundle: UserBundle) => (
+                  <SelectItem key={bundle.id} value={bundle.id}>
+                    {getSelectBundleDescription(bundle)}
+                  </SelectItem>
+                ))}
             </Select>
             {isValidUUID(selectedBundle) && (
               <Form
@@ -192,6 +187,8 @@ const PostJob: React.FC = () => {
                 setDescription={setDescription}
                 setTagValue={setTagValue}
                 tagValue={tagValue}
+                setLogo={(e) => handleFile(e)}
+                onSelectCompanyId={setSelectedCompanyId}
               />
             )}
           </>
@@ -202,6 +199,7 @@ const PostJob: React.FC = () => {
         job={preSavedJob!}
         onClose={() => setShowPreviewModal(false)}
         onConfirm={handleSubmit}
+        isLoading={isLoading}
       />
     </div>
   );

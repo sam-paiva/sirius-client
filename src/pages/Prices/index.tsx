@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { BsCheck } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../core/hooks/storeHooks';
+import { getBundlesAction } from '../../core/store/bundles/bundlesActions';
+import { selectBundleAction } from '../../core/store/checkout/checkoutSlice';
 import { formatter } from '../../shared/utils/currencyFormatter';
-import { getBundlesAction } from '../../store/bundles/bundlesActions';
-import { selectBundleAction } from '../../store/checkout/checkoutSlice';
 import PriceCard from './PriceCard';
 
 const Prices: React.FC = () => {

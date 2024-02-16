@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import * as authApi from '../../infra/services/auth/authApi';
-import { getDecodedToken } from '../../infra/services/auth/authService';
-import { CreateCompanyRequest } from '../../infra/services/users/requests/createCompanyRequest';
-import * as usersApi from '../../infra/services/users/userApi';
-import { showToast } from '../../shared/utils/toast';
+import * as authApi from '../../../infra/services/auth/authApi';
+import { getDecodedToken } from '../../../infra/services/auth/authService';
+import { CreateCompanyRequest } from '../../../infra/services/users/requests/createCompanyRequest';
+import * as usersApi from '../../../infra/services/users/userApi';
+import { showToast } from '../../../shared/utils/toast';
 import { handleError } from '../errorHandler';
 
 export const logoutAction = createAsyncThunk('users/logout', async (_, thunkAPI) => {

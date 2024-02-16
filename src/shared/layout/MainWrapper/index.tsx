@@ -1,21 +1,22 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../core/hooks/storeHooks';
+import { getJobsAction } from '../../../core/store/jobs/jobsActions';
+import { updateBundlesAfterPayment } from '../../../core/store/users/userSlice';
+import { getUserBundlesAction } from '../../../core/store/users/usersActions';
 import Router from '../../../infra/routes';
 import { checkifUserIsAuthenticated } from '../../../infra/services/auth/authService';
 import signalRService from '../../../infra/services/signalr/signalRService';
-import { updateBundlesAfterPayment } from '../../../store/users/userSlice';
-import { getUserBundlesAction } from '../../../store/users/usersActions';
 import { showToast } from '../../utils/toast';
 import NavigationBar from '../NavigationBar';
 
 const MainWrapper: React.FC = () => {
   const isAuthenticated = useAppSelector((c) => c.users.isAuthenticated);
   const dispatch = useAppDispatch();
+  const filter = '$orderby=UserBundle/Sponsored desc, CreatedDate desc';
 
   useEffect(() => {
-    //dispatch(getJobsAction(null));
-    if (checkifUserIsAuthenticated()) dispatch(getUserBundlesAction());
+    dispatch(getJobsAction(filter));
 
     signalRService.startConnection();
     signalRService.subscribeToReceiveMessage(handlePaymentProcessedMessage);
@@ -23,6 +24,10 @@ const MainWrapper: React.FC = () => {
       signalRService.stopConnection();
     };
   }, []);
+
+  useEffect(() => {
+    if (checkifUserIsAuthenticated()) dispatch(getUserBundlesAction());
+  }, [isAuthenticated]);
 
   const handlePaymentProcessedMessage = (message: string) => {
     showToast('Bundle Added', 'success');

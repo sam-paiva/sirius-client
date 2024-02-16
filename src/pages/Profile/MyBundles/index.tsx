@@ -2,7 +2,7 @@ import { Pagination, Table, TableBody, TableCell, TableColumn, TableHeader, Tabl
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../core/hooks/storeHooks';
-import { getUserBundlesAction } from '../../../store/users/usersActions';
+import { getUserBundlesAction } from '../../../core/store/users/usersActions';
 const MyBundles: React.FC = () => {
   const userBundles = useAppSelector((c) => c.users.userBundles);
   const dispatch = useAppDispatch();

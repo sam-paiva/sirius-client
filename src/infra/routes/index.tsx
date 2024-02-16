@@ -3,7 +3,6 @@ import About from '../../pages/About';
 import Callback from '../../pages/Callback';
 import Checkout from '../../pages/Checkout';
 import CheckoutSuccess from '../../pages/Checkout/CheckoutSuccess';
-import Companies from '../../pages/Companies';
 import Home from '../../pages/Home';
 import PositionDetails from '../../pages/JobDetails';
 import PostJob from '../../pages/PostJob';
@@ -109,15 +108,6 @@ const routes: CustomRoute[] = [
     element: (
       <ProtectedRoute>
         <CheckoutSuccess />
-      </ProtectedRoute>
-    ),
-    children: []
-  },
-  {
-    path: '/companies',
-    element: (
-      <ProtectedRoute>
-        <Companies />
       </ProtectedRoute>
     ),
     children: []

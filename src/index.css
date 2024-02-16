@@ -13,6 +13,14 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  button {
+    &:disabled {
+      background-color: #dddddd; /* Grey */
+      color: #666666; /* Dark grey */
+      cursor: not-allowed;
+    }
+  }
 }
 
 a {
@@ -71,12 +79,4 @@ h1 {
   color: #333;
   font-weight: 500;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-}
-
-button {
-  &:disabled {
-    background-color: #dddddd; /* Grey */
-    color: #666666; /* Dark grey */
-    cursor: not-allowed;
-  }
 }

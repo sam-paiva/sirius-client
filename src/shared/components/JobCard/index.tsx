@@ -2,7 +2,7 @@ import { Card, CardBody, CardFooter, CardHeader, Divider, Link } from '@nextui-o
 import moment from 'moment';
 import React from 'react';
 import { BsBuilding } from 'react-icons/bs';
-import { GiAncientSword, GiMoneyStack } from 'react-icons/gi';
+import { GiAncientSword } from 'react-icons/gi';
 import { IoLocationOutline } from 'react-icons/io5';
 import { LiaFileContractSolid } from 'react-icons/lia';
 import { ContractTypes } from '../../../core/enums/contractTypes';
@@ -18,19 +18,22 @@ interface Props {
 const JobCard: React.FC<Props> = ({ job }) => {
   return (
     <Card className="mb-6 max-h-[400px]">
-      <CardHeader className="flex gap-3">
+      <CardHeader className={`flex gap-3 ${job.userBundle.sponsored && 'bg-orange-200'}`}>
         <div className="flex flex-col gap-2">
           <h1 className="text-2xl text-sky-500 font-bold">{job.title}</h1>
-          <Badge content={moment(job.createdDate).fromNow()} />
+          <div className="flex gap-1">
+            <Badge content={moment(job.createdDate).fromNow()} />
+            {job.userBundle.sponsored && <Badge color="bg-orange-400" content={'Sponsored'} />}
+          </div>
         </div>
       </CardHeader>
       <Divider />
       <CardBody className="max-h-[300px]">
         <div className="flex items-start w-[100%] gap-3">
-          <div className="flex items-center gap-1">
+          {/* <div className="items-center gap-1 hidden md:flex">
             <GiMoneyStack />
-            <span className="text-gray-500">{job.budget ?? 'Not Informed'}</span>
-          </div>
+            <span className="text-gray-500">{job.budget}</span>
+          </div> */}
           <div className="flex items-center gap-1">
             <IoLocationOutline />
             <span className="text-gray-500">
@@ -39,7 +42,7 @@ const JobCard: React.FC<Props> = ({ job }) => {
           </div>
           <div className="flex items-center gap-1">
             <BsBuilding />
-            <span className="text-gray-500">{job.company}</span>
+            <span className="text-gray-500">{job.company.name}</span>
           </div>
           <div className="flex items-center gap-1">
             <LiaFileContractSolid />

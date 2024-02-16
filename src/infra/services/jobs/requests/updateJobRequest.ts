@@ -1,7 +1,7 @@
 import { ContractTypes } from '../../../../core/enums/contractTypes';
 import { PositionLevels } from '../../../../core/enums/positionLevels';
 
-export interface AddJobRequest {
+export interface UpdateJobRequest {
   jobTitle: string;
   jobDescription: string;
   tags?: string[];
@@ -15,5 +15,5 @@ export interface AddJobRequest {
   companyWebsite: string | null;
   companyLogo: File | null;
   companyId: string | null;
-  userBundleId: string;
+  jobId: string;
 }

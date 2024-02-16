@@ -2,8 +2,8 @@ import { Button } from '@nextui-org/react';
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../core/hooks/storeHooks';
+import { loginCallbackAction } from '../../core/store/users/usersActions';
 import GoogleIcon from '../../shared/Icons/GoogleIcon';
-import { loginCallbackAction } from '../../store/users/usersActions';
 
 const SignIn: React.FC = () => {
   const apiURL = import.meta.env.VITE_API_URL;

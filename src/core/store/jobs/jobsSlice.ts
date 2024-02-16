@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ContractTypes } from '../../core/enums/contractTypes';
-import { PositionLevels } from '../../core/enums/positionLevels';
-import { Job } from '../../core/models/job';
-import { Problem } from '../../core/models/problem';
+import { ContractTypes } from '../../enums/contractTypes';
+import { PositionLevels } from '../../enums/positionLevels';
+import { Job } from '../../models/job';
+import { Problem } from '../../models/problem';
 import { addJobAction, getJobByIdAction, getJobsAction, getJobsByUserAction } from './jobsActions';
 
 interface PreSavedJob {

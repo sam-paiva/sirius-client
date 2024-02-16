@@ -1,24 +1,27 @@
-import { Avatar, Card, CardBody, CardFooter, CardHeader, Divider } from '@nextui-org/react';
+import { Button, Card, CardBody, CardFooter, CardHeader, Divider } from '@nextui-org/react';
 import React, { useEffect } from 'react';
-import { BsBuilding, BsTicket, BsTools } from 'react-icons/bs';
+import { BsTicket, BsTools } from 'react-icons/bs';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { LiaPlusCircleSolid } from 'react-icons/lia';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../core/hooks/storeHooks';
+import { getJobsByUserAction } from '../../core/store/jobs/jobsActions';
+import { logoutAction } from '../../core/store/users/usersActions';
 import { getDecodedToken } from '../../infra/services/auth/authService';
 import JobCard from '../../shared/components/JobCard';
 import { Spinner } from '../../shared/components/Spinner';
-import { logoutAction } from '../../store/users/usersActions';
 
 const Profile: React.FC = () => {
   const user = getDecodedToken()!;
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const userJobs = useAppSelector((c) => c.jobs.userJobs);
   const isLoading = useAppSelector((c) => c.jobs.isLoading);
+  const userBundles = useAppSelector((c) => c.users.userBundles);
   const linkClass = 'cursor-pointer text-md text-black font-light p-1';
 
   useEffect(() => {
-    //dispatch(getJobsByUserAction());
+    dispatch(getJobsByUserAction());
   }, []);
 
   const renderJobs = () => {
@@ -32,15 +35,32 @@ const Profile: React.FC = () => {
     return userJobs.map((job, key) => <JobCard key={key} job={job} />);
   };
 
+  const buyBundlesBanner = () => {
+    return (
+      <>
+        {userBundles.every((c) => c.remainingPositions === 0) && !isLoading && (
+          <div className="flex flex-col justify-start bg-orange-200 w-[100%] h-auto p-4 rounded mb-1">
+            <div className="flex items-center justify-between gap-1">
+              <p className="text-orange-600 font-bold">You have no valid bundles</p>
+              <Button onClick={() => navigate('/prices')} className="bg-orange-300">
+                Buy
+              </Button>
+            </div>
+          </div>
+        )}
+      </>
+    );
+  };
+
   return (
     <div className="flex flex-col justify-center mx-auto my-0 max-w-5xl px-8 w-[100%] mt-14">
       <div className="grid grid-cols-5 gap-4 w-[100%]">
         <div className="col-span-2 overflow-hidden sticky top-[80px] max-h-[500px]">
+          {buyBundlesBanner()}
           <Card className="max-w-[400px] max-h-[500px] h-[500px]">
             <CardHeader className="flex gap-3 items-centers justify-start bg-sky-300">
               <div className="flex flex-col items-start justify-start">
-                <Avatar size="lg" src={user.picture ?? ''} />
-                <p className="text-md mt-4">{`${user.given_name} ${user.unique_name}`}</p>
+                <h2>Welcome,</h2> <p className="text-md">{`${user.given_name} ${user.unique_name}`}</p>
               </div>
             </CardHeader>
             <Divider />
@@ -50,12 +70,6 @@ const Profile: React.FC = () => {
                   <LiaPlusCircleSolid />
                   <Link to={'/post-job'} className={linkClass}>
                     Post Job
-                  </Link>
-                </div>
-                <div className="flex w-[100%] items-center">
-                  <BsBuilding />
-                  <Link to={'/companies'} className={linkClass}>
-                    Companies
                   </Link>
                 </div>
                 <div className="flex w-[100%] items-center">

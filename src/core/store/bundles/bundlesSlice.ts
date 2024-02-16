@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Bundle } from '../../core/models/bundle';
+import { Bundle } from '../../models/bundle';
 import { getBundlesAction } from './bundlesActions';
 
 interface State {

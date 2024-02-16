@@ -9,10 +9,10 @@ import { useParams } from 'react-router-dom';
 import { ContractTypes } from '../../core/enums/contractTypes';
 import { PositionLevels } from '../../core/enums/positionLevels';
 import { useAppDispatch, useAppSelector } from '../../core/hooks/storeHooks';
+import { getJobByIdAction } from '../../core/store/jobs/jobsActions';
 import Badge from '../../shared/components/Badge';
 import { Spinner } from '../../shared/components/Spinner';
 import { getEnumKey } from '../../shared/utils/enumUtils';
-import { getJobByIdAction } from '../../store/jobs/jobsActions';
 
 const PositionDetails = () => {
   let { jobId } = useParams();
@@ -44,7 +44,10 @@ const PositionDetails = () => {
         <div className="bg-white p-4 rounded-md shadow-sm mb-10 w-[100%] flex-wrap">
           <div className="flex flex-col gap-2">
             <h1 className="text-4xl text-sky-500 font-bold">{job!.title}</h1>
-            <Badge content={moment(job!.createdDate).fromNow()} />
+            <div className="flex gap-1">
+              <Badge content={moment(job!.createdDate).fromNow()} />
+              {job.userBundle.sponsored && <Badge color="bg-orange-400" content={'Sponsored'} />}
+            </div>
           </div>
 
           <div className="flex items-start w-[100%] gap-3 mt-6">
@@ -60,7 +63,7 @@ const PositionDetails = () => {
             </div>
             <div className="flex items-center gap-1">
               <BsBuilding />
-              <span className="text-gray-500">{job!.company}</span>
+              <span className="text-gray-500">{job!.company.name}</span>
             </div>
             <div className="flex items-center gap-1">
               <LiaFileContractSolid />

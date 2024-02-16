@@ -7,25 +7,26 @@ import { IoLocationOutline } from 'react-icons/io5';
 import { LiaFileContractSolid } from 'react-icons/lia';
 import { ContractTypes } from '../../../core/enums/contractTypes';
 import { PositionLevels } from '../../../core/enums/positionLevels';
-import { PreSavedJob } from '../../../core/models/preSavedJob';
+import { PreSavedJob, PreUpdateJob } from '../../../core/models/preSavedJob';
 import Badge from '../../../shared/components/Badge';
 import SubmitButton from '../../../shared/components/PrimaryButton';
 import { getEnumKey } from '../../../shared/utils/enumUtils';
 
 interface Props {
   show: boolean;
-  job: PreSavedJob;
+  job: PreSavedJob | PreUpdateJob;
   onClose: () => void;
   onConfirm: () => void;
+  isLoading: boolean;
 }
 
-const PreviewModal: React.FC<Props> = ({ show, job, onClose, onConfirm }) => {
+const PreviewModal: React.FC<Props> = ({ show, job, onClose, onConfirm, isLoading }) => {
   return (
     <Modal size={'full'} isOpen={show} onClose={onClose}>
       <ModalContent>
-        {(onClose) => (
+        {() => (
           <>
-            <ModalBody>
+            <ModalBody className="overflow-auto">
               {job && (
                 <div className="flex flex-col justify-center mx-auto my-0 max-w-5xl px-8 w-[100%] mt-14">
                   <div className="flex flex-col gap-2">
@@ -62,11 +63,19 @@ const PreviewModal: React.FC<Props> = ({ show, job, onClose, onConfirm }) => {
                   </div>
 
                   <div className="mt-10">
-                    <SubmitButton>APPLY</SubmitButton>
+                    <SubmitButton onClick={() => window.open(job.positionUrl, '_blank')}>APPLY</SubmitButton>
                   </div>
+
                   <Divider className="mt-20" />
-                  <div className="mt-10 w-[100%] flex justify-end">
-                    <SubmitButton onClick={onConfirm}>SUBMIT</SubmitButton>
+                  <div>
+                    <span className="font-semibold">
+                      Please review it carefully, after submit you are not able to update the position details
+                    </span>
+                    <div className="mt-10 w-[100%] flex justify-end">
+                      <SubmitButton isLoading={isLoading} onClick={onConfirm}>
+                        SUBMIT
+                      </SubmitButton>
+                    </div>
                   </div>
                 </div>
               )}

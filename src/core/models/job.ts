@@ -1,5 +1,6 @@
 import { ContractTypes } from '../enums/contractTypes';
 import { PositionLevels } from '../enums/positionLevels';
+import { Company } from './company';
 
 export interface Job {
   description: string;
@@ -10,11 +11,10 @@ export interface Job {
   userId: string;
   location: Location;
   createdDate: string;
-  companyName: string;
   contractType: ContractTypes;
   positionLevel: PositionLevels;
   positionUrl: string;
-  companyWebsite: string;
-  companyLogo: string;
+  company: Company;
   selectedBundle: string;
+  userBundle: UserBundle;
 }

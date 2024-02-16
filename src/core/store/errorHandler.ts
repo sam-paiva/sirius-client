@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { Problem } from '../core/models/problem';
-import { showToast } from '../shared/utils/toast';
+import { showToast } from '../../shared/utils/toast';
+import { Problem } from '../models/problem';
 
 export const handleError = (error: any, reject: (problems: Problem[]) => void) => {
   if (axios.isAxiosError(error) && error.response!.status === 422) {

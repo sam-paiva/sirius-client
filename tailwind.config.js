@@ -3,21 +3,17 @@
 const { nextui } = require('@nextui-org/react');
 
 export default {
-  content: [
-    './index.html',
-    './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}', './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       screens: {
-        'mobile': { 'max': '639px' },
-        'sm': { 'min': '340px', 'max': '767px' },
-        'md': { 'min': '768px', 'max': '1023px' },
-        'lg': { 'min': '1024px', 'max': '1279px' },
-        'xl': { 'min': '1280px' },
-      },
-    },
+        mobile: { max: '639px' },
+        sm: { min: '340px', max: '767px' },
+        md: { min: '768px', max: '1023px' },
+        lg: { min: '1024px', max: '1279px' },
+        xl: { min: '1280px' }
+      }
+    }
   },
   darkMode: 'class',
   plugins: [
@@ -30,14 +26,14 @@ export default {
       themes: {
         light: {
           layout: {}, // light theme layout tokens
-          colors: {}, // light theme colors
+          colors: {} // light theme colors
         },
         dark: {
           layout: {}, // dark theme layout tokens
-          colors: {}, // dark theme colors
-        },
+          colors: {} // dark theme colors
+        }
         // ... custom themes
-      },
-    }),
-  ],
+      }
+    })
+  ]
 };

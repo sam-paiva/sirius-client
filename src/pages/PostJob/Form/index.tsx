@@ -1,10 +1,12 @@
-import { Input, Select, SelectItem } from '@nextui-org/react';
-import React from 'react';
+import { Autocomplete, AutocompleteItem, Input, Select, SelectItem } from '@nextui-org/react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import ReactQuill from 'react-quill';
 import { ContractTypes } from '../../../core/enums/contractTypes';
 import { PositionLevels } from '../../../core/enums/positionLevels';
+import { useGetCompaniesQuery } from '../../../infra/services/companies/companiesApi';
 import SubmitButton from '../../../shared/components/PrimaryButton';
+import { urlToFile } from '../../../shared/utils/fileUtils';
 import { isValidUrl } from '../../../shared/utils/stringUtils';
 
 export interface FormValues {
@@ -26,12 +28,14 @@ interface Props {
   handleKeyDown: (e: any) => void;
   quillRef: React.RefObject<ReactQuill>;
   companyLogo: File | null;
+  setLogo: (file: File) => void;
   handleDrop: (e: any) => void;
   onDragOver: (e: any) => void;
   setDescription: (value: string) => void;
   tagValue: string;
   setTagValue: (value: string) => void;
   isBundleSelected: boolean;
+  onSelectCompanyId: (id: string | null) => void;
 }
 
 const Form: React.FC<Props> = ({
@@ -44,7 +48,9 @@ const Form: React.FC<Props> = ({
   setDescription,
   tagValue,
   setTagValue,
-  isBundleSelected
+  onSelectCompanyId,
+  isBundleSelected,
+  setLogo
 }) => {
   const contractTypes = [
     { label: 'On Site', value: 1 },
@@ -63,15 +69,45 @@ const Form: React.FC<Props> = ({
     register,
     handleSubmit,
     control,
+    watch,
     setValue,
-    reset,
-    formState: { errors, isDirty, isSubmitSuccessful }
+    formState: { errors, isDirty }
   } = useForm<FormValues>({ mode: 'onChange' });
 
   const requiredMessage = 'Field is required';
   const salaryRanges = ['$45000.000 - $75000.00', '$75000.000 - $95000.00', '$95000.000 - $130000.00', 'Not available'];
   const disableFormSubmit = () => {
     return Object.keys(errors).length > 0 || !quillRef.current?.value || !isDirty || !isBundleSelected;
+  };
+  const [selectedFile, _] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const companyNameField = watch('companyName');
+  const { data, isLoading } = useGetCompaniesQuery(`$filter=contains(toLower(Name), '${companyNameField?.toLowerCase()}')&$top=10`, {
+    skip: !companyNameField
+  });
+
+  const setCompanyAfterSelection = (value: string) => {
+    const company = data?.find((c) => c.id === value);
+    if (company) {
+      setValue('companyWebsite', company?.websiteUrl!, { shouldDirty: true, shouldValidate: true, shouldTouch: true });
+      urlToFile(company.logoUrl, setLogo);
+      onSelectCompanyId(value.toString());
+    }
+  };
+
+  const handleFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    const file = event.target.files![0];
+
+    if (file) {
+      setLogo(file);
+    }
+  };
+
+  const openFileSelection = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
 
   return (
@@ -92,15 +128,14 @@ const Form: React.FC<Props> = ({
             name="budget"
             control={control}
             rules={{ required: true }} // Add your validation rules here
-            render={({ field: { onChange, onBlur, value } }) => (
+            render={({ field: { onChange, onBlur } }) => (
               <Select
                 isRequired
                 placeholder="Select the salary range"
                 className="max-w-xs"
                 onBlur={onBlur}
-                onChange={onChange}
+                onChange={(e) => onChange(salaryRanges[Number(e.target.value)])}
                 errorMessage={errors.positionLevel && 'Field is required'}
-                selectedKeys={value ? [value] : []}
               >
                 {salaryRanges.map((range, key) => (
                   <SelectItem key={key} value={range}>
@@ -205,15 +240,27 @@ const Form: React.FC<Props> = ({
 
           <div className="group flex flex-col w-full gap-3">
             <h2 className="mb-8 mt-10">Company Details</h2>
-            <Input
-              isRequired
-              isInvalid={errors.companyName?.message ? true : false}
-              required
-              {...register('companyName', { required: requiredMessage, maxLength: 50 })}
-              type="text"
-              label="Company Name"
-              placeholder=""
+            <Controller
+              name="companyName"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { onChange } }) => (
+                <Autocomplete
+                  allowsCustomValue
+                  isRequired
+                  onKeyDown={(e: any) => e.continuePropagation()}
+                  onSelectionChange={(value) => setCompanyAfterSelection(value.toString())}
+                  onInputChange={onChange}
+                  isLoading={isLoading}
+                  label="Company Name"
+                  placeholder=""
+                  defaultItems={data ?? []}
+                >
+                  {(item) => <AutocompleteItem key={item.id}>{item.name}</AutocompleteItem>}
+                </Autocomplete>
+              )}
             />
+
             <Input
               isRequired
               isInvalid={errors.companyName?.message ? true : false}
@@ -221,11 +268,27 @@ const Form: React.FC<Props> = ({
               type="text"
               label="Company Website"
               placeholder="Example: https://youwebsite.com"
+              value={watch('companyWebsite')}
             />
-            <div className="drop-area bg-gray-100 h-56 flex justify-center items-center" onDrop={handleDrop} onDragOver={onDragOver}>
-              <div className="flex flex-col items-center">
-                <p>Drag and drop your Company's logo</p>
+            <input
+              key={selectedFile?.name ?? ''}
+              ref={fileInputRef}
+              className="hidden"
+              onChange={(event) => handleFileInputChange(event)}
+              accept=".png, .jpg, .jpeg, .ico"
+              type="file"
+              placeholder="Choose your Resume"
+            />
+            <div
+              onClick={openFileSelection}
+              className="drop-area bg-gray-100 h-56 flex justify-center items-center"
+              onDrop={handleDrop}
+              onDragOver={onDragOver}
+            >
+              <div className="flex flex-col items-center cursor-pointer">
+                <p>Drag and drop your Company's logo or click to select a file</p>
                 {companyLogo ? <p>{companyLogo.name}</p> : <p className="text-default-400">Acceptable formats: .jpg, .png, .ico, .jpeg'</p>}
+                {companyLogo && <img className="w-[100px]" src={URL.createObjectURL(companyLogo)} id="logo-content" alt="Preview" />}
               </div>
             </div>
           </div>
