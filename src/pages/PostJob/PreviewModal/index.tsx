@@ -7,14 +7,14 @@ import { IoLocationOutline } from 'react-icons/io5';
 import { LiaFileContractSolid } from 'react-icons/lia';
 import { ContractTypes } from '../../../core/enums/contractTypes';
 import { PositionLevels } from '../../../core/enums/positionLevels';
-import { PreSavedJob, PreUpdateJob } from '../../../core/models/preSavedJob';
+import { PreSavedJob } from '../../../core/models/preSavedJob';
 import Badge from '../../../shared/components/Badge';
 import SubmitButton from '../../../shared/components/PrimaryButton';
 import { getEnumKey } from '../../../shared/utils/enumUtils';
 
 interface Props {
   show: boolean;
-  job: PreSavedJob | PreUpdateJob;
+  job: PreSavedJob;
   onClose: () => void;
   onConfirm: () => void;
   isLoading: boolean;
@@ -31,7 +31,17 @@ const PreviewModal: React.FC<Props> = ({ show, job, onClose, onConfirm, isLoadin
                 <div className="flex flex-col justify-center mx-auto my-0 max-w-5xl px-8 w-[100%] mt-14">
                   <div className="flex flex-col gap-2">
                     <h1 className="text-4xl text-sky-500 font-bold">{job!.title}</h1>
-                    <Badge content={moment().fromNow()} />
+                    <div className="flex gap-1">
+                      <Badge content={moment().fromNow()} />
+                      {job.userBundle.sponsored && <Badge color="bg-orange-400" content={'Sponsored'} />}
+                    </div>
+                  </div>
+                  <div className="flex mt-2">
+                    {job.tags!.map((tag, key) => (
+                      <div key={key} className="bg-blue-500 max-w-[100px] text-white rounded px-2 py-1 m-1 cursor-pointer">
+                        {tag}
+                      </div>
+                    ))}
                   </div>
 
                   <div className="flex items-start w-[100%] gap-3 mt-6">

@@ -1,7 +1,7 @@
-import { Button } from '@nextui-org/react';
 import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { FormEvent, useState } from 'react';
 import MessageBanner from '../../../shared/components/MessageBanner';
+import PrimaryButton from '../../../shared/components/PrimaryButton';
 
 const CheckoutForm: React.FC = () => {
   const stripe = useStripe();
@@ -56,10 +56,11 @@ const CheckoutForm: React.FC = () => {
       )}
       <PaymentElement id="payment-element" options={paymentElementOptions} />
 
-      <Button isLoading={isLoading} type="submit" className="mt-10 bg-black text-white text-xl" disabled={!stripe || !elements} id="submit">
-        Buy Now
-      </Button>
-      {/* Show any error or success messages */}
+      <div className="mt-10">
+        <PrimaryButton isLoading={isLoading} type="submit" disabled={!stripe || !elements}>
+          Buy Now
+        </PrimaryButton>
+      </div>
     </form>
   );
 };

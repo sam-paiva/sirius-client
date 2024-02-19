@@ -1,6 +1,6 @@
 import { Button, Card, CardBody, CardFooter, CardHeader, Divider } from '@nextui-org/react';
 import React, { useEffect } from 'react';
-import { BsTicket, BsTools } from 'react-icons/bs';
+import { BsTicket } from 'react-icons/bs';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { LiaPlusCircleSolid } from 'react-icons/lia';
 import { Link, useNavigate } from 'react-router-dom';
@@ -21,24 +21,25 @@ const Profile: React.FC = () => {
   const linkClass = 'cursor-pointer text-md text-black font-light p-1';
 
   useEffect(() => {
-    dispatch(getJobsByUserAction());
+    const filter = `$orderby=CreatedDate desc&$count=true`;
+    dispatch(getJobsByUserAction(filter));
   }, []);
 
   const renderJobs = () => {
-    if (userJobs.length == 0)
+    if (userJobs?.items.length == 0)
       return (
         <>
           <p className="text-center">No jobs found</p>
         </>
       );
 
-    return userJobs.map((job, key) => <JobCard key={key} job={job} />);
+    return userJobs?.items.map((job, key) => <JobCard key={key} job={job} />);
   };
 
   const buyBundlesBanner = () => {
     return (
       <>
-        {userBundles.every((c) => c.remainingPositions === 0) && !isLoading && (
+        {userBundles?.items.every((c) => c.remainingPositions === 0) && !isLoading && (
           <div className="flex flex-col justify-start bg-orange-200 w-[100%] h-auto p-4 rounded mb-1">
             <div className="flex items-center justify-between gap-1">
               <p className="text-orange-600 font-bold">You have no valid bundles</p>
@@ -78,12 +79,12 @@ const Profile: React.FC = () => {
                     My Bundles
                   </Link>
                 </div>
-                <div className="flex w-[100%] items-center">
+                {/* <div className="flex w-[100%] items-center">
                   <BsTools />
                   <Link to={'/profile/bundles'} className={linkClass}>
                     Settings
                   </Link>
-                </div>
+                </div> */}
               </div>
             </CardBody>
             <CardFooter>

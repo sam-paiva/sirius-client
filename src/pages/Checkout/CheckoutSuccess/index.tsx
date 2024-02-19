@@ -1,7 +1,7 @@
-import { Button } from '@nextui-org/react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import gif from '../../../assets/payment-success.gif';
+import PrimaryButton from '../../../shared/components/PrimaryButton';
 const CheckoutSuccess: React.FC = () => {
   const navigate = useNavigate();
 
@@ -10,9 +10,9 @@ const CheckoutSuccess: React.FC = () => {
       <div className="flex flex-col items-center justify-center w-auto">
         <h1 className="text-center text-3xl font-bold">Payment Successfull</h1>
         <img className="mt-5 w-[80px]" src={gif} alt="Success gif" />
-        <Button className="bg-black mt-10 text-xl" color="primary" onClick={() => navigate('/profile/bundles')}>
-          See my bundles
-        </Button>
+        <div className="mt-10">
+          <PrimaryButton onClick={() => navigate('/profile/bundles')}>See my bundles</PrimaryButton>
+        </div>
       </div>
     </div>
   );

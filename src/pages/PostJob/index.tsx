@@ -1,6 +1,6 @@
-import { Select, SelectItem } from '@nextui-org/react';
+import { Button, Select, SelectItem } from '@nextui-org/react';
 import moment from 'moment';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
 import 'react-quill/dist/quill.snow.css';
@@ -10,6 +10,7 @@ import { PositionLevels } from '../../core/enums/positionLevels';
 import { useAppDispatch, useAppSelector } from '../../core/hooks/storeHooks';
 import { PreSavedJob } from '../../core/models/preSavedJob';
 import { addJobAction } from '../../core/store/jobs/jobsActions';
+import { getUserBundlesAction } from '../../core/store/users/usersActions';
 import { AddJobRequest } from '../../infra/services/jobs/requests/addJobRequest';
 import MessageBanner from '../../shared/components/MessageBanner';
 import { Spinner } from '../../shared/components/Spinner';
@@ -31,6 +32,11 @@ const PostJob: React.FC = () => {
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [preSavedJob, setPreSaveJob] = useState<PreSavedJob | null>(null);
   const [selectedCompanyId, setSelectedCompanyId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const filter = `$orderby=CreatedDate desc,RemainingPositions desc&$filter=RemainingPositions gt 0&$count=true`;
+    dispatch(getUserBundlesAction(filter));
+  }, []);
 
   const handleDrop = (e: any) => {
     e.preventDefault();
@@ -60,7 +66,6 @@ const PostJob: React.FC = () => {
 
   const processFile = (file: File) => {
     if (file.type.startsWith('image/')) {
-      // Only handle image files
       handleFile(file);
     } else {
       showToast('File Format Invalid! Acceptable formats: .jpg, png, .ico, .jpeg', 'warning');
@@ -84,7 +89,7 @@ const PostJob: React.FC = () => {
     setTags(tags.filter((tag) => tag !== tagToRemove));
   };
 
-  const onSubmit = (data: FormValues) => {
+  const handlePreSaveJob = (data: FormValues) => {
     if (!description) showToast("Job description can't be blank", 'warning');
     if (!selectedBundle) showToast('Please select a bundle to complete the operation', 'warning');
 
@@ -101,7 +106,7 @@ const PostJob: React.FC = () => {
       positionUrl: data.positionUrl,
       companyLogo: companyLogo,
       companyWebsite: data.companyWebsite,
-      userBundleId: selectedBundle!,
+      userBundle: userBundles?.items.find((c) => c.id === selectedBundle)!,
       companyId: selectedCompanyId
     };
 
@@ -125,7 +130,7 @@ const PostJob: React.FC = () => {
       positionUrl: preSavedJob!.positionUrl,
       companyLogo: companyLogo,
       companyWebsite: preSavedJob!.companyWebsite,
-      userBundleId: selectedBundle!,
+      userBundleId: preSavedJob?.userBundle.id!,
       companyId: selectedCompanyId
     };
 
@@ -141,7 +146,24 @@ const PostJob: React.FC = () => {
   };
 
   const getSelectBundleDescription = (bundle: UserBundle) => {
-    return `${bundle.name} - remaining ${bundle.remainingPositions} - purchased ${moment(bundle.createdDate).fromNow()}`;
+    return `${bundle.name} - Remaining Creations ${bundle.remainingPositions} - Purchased ${moment(bundle.createdDate).fromNow()}`;
+  };
+
+  const buyBundlesBanner = () => {
+    return (
+      <>
+        {userBundles?.items.every((c) => c.remainingPositions === 0) && !isLoading && (
+          <div className="flex flex-col justify-start bg-orange-200 w-[100%] h-auto p-4 rounded mb-1">
+            <div className="flex items-center justify-between gap-1">
+              <p className="text-orange-600 font-bold">You have no valid bundles</p>
+              <Button onClick={() => navigate('/prices')} className="bg-orange-300">
+                Buy
+              </Button>
+            </div>
+          </div>
+        )}
+      </>
+    );
   };
 
   return (
@@ -166,15 +188,23 @@ const PostJob: React.FC = () => {
               ))}
             </div>
             {problems.length > 0 && <MessageBanner problems={problems} />}
-            <Select placeholder="Select a ticket" className="max-w-xs w-[100%] mt-8" onChange={(e) => setSelectedBundle(e.target.value)}>
-              {userBundles
-                .filter((c) => c.remainingPositions > 0)
-                .map((bundle: UserBundle) => (
-                  <SelectItem key={bundle.id} value={bundle.id}>
-                    {getSelectBundleDescription(bundle)}
-                  </SelectItem>
-                ))}
-            </Select>
+            {userBundles?.items!.some((c) => c.remainingPositions > 1) ? (
+              <Select
+                placeholder="Select a ticket"
+                className="xl:w-[60%] lg:w-[60%] md:w-[60%] sm:w-full mt-8"
+                onChange={(e) => setSelectedBundle(e.target.value)}
+              >
+                {userBundles.items
+                  .filter((c) => c.remainingPositions > 0)
+                  .map((bundle: UserBundle) => (
+                    <SelectItem key={bundle.id} value={bundle.id}>
+                      {getSelectBundleDescription(bundle)}
+                    </SelectItem>
+                  ))}
+              </Select>
+            ) : (
+              buyBundlesBanner()
+            )}
             {isValidUUID(selectedBundle) && (
               <Form
                 companyLogo={companyLogo}
@@ -182,7 +212,7 @@ const PostJob: React.FC = () => {
                 handleKeyDown={handleKeyDown}
                 isBundleSelected={isValidUUID(selectedBundle)}
                 onDragOver={handleDragOver}
-                onSubmit={onSubmit}
+                onSubmit={handlePreSaveJob}
                 quillRef={quillRef}
                 setDescription={setDescription}
                 setTagValue={setTagValue}

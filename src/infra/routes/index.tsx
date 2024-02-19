@@ -1,5 +1,4 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import About from '../../pages/About';
 import Callback from '../../pages/Callback';
 import Checkout from '../../pages/Checkout';
 import CheckoutSuccess from '../../pages/Checkout/CheckoutSuccess';
@@ -50,11 +49,6 @@ const routes: CustomRoute[] = [
   {
     path: '/sign-in',
     element: <SignIn />,
-    children: []
-  },
-  {
-    path: '/about',
-    element: <About />,
     children: []
   },
   {

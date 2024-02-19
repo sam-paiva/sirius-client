@@ -7,10 +7,12 @@ const MyBundles: React.FC = () => {
   const userBundles = useAppSelector((c) => c.users.userBundles);
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(1);
+  const topLimit = 15;
+  const filter = `$orderby=CreatedDate desc,RemainingPositions desc&$top=${topLimit}&$skip=${(page - 1) * topLimit}&$count=true`;
 
   useEffect(() => {
-    dispatch(getUserBundlesAction());
-  }, []);
+    dispatch(getUserBundlesAction(filter));
+  }, [page]);
 
   const columns = [
     {
@@ -31,7 +33,7 @@ const MyBundles: React.FC = () => {
     },
     {
       key: 'createdDate',
-      label: 'DATE PROCESSED'
+      label: 'Purchased Date'
     }
   ];
 
@@ -42,15 +44,16 @@ const MyBundles: React.FC = () => {
       <Table
         bottomContent={
           <div className="flex w-full justify-center">
-            <Pagination
-              isCompact
-              showControls
-              showShadow
-              color="primary"
-              page={page}
-              total={userBundles.length}
-              onChange={(page) => setPage(page)}
-            />
+            {userBundles && (
+              <Pagination
+                isDisabled={Math.ceil(userBundles?.total! / topLimit) === 1}
+                color="primary"
+                page={page}
+                total={Math.ceil(userBundles?.total! / topLimit)}
+                onChange={(page) => setPage(page)}
+                isCompact={false}
+              />
+            )}
           </div>
         }
         className="mt-10"
@@ -61,16 +64,17 @@ const MyBundles: React.FC = () => {
           ))}
         </TableHeader>
         <TableBody emptyContent={'No bundles found'}>
-          {userBundles.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.remainingPositions}</TableCell>
-              <TableCell>{row.remainingPositions > 0 ? 'YES' : 'NO'}</TableCell>
-              <TableCell>{row.sponsored ? 'YES' : 'NO'}</TableCell>
+          {userBundles! &&
+            userBundles!.items.map((row) => (
+              <TableRow key={row.id}>
+                <TableCell>{row.name}</TableCell>
+                <TableCell>{row.remainingPositions}</TableCell>
+                <TableCell>{row.remainingPositions > 0 ? 'YES' : 'NO'}</TableCell>
+                <TableCell>{row.sponsored ? 'YES' : 'NO'}</TableCell>
 
-              <TableCell>{moment(row.createdDate).format('DD-MM-yyyy HH:mm')}</TableCell>
-            </TableRow>
-          ))}
+                <TableCell>{moment(row.createdDate).format('DD-MM-yyyy HH:mm')}</TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </div>

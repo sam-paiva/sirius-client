@@ -2,7 +2,7 @@ import { animated, useSpring } from '@react-spring/web';
 import React from 'react';
 import { useAppSelector } from '../../core/hooks/storeHooks';
 import JobCard from '../../shared/components/JobCard';
-import Filters from './Filters';
+import PrimaryButton from '../../shared/components/PrimaryButton';
 
 const Home: React.FC = () => {
   const props = useSpring({
@@ -14,9 +14,9 @@ const Home: React.FC = () => {
   const isLoading = useAppSelector((c) => c.jobs.isLoading);
 
   const displayPositionsCount = () => {
-    if (jobs.length >= 300) return '+300';
+    if (jobs!.total! >= 300) return '+300';
 
-    return jobs.length;
+    return jobs!.total;
   };
 
   return (
@@ -33,20 +33,22 @@ const Home: React.FC = () => {
         <animated.div style={props} className={'mx-auto my-0 max-w-5xl px-8 w-[100%]'}>
           <h1 className="text-white font-bold">Search for your positions</h1>
           <div className="flex items-center">
-            <span className="text-orange-300 text-2xl font-medium mr-1">{displayPositionsCount()}</span>
+            {jobs && <span className="text-orange-300 text-2xl font-medium mr-1">{displayPositionsCount()}</span>}
             <h2 className="text-white text-2xl font-medium">opened positions🚀</h2>
           </div>
           <h2 className="text-white mt-4 text-2xl">
             Discover a seamless IT job-hunting experience with our user-friendly platform. Uncover a plethora of career opportunities
             tailored to your skills and aspirations.
           </h2>
-          {/* <Input size="lg" className="w-[100%] mt-10" type="text" label="Software Engineer, HR Manager..." /> */}
+          <div className="mt-5">
+            <PrimaryButton>View All Positions</PrimaryButton>
+          </div>
         </animated.div>
       </div>
       <div className="flex flex-col justify-center mx-auto my-0 max-w-5xl px-8 w-[100%] mt-14">
         <h1 className="text-2xl font-bold">Recent Positions</h1>
-        <Filters />
-        <div className="mt-16">{!isLoading && jobs.map((job, key) => <JobCard job={job} key={key} />)}</div>
+        {/* <Filters /> */}
+        <div className="mt-16">{!isLoading && jobs && jobs?.items.map((job, key) => <JobCard job={job} key={key} />)}</div>
       </div>
     </div>
   );

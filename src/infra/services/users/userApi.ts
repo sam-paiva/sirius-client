@@ -1,7 +1,7 @@
 import api from '../axios';
 
-export const getBundlesByUser = () => {
-  return api.get('/users/get-bundles');
+export const getBundlesByUser = (filter?: string) => {
+  return api.get(`/users/get-bundles?${filter}`);
 };
 
 export const createCompany = (data: any) => {

@@ -22,12 +22,12 @@ export const logoutAction = createAsyncThunk('users/logout', async (_, thunkAPI)
   }
 });
 
-export const loginCallbackAction = createAsyncThunk('users/loginCallback', async ({ navigate, from }: any, thunkAPI) => {
+export const loginCallbackAction = createAsyncThunk('users/login-callback', async ({ navigate, from }: any, thunkAPI) => {
   try {
     const token = getDecodedToken();
     if (token) {
       if (from && from !== '/home') navigate(from);
-      else navigate('/admin');
+      else navigate('/profile');
 
       return thunkAPI.fulfillWithValue({});
     }
@@ -37,9 +37,9 @@ export const loginCallbackAction = createAsyncThunk('users/loginCallback', async
   }
 });
 
-export const getUserBundlesAction = createAsyncThunk('users/get-user-bundles', async (_, { rejectWithValue }) => {
+export const getUserBundlesAction = createAsyncThunk('users/get-user-bundles', async (filter: string = '', { rejectWithValue }) => {
   try {
-    const response = await usersApi.getBundlesByUser();
+    const response = await usersApi.getBundlesByUser(filter);
 
     if (response.status === 200) {
       return response.data;

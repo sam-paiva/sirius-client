@@ -1,52 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ContractTypes } from '../../enums/contractTypes';
-import { PositionLevels } from '../../enums/positionLevels';
 import { Job } from '../../models/job';
+import { PaginateResult } from '../../models/paginateResult';
 import { Problem } from '../../models/problem';
 import { addJobAction, getJobByIdAction, getJobsAction, getJobsByUserAction } from './jobsActions';
 
-interface PreSavedJob {
-  jobTitle: string;
-  jobDescription: string;
-  tags?: string[];
-  budget?: string;
-  country: string;
-  city: string;
-  contractType: ContractTypes;
-  positionLevels: PositionLevels;
-  companyName?: string;
-  positionUrl: string;
-  companyWebsite: string | null;
-  companyLogo: string | null;
-  userBundleId: string;
-}
-
 interface State {
   isLoading: boolean;
-  userJobs: Job[];
-  jobs: Job[];
+  userJobs: PaginateResult<Job> | null;
+  jobs: PaginateResult<Job> | null;
   createJobsProblems: Problem[];
   selectedJob: Job | null;
-  preSavedJob: PreSavedJob | null;
 }
 
 const initialState: State = {
   isLoading: false,
-  userJobs: [],
+  userJobs: null,
   createJobsProblems: [],
-  jobs: [],
-  selectedJob: null,
-  preSavedJob: null
+  jobs: null,
+  selectedJob: null
 };
 
 export const jobsSlice = createSlice({
   name: 'jobs',
   initialState,
-  reducers: {
-    preSaveJobAction: (state, action) => {
-      state.preSavedJob = action.payload;
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(addJobAction.pending, (state) => {
       state.isLoading = true;
@@ -60,7 +37,7 @@ export const jobsSlice = createSlice({
 
     builder.addCase(addJobAction.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.userJobs.push(action.payload);
+      state.userJobs!.items.push(action.payload);
     });
 
     builder.addCase(getJobsByUserAction.pending, (state) => {
@@ -105,6 +82,6 @@ export const jobsSlice = createSlice({
   }
 });
 
-export const { preSaveJobAction } = jobsSlice.actions;
+export const {} = jobsSlice.actions;
 
 export default jobsSlice.reducer;

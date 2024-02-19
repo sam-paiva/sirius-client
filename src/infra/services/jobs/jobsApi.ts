@@ -17,8 +17,8 @@ export const addJob = (request: AddJobRequest) => {
   });
 };
 
-export const getJobsByUser = () => {
-  return api.get('/jobs/get-by-user');
+export const getJobsByUser = (filter?: string) => {
+  return api.get(`/jobs/get-by-user?${filter}`);
 };
 
 export const getJobs = (filter: string | null) => {

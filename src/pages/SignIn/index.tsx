@@ -1,9 +1,12 @@
-import { Button } from '@nextui-org/react';
-import React, { useEffect } from 'react';
+import { Button, Image } from '@nextui-org/react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import logo from '../../assets/background-dark.png';
 import { useAppDispatch } from '../../core/hooks/storeHooks';
 import { loginCallbackAction } from '../../core/store/users/usersActions';
 import GoogleIcon from '../../shared/Icons/GoogleIcon';
+import LinkedinIcon from '../../shared/Icons/LinkedinIcon';
+import MicrosoftIcon from '../../shared/Icons/MicrosoftIcon';
 
 const SignIn: React.FC = () => {
   const apiURL = import.meta.env.VITE_API_URL;
@@ -11,6 +14,8 @@ const SignIn: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const [originalBackgroundColor, setOriginalBackgroundColor] = useState('');
+  const buttonClass = 'text-black flex';
 
   const handleUnload = () => {
     const redirectUrl = localStorage.getItem('redirect_url');
@@ -18,6 +23,9 @@ const SignIn: React.FC = () => {
   };
 
   useEffect(() => {
+    const root = document.getElementById('root');
+    setOriginalBackgroundColor(root?.style.backgroundColor!);
+    if (root) root.style.backgroundColor = 'white';
     // Add a message event listener to receive messages from child windows
     const handleMessage = (event: any) => {
       if (event.origin === window.location.origin) {
@@ -30,6 +38,7 @@ const SignIn: React.FC = () => {
     return () => {
       // Remove the event listener when the component is unmounted
       window.removeEventListener('message', handleMessage);
+      if (root) root.style.backgroundColor = originalBackgroundColor;
     };
   }, [dispatch]);
 
@@ -42,14 +51,42 @@ const SignIn: React.FC = () => {
   };
   return (
     <div className="flex flex-col w-[100%]">
-      <div className="bg-white mt-12 mx-auto max-w-screen-lg min-w-[30%] min-h-full rounded-xl shadow-sm">
-        <h1 className="mt-12 text-center">Login</h1>
+      <div className="bg-white mt-12 mx-auto max-w-screen-lg min-w-[30%] min-h-full">
+        <div className="flex justify-center flex-col items-center p-4">
+          <Image onClick={() => navigate('/home')} alt="logo" src={logo} width={180} className="mt-2 cursor-pointer" />
+          <h1 className="font-medium text-2xl">Create an account or sign in.</h1>
+          <span className="text-sm text-justify">By creating an account or signing in, you understand and agree to Unjobless's Terms.</span>
+          <span className="text-sm text-justify">You also acknowledge our Cookie and Privacy policies.</span>
+        </div>
+
         <div className="my-8 p-5 text-center w-[100%]">
           <div>
-            <form onSubmit={signInWithGoogle}>
-              <Button type="submit" radius="full" isIconOnly={false} color="default" aria-label="sign in with google">
+            <form onSubmit={signInWithGoogle} className="flex flex-col gap-3">
+              <Button type="submit" radius="none" isIconOnly={false} className={buttonClass} aria-label="sign in with google">
                 <GoogleIcon />
                 Continue with Google
+              </Button>
+              <Button
+                type="submit"
+                radius="none"
+                isIconOnly={false}
+                className={buttonClass}
+                color="default"
+                aria-label="sign in with google"
+              >
+                <MicrosoftIcon />
+                Continue with Microsoft
+              </Button>
+              <Button
+                type="submit"
+                radius="none"
+                isIconOnly={false}
+                className={buttonClass}
+                color="default"
+                aria-label="sign in with google"
+              >
+                <LinkedinIcon />
+                Continue with Linkedin
               </Button>
             </form>
           </div>

@@ -11,7 +11,8 @@ export const addJobAction = createAsyncThunk('jobs/add-job', async ({ request, n
 
     if (response.status === 201) {
       const getJobsPromise = dispatch(getJobsAction(null));
-      const getBundlesPromise = dispatch(getUserBundlesAction());
+      const filter = `$orderby=CreatedDate desc,RemainingPositions desc&$filter=RemainingPositions gt 0&$count=true`;
+      const getBundlesPromise = dispatch(getUserBundlesAction(filter));
       await Promise.all([getJobsPromise, getBundlesPromise]);
       navigate('/profile');
       showToast('Position created successfully', 'success');
@@ -24,9 +25,9 @@ export const addJobAction = createAsyncThunk('jobs/add-job', async ({ request, n
   }
 });
 
-export const getJobsByUserAction = createAsyncThunk('jobs/get-jobs-by-user', async (_, { rejectWithValue }) => {
+export const getJobsByUserAction = createAsyncThunk('jobs/get-jobs-by-user', async (filter: string, { rejectWithValue }) => {
   try {
-    const response = await jobsApi.getJobsByUser();
+    const response = await jobsApi.getJobsByUser(filter);
 
     if (response.status === 200) {
       return response.data;

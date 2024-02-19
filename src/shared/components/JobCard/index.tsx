@@ -5,6 +5,7 @@ import { BsBuilding } from 'react-icons/bs';
 import { GiAncientSword } from 'react-icons/gi';
 import { IoLocationOutline } from 'react-icons/io5';
 import { LiaFileContractSolid } from 'react-icons/lia';
+import { useNavigate } from 'react-router-dom';
 import { ContractTypes } from '../../../core/enums/contractTypes';
 import { PositionLevels } from '../../../core/enums/positionLevels';
 import { Job } from '../../../core/models/job';
@@ -16,11 +17,14 @@ interface Props {
 }
 
 const JobCard: React.FC<Props> = ({ job }) => {
+  const navigate = useNavigate();
   return (
     <Card className="mb-6 max-h-[400px]">
       <CardHeader className={`flex gap-3 ${job.userBundle.sponsored && 'bg-orange-200'}`}>
         <div className="flex flex-col gap-2">
-          <h1 className="text-2xl text-sky-500 font-bold">{job.title}</h1>
+          <h1 onClick={() => navigate(`/position-details/${job.id}`)} className="text-2xl text-sky-500 font-bold cursor-pointer">
+            {job.title}
+          </h1>
           <div className="flex gap-1">
             <Badge content={moment(job.createdDate).fromNow()} />
             {job.userBundle.sponsored && <Badge color="bg-orange-400" content={'Sponsored'} />}

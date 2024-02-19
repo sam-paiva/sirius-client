@@ -30,11 +30,11 @@ const NavigationBar: React.FC<Props> = ({ isAuthenticated }) => {
                 Prices
               </Link>
             </NavbarItem>
-            <NavbarItem className="lg:flex">
+            {/* <NavbarItem className="lg:flex">
               <Link className="text-black" to={`/about`} state={{ from: previousLocation }}>
                 About
               </Link>
-            </NavbarItem>
+            </NavbarItem> */}
             {!isAuthenticated && !isSignIn && (
               <NavbarItem className="lg:flex">
                 <Link to={`/sign-in`} state={{ from: previousLocation }}>

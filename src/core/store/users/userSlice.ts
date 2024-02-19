@@ -1,17 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { checkifUserIsAuthenticated } from '../../../infra/services/auth/authService';
+import { PaginateResult } from '../../models/paginateResult';
 import { createCompanyAction, getUserBundlesAction, loginCallbackAction, logoutAction } from './usersActions';
 
 interface State {
   isLoading: boolean;
   isAuthenticated: boolean;
-  userBundles: UserBundle[];
+  userBundles: PaginateResult<UserBundle> | null;
 }
 
 const initialState: State = {
   isLoading: false,
   isAuthenticated: checkifUserIsAuthenticated() ? true : false,
-  userBundles: []
+  userBundles: null
 };
 
 export const usersSlice = createSlice({
@@ -22,7 +23,7 @@ export const usersSlice = createSlice({
       state.isAuthenticated = true;
     },
     updateBundlesAfterPayment: (state, action) => {
-      state.userBundles.push(action.payload);
+      state.userBundles?.items.push(action.payload);
     }
   },
   extraReducers: (builder) => {
@@ -75,7 +76,7 @@ export const usersSlice = createSlice({
       state.isLoading = false;
     });
 
-    builder.addCase(createCompanyAction.fulfilled, (state, action) => {
+    builder.addCase(createCompanyAction.fulfilled, (state, _) => {
       state.isLoading = false;
     });
   }
