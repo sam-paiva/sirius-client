@@ -5,7 +5,7 @@ import { IoLogOutOutline } from 'react-icons/io5';
 import { LiaPlusCircleSolid } from 'react-icons/lia';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../core/hooks/storeHooks';
-import { getJobsByUserAction } from '../../core/store/jobs/jobsActions';
+import { getJobsByUserAction, updatePositionFilledAction } from '../../core/store/jobs/jobsActions';
 import { logoutAction } from '../../core/store/users/usersActions';
 import { getDecodedToken } from '../../infra/services/auth/authService';
 import JobCard from '../../shared/components/JobCard';
@@ -25,6 +25,10 @@ const Profile: React.FC = () => {
     dispatch(getJobsByUserAction(filter));
   }, []);
 
+  const handleDisableJob = (jobId: string) => {
+    dispatch(updatePositionFilledAction(jobId));
+  };
+
   const renderJobs = () => {
     if (userJobs?.items.length == 0)
       return (
@@ -33,7 +37,7 @@ const Profile: React.FC = () => {
         </>
       );
 
-    return userJobs?.items.map((job, key) => <JobCard key={key} job={job} />);
+    return userJobs?.items.map((job, key) => <JobCard key={key} job={job} onSwitch={handleDisableJob} />);
   };
 
   const buyBundlesBanner = () => {
@@ -58,7 +62,7 @@ const Profile: React.FC = () => {
       <div className="grid grid-cols-5 gap-4 w-[100%]">
         <div className="col-span-2 overflow-hidden sticky top-[80px] max-h-[500px]">
           {buyBundlesBanner()}
-          <Card className="max-w-[400px] max-h-[500px] h-[500px]">
+          <Card className="max-w-[400px] max-h-[300px] h-[500px]">
             <CardHeader className="flex gap-3 items-centers justify-start bg-sky-300">
               <div className="flex flex-col items-start justify-start">
                 <h2>Welcome,</h2> <p className="text-md">{`${user.given_name} ${user.unique_name}`}</p>

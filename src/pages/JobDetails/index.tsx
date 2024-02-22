@@ -48,9 +48,9 @@ const PositionDetails = () => {
               <Badge content={moment(job!.createdDate).fromNow()} />
               {job.userBundle.sponsored && <Badge color="bg-orange-400" content={'Sponsored'} />}
             </div>
-            <div>
+            <div className="flex items-center">
               {job.tags.map((tag, key) => (
-                <div key={key} className="bg-blue-500 max-w-[100px] text-white rounded px-2 py-1 m-1 cursor-pointer">
+                <div key={key} className="bg-blue-500 max-w-[100px] text-white rounded px-2 py-1 m-1">
                   {tag}
                 </div>
               ))}

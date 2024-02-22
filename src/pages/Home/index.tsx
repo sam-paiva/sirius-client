@@ -1,5 +1,6 @@
 import { animated, useSpring } from '@react-spring/web';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../core/hooks/storeHooks';
 import JobCard from '../../shared/components/JobCard';
 import PrimaryButton from '../../shared/components/PrimaryButton';
@@ -12,6 +13,7 @@ const Home: React.FC = () => {
   });
   const jobs = useAppSelector((c) => c.jobs.jobs);
   const isLoading = useAppSelector((c) => c.jobs.isLoading);
+  const navigate = useNavigate();
 
   const displayPositionsCount = () => {
     if (jobs!.total! >= 300) return '+300';
@@ -41,14 +43,13 @@ const Home: React.FC = () => {
             tailored to your skills and aspirations.
           </h2>
           <div className="mt-5">
-            <PrimaryButton>View All Positions</PrimaryButton>
+            <PrimaryButton onClick={() => navigate('/search-jobs')}>View All Positions</PrimaryButton>
           </div>
         </animated.div>
       </div>
       <div className="flex flex-col justify-center mx-auto my-0 max-w-5xl px-8 w-[100%] mt-14">
         <h1 className="text-2xl font-bold">Recent Positions</h1>
-        {/* <Filters /> */}
-        <div className="mt-16">{!isLoading && jobs && jobs?.items.map((job, key) => <JobCard job={job} key={key} />)}</div>
+        <div className="mt-10">{!isLoading && jobs && jobs?.items?.map((job, key) => <JobCard job={job} key={key} />)}</div>
       </div>
     </div>
   );

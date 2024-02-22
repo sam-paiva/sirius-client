@@ -26,15 +26,15 @@ const NavigationBar: React.FC<Props> = ({ isAuthenticated }) => {
           <NavbarContent className="sm:flex gap-4" justify="center"></NavbarContent>
           <NavbarContent justify="end">
             <NavbarItem className="lg:flex">
+              <Link className="text-black" to={`/search-jobs`} state={{ from: previousLocation }}>
+                Advanced Search
+              </Link>
+            </NavbarItem>
+            <NavbarItem className="lg:flex">
               <Link className="text-black" to={`/prices`} state={{ from: previousLocation }}>
                 Prices
               </Link>
             </NavbarItem>
-            {/* <NavbarItem className="lg:flex">
-              <Link className="text-black" to={`/about`} state={{ from: previousLocation }}>
-                About
-              </Link>
-            </NavbarItem> */}
             {!isAuthenticated && !isSignIn && (
               <NavbarItem className="lg:flex">
                 <Link to={`/sign-in`} state={{ from: previousLocation }}>

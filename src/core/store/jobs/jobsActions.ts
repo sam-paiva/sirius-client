@@ -80,3 +80,24 @@ export const updateJobAction = createAsyncThunk('jobs/update', async (request: U
     return handleError(error, rejectWithValue);
   }
 });
+
+export const updatePositionFilledAction = createAsyncThunk(
+  'jobs/update-job-filled',
+  async (jobId: string, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await jobsApi.updatePositionFilled(jobId);
+
+      if (response.status === 204) {
+        const jobsFilter = `$orderby=CreatedDate desc&$count=true`;
+        const getJobsPromise = dispatch(getJobsByUserAction(jobsFilter));
+        await Promise.all([getJobsPromise]);
+        showToast('Job has been updated successfully', 'success');
+        return response.data;
+      }
+
+      return rejectWithValue({});
+    } catch (error) {
+      return handleError(error, rejectWithValue);
+    }
+  }
+);

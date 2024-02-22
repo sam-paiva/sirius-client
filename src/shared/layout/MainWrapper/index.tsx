@@ -13,7 +13,7 @@ const MainWrapper: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const filter = '$orderby=UserBundle/Sponsored desc, CreatedDate desc&count=true&top=30';
+    const filter = '$orderby=UserBundle/Sponsored desc, CreatedDate desc&count=true&top=30&filter=PositionFilled eq false';
     dispatch(getJobsAction(filter));
 
     signalRService.startConnection();

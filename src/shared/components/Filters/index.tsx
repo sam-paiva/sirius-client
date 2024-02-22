@@ -4,29 +4,28 @@ import { useForm } from 'react-hook-form';
 import { BsSearch } from 'react-icons/bs';
 import { IoLocationOutline } from 'react-icons/io5';
 
-interface FormValues {
+export interface FilterFormValues {
   searchText: string;
   location: string;
 }
 
-const Filters: React.FC = () => {
+interface Props {
+  onSubmit: (data: FilterFormValues) => void;
+}
+
+const Filters: React.FC<Props> = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
-    control,
-    formState: { errors, isDirty }
-  } = useForm<FormValues>();
-  const requiredMessage = 'Required Field';
+    formState: { errors, isValid }
+  } = useForm<FilterFormValues>();
 
   return (
     <div className="flex justify-center mx-auto my-0 max-w-5xl w-[100%] mt-14">
-      <form className="w-[100%] flex gap-1 items-center">
+      <form className="w-[100%] flex gap-1 items-center" onSubmit={handleSubmit(onSubmit)}>
         <Input
           startContent={<BsSearch />}
-          isRequired
-          isInvalid={errors.searchText?.message ? true : false}
-          errorMessage={errors.searchText?.message}
-          {...register('searchText', { required: requiredMessage, maxLength: 70 })}
+          {...register('searchText', { required: true, maxLength: 70 })}
           size="lg"
           className="w-[100%]"
           type="text"
@@ -43,7 +42,7 @@ const Filters: React.FC = () => {
           label="Location"
           placeholder="type here..."
         />
-        <Button color="primary" type="submit" className="h-[90%] w-[20%]">
+        <Button disabled={!isValid} type="submit" className="h-[90%] w-[20%] bg-sky-400 text-white">
           Search
         </Button>
       </form>

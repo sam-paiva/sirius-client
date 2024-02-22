@@ -32,3 +32,7 @@ export const getJobDetails = (id: string) => {
 export const updateJob = (request: UpdateJobRequest) => {
   return api.put('jobs', request);
 };
+
+export const updatePositionFilled = (jobId: string) => {
+  return api.patch('jobs', { jobId });
+};

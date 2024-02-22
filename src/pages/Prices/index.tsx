@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../core/hooks/storeHooks';
 import { getBundlesAction } from '../../core/store/bundles/bundlesActions';
 import { selectBundleAction } from '../../core/store/checkout/checkoutSlice';
+import ContainerWrapper from '../../shared/components/ContainerWrapper';
 import { formatter } from '../../shared/utils/currencyFormatter';
 import PriceCard from './PriceCard';
 
@@ -104,14 +105,14 @@ const Prices: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center mx-auto my-0 max-w-5xl px-8 w-[100%] mt-14 bg-white p-8">
+    <ContainerWrapper>
       <div className="flex flex-col items-center w-[100%] justify-center">
         <h1 className="font-medium">Pricing Tickets</h1>
         <span className="mt-6 text-lg text-gray-500">After choosing one of our tickets, you can start to post job positions.</span>
         <span className="text-lg text-gray-500">Please find which most fits your demand.</span>
       </div>
       <div className="flex items-center justify-around gap-6 mt-12">{displayBundles()}</div>
-    </div>
+    </ContainerWrapper>
   );
 };
 

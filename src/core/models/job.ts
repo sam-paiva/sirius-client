@@ -17,4 +17,5 @@ export interface Job {
   company: Company;
   selectedBundle: string;
   userBundle: UserBundle;
+  positionFilled: boolean;
 }

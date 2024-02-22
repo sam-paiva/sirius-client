@@ -8,6 +8,7 @@ import PostJob from '../../pages/PostJob';
 import Prices from '../../pages/Prices';
 import Admin from '../../pages/Profile';
 import MyBundles from '../../pages/Profile/MyBundles';
+import SearchJobs from '../../pages/SearchJobs';
 import SignIn from '../../pages/SignIn';
 import { checkifUserIsAuthenticated } from '../services/auth/authService';
 
@@ -104,6 +105,11 @@ const routes: CustomRoute[] = [
         <CheckoutSuccess />
       </ProtectedRoute>
     ),
+    children: []
+  },
+  {
+    path: '/search-jobs',
+    element: <SearchJobs />,
     children: []
   }
 ];
