@@ -42,9 +42,9 @@ const SignIn: React.FC = () => {
     };
   }, [dispatch]);
 
-  const signInWithGoogle = () => {
+  const handleExternalSignIn = (provider: string) => {
     window.open(
-      `${apiURL}/auth/google-signin?returnUrl=${location.state.from ?? ''}`,
+      `${apiURL}/auth/external-signin?returnUrl=${'/home'}&provider=${provider}`,
       '_blank',
       'location=yes,height=570,width=520,scrollbars=yes,status=yes'
     );
@@ -61,34 +61,40 @@ const SignIn: React.FC = () => {
 
         <div className="my-8 p-5 text-center w-[100%]">
           <div>
-            <form onSubmit={signInWithGoogle} className="flex flex-col gap-3">
-              <Button type="submit" radius="none" isIconOnly={false} className={buttonClass} aria-label="sign in with google">
+            <div className="flex flex-col gap-3">
+              <Button
+                onClick={() => handleExternalSignIn('Google')}
+                radius="none"
+                isIconOnly={false}
+                className={buttonClass}
+                aria-label="sign in with google"
+              >
                 <GoogleIcon />
                 Continue with Google
               </Button>
               <Button
-                type="submit"
+                onClick={() => handleExternalSignIn('Microsoft')}
                 radius="none"
                 isIconOnly={false}
                 className={buttonClass}
                 color="default"
-                aria-label="sign in with google"
+                aria-label="sign in with Microsoft"
               >
                 <MicrosoftIcon />
                 Continue with Microsoft
               </Button>
               <Button
-                type="submit"
                 radius="none"
                 isIconOnly={false}
                 className={buttonClass}
                 color="default"
-                aria-label="sign in with google"
+                aria-label="sign in with Linkedin"
+                onClick={() => handleExternalSignIn('Linkedin')}
               >
                 <LinkedinIcon />
                 Continue with Linkedin
               </Button>
-            </form>
+            </div>
           </div>
         </div>
       </div>

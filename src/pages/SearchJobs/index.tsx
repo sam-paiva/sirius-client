@@ -11,8 +11,6 @@ const SearchJobs: React.FC = () => {
   const isLoading = useAppSelector((c) => c.jobs.isLoading);
   const dispatch = useAppDispatch();
 
-  console.log(jobs);
-
   useEffect(() => {
     const filter = '$orderby=UserBundle/Sponsored desc, CreatedDate desc&count=true&top=30&$filter=PositionFilled eq false';
     dispatch(getJobsAction(filter));

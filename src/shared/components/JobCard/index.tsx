@@ -1,6 +1,7 @@
 import { Card, CardBody, CardHeader, Checkbox, Divider, Tooltip } from '@nextui-org/react';
 import moment from 'moment';
 import React from 'react';
+import { BsBuilding } from 'react-icons/bs';
 import { GiAncientSword } from 'react-icons/gi';
 import { IoLocationOutline } from 'react-icons/io5';
 import { LiaFileContractSolid } from 'react-icons/lia';
@@ -57,7 +58,7 @@ const JobCard: React.FC<Props> = ({ job, onSwitch }) => {
       <CardBody className="max-h-[500px]">
         <div className="flex items-start w-[100%] gap-3">
           <div className="flex items-center gap-1">
-            <img className="w-[12px] h-[16px]" src={job.company.logoUrl} />
+            {job.company.logoUrl ? <img className="w-[13px] h-[17px]" src={job.company.logoUrl} /> : <BsBuilding />}
             <span className="text-gray-500">{job.company.name}</span>
           </div>
           <div className="flex items-center gap-1">

@@ -38,7 +38,7 @@ const MyBundles: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col h-auto justify-center mx-auto my-0 max-w-5xl px-8 w-[100%] mt-14 bg-white p-8">
+    <div className="flex flex-col bg-white h-auto justify-center mx-auto my-0 max-w-5xl px-8 w-[100%] mt-14 p-8 border-gray-300 rounded border-1">
       <h1>My Bundles</h1>
 
       <Table

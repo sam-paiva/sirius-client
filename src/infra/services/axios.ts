@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { logout } from './auth/authApi';
-import { checkifUserIsAuthenticated } from './auth/authService';
+import { checkifUserIsAuthenticated, getJwtToken } from './auth/authService';
 
 console.log(import.meta.env.VITE_API_URL);
 
@@ -24,7 +24,7 @@ api.interceptors.response.use(
         config.sent = true;
 
         logout().then(() => {
-          window.location.href = 'home';
+          window.location.href = 'sign-in';
           window.location.reload();
         });
 
@@ -32,6 +32,24 @@ api.interceptors.response.use(
       }
       return Promise.reject(error);
     }
+  }
+);
+
+api.interceptors.request.use(
+  function (config) {
+    // Get the JWT token
+    const jwtToken = getJwtToken();
+
+    // If token exists, add it to the request headers
+    if (jwtToken) {
+      config.headers.Authorization = `Bearer ${jwtToken}`;
+    }
+
+    return config;
+  },
+  function (error) {
+    // Do something with request error
+    return Promise.reject(error);
   }
 );
 

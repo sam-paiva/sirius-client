@@ -36,7 +36,7 @@ const Home: React.FC = () => {
           <h1 className="text-white font-bold">Search for your positions</h1>
           <div className="flex items-center">
             {jobs && <span className="text-orange-300 text-2xl font-medium mr-1">{displayPositionsCount()}</span>}
-            <h2 className="text-white text-2xl font-medium">opened positions🚀</h2>
+            <h2 className="text-white text-2xl font-medium">opened position(s)🚀</h2>
           </div>
           <h2 className="text-white mt-4 text-2xl">
             Discover a seamless IT job-hunting experience with our user-friendly platform. Uncover a plethora of career opportunities

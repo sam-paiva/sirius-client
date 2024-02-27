@@ -39,7 +39,7 @@ const PositionDetails = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center mx-auto my-0 max-w-5xl px-8 w-[100%] mt-14">
+    <div className="flex flex-col justify-center mx-auto my-0 max-w-5xl px-8 w-[100%] mt-14 border-gray-300 rounded">
       {!loading && job ? (
         <div className="bg-white p-4 rounded-md shadow-sm mb-10 w-[100%] flex-wrap">
           <div className="flex flex-col gap-2">
@@ -59,6 +59,10 @@ const PositionDetails = () => {
 
           <div className="flex items-start w-[100%] gap-3 mt-6">
             <div className="flex items-center gap-1">
+              {job.company.logoUrl ? <img className="w-[13px] h-[17px]" src={job.company.logoUrl} /> : <BsBuilding />}
+              <span className="text-gray-500">{job.company.name}</span>
+            </div>
+            <div className="flex items-center gap-1">
               <GiMoneyStack />
               <span className="text-gray-500">{job!.budget}</span>
             </div>
@@ -68,10 +72,7 @@ const PositionDetails = () => {
                 {job!.location.country}/{job!.location.city}
               </span>
             </div>
-            <div className="flex items-center gap-1">
-              <BsBuilding />
-              <span className="text-gray-500">{job!.company.name}</span>
-            </div>
+
             <div className="flex items-center gap-1">
               <LiaFileContractSolid />
               <span className="text-gray-500">{getEnumKey(ContractTypes, job!.contractType)}</span>

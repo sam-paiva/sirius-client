@@ -1,6 +1,6 @@
 import { Button, Card, CardBody, CardFooter, CardHeader, Divider } from '@nextui-org/react';
 import React, { useEffect } from 'react';
-import { BsTicket } from 'react-icons/bs';
+import { BsCurrencyEuro, BsTicket } from 'react-icons/bs';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { LiaPlusCircleSolid } from 'react-icons/lia';
 import { Link, useNavigate } from 'react-router-dom';
@@ -62,10 +62,10 @@ const Profile: React.FC = () => {
       <div className="grid grid-cols-5 gap-4 w-[100%]">
         <div className="col-span-2 overflow-hidden sticky top-[80px] max-h-[500px]">
           {buyBundlesBanner()}
-          <Card className="max-w-[400px] max-h-[300px] h-[500px]">
-            <CardHeader className="flex gap-3 items-centers justify-start bg-sky-300">
+          <Card className="max-w-[400px] h-[400px] border-1 border-gray-300 rounded" radius="none">
+            <CardHeader className="flex gap-3 items-centers justify-start">
               <div className="flex flex-col items-start justify-start">
-                <h2>Welcome,</h2> <p className="text-md">{`${user.given_name} ${user.unique_name}`}</p>
+                <h2>Welcome,</h2> <p className="text-md text-default-500">{`${user.unique_name}`}</p>
               </div>
             </CardHeader>
             <Divider />
@@ -81,6 +81,12 @@ const Profile: React.FC = () => {
                   <BsTicket />
                   <Link to={'/profile/bundles'} className={linkClass}>
                     My Bundles
+                  </Link>
+                </div>
+                <div className="flex w-[100%] items-center">
+                  <BsCurrencyEuro />
+                  <Link to={'/prices'} className={linkClass}>
+                    Buy Bundle
                   </Link>
                 </div>
                 {/* <div className="flex w-[100%] items-center">

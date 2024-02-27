@@ -9,7 +9,7 @@ interface UserClaims {
   sub: string;
 }
 
-const getJwtToken = () => Cookies.get('Token');
+export const getJwtToken = () => Cookies.get('Token');
 
 export const checkifUserIsAuthenticated = () => {
   const token = getJwtToken();
