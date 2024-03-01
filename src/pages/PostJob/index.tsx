@@ -196,6 +196,7 @@ const PostJob: React.FC = () => {
               >
                 {userBundles.items
                   .filter((c) => c.remainingPositions > 0)
+                  .sort((a, b) => a.name.localeCompare(b.name))
                   .map((bundle: UserBundle) => (
                     <SelectItem key={bundle.id} value={bundle.id}>
                       {getSelectBundleDescription(bundle)}

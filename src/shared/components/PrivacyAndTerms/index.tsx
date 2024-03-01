@@ -16,7 +16,7 @@ const PrivacyAndTerms = () => {
       </p>
       <p className="mb-4">
         We may share your information with third-party service providers, business partners, or as required by law. We take reasonable steps
-        to protect your information but cannot guarantee its absolute security.
+        to protect your information its absolute security.
       </p>
 
       <h2 className="text-2xl font-bold mb-4">Terms & Conditions</h2>

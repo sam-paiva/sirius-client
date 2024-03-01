@@ -61,7 +61,8 @@ const Profile: React.FC = () => {
           <Card className="max-w-[400px] h-[400px] border-1 border-gray-300 rounded" radius="none">
             <CardHeader className="flex gap-3 items-centers justify-start">
               <div className="flex flex-col items-start justify-start">
-                <h2>Welcome,</h2> <p className="text-md text-default-500">{`${user.unique_name}`}</p>
+                <p className="text-md text-default-500">{`${user.unique_name}`}</p>
+                <p className="text-md text-default-500">{`${user.email}`}</p>
               </div>
             </CardHeader>
             <Divider />

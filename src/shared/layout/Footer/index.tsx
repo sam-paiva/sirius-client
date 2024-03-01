@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="flex justify-between">
           <div className="w-full sm:w-auto mb-4 sm:mb-0">
             <h3 className="text-2xl font-semibold mb-2">Quick Links</h3>
-            <ul className="text-lg">
+            <ul className="text-sm">
               <li className="mb-1">
                 <Link onClick={handleLinkClick} to={'Home'}>
                   Home
