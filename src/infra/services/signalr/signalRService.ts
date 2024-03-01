@@ -5,9 +5,7 @@ class SignalRService {
   private onReceiveMessageCallbacks: ((message: string) => void)[] = [];
 
   startConnection = () => {
-    this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(import.meta.env.VITE_SIGNALR_ENDPOINT) // Replace with your hub URL
-      .build();
+    this.hubConnection = new signalR.HubConnectionBuilder().withUrl(import.meta.env.VITE_SIGNALR_ENDPOINT, {}).build();
 
     this.hubConnection
       .start()

@@ -22,7 +22,7 @@ const MainWrapper: React.FC = () => {
     return () => {
       signalRService.stopConnection();
     };
-  }, []);
+  }, [isAuthenticated]);
 
   const handlePaymentProcessedMessage = (message: string) => {
     showToast('Bundle Added', 'success');
