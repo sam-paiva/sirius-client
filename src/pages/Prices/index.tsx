@@ -97,7 +97,7 @@ const Prices: React.FC = () => {
 
           <div className="flex items-baseline">
             <BsCheck className="bg-green" />
-            <li className="text-center">Sponsored cover (priority in the list)</li>
+            <li className="text-center">Sponsored tag</li>
           </div>
         </ul>
       </>

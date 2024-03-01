@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../core/hooks/storeHooks';
 import { getJobsAction } from '../../core/store/jobs/jobsActions';
 import ContainerWrapper from '../../shared/components/ContainerWrapper';
+import Empty from '../../shared/components/Empty';
 import Filters, { FilterFormValues } from '../../shared/components/Filters';
 import JobCard from '../../shared/components/JobCard';
 import { Spinner } from '../../shared/components/Spinner';
@@ -10,6 +11,7 @@ const SearchJobs: React.FC = () => {
   const jobs = useAppSelector((c) => c.jobs.jobs);
   const isLoading = useAppSelector((c) => c.jobs.isLoading);
   const dispatch = useAppDispatch();
+  ``;
 
   useEffect(() => {
     const filter = '$orderby=UserBundle/Sponsored desc, CreatedDate desc&count=true&top=30&$filter=PositionFilled eq false';
@@ -37,6 +39,7 @@ const SearchJobs: React.FC = () => {
       <div className="flex flex-col justify-center mx-auto max-w-5xl px-8 w-[100%] mt-14">
         {!isLoading && jobs?.items.map((job) => <JobCard job={job} key={job.id} />)}
         {isLoading && <Spinner />}
+        {!isLoading && jobs?.items.length === 0 && <Empty />}
       </div>
     </>
   );

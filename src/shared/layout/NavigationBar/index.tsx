@@ -1,7 +1,7 @@
 import { Image, Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/react';
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import logo from '../../../assets/background-dark.png';
+import logo from '../../../assets/background-light.png';
 import usePreviousLocation from '../../../core/hooks/usePreviousLocation';
 
 interface Props {
@@ -19,19 +19,23 @@ const NavigationBar: React.FC<Props> = ({ isAuthenticated }) => {
   return (
     <>
       {!pagesWithoutNavbar.includes(currentPathName) && (
-        <Navbar>
+        <Navbar style={{ background: '#111827' }}>
           <NavbarBrand>
             <Image onClick={() => navigate('/home')} alt="logo" src={logo} width={180} className="mt-2 cursor-pointer" />
           </NavbarBrand>
           <NavbarContent className="sm:flex gap-4" justify="center"></NavbarContent>
           <NavbarContent justify="end">
             <NavbarItem className="lg:flex">
-              <Link className="text-black" to={`/search-jobs`} state={{ from: previousLocation }}>
+              <Link
+                className="text-default hover:text-white transition duration-300"
+                to={`/search-jobs`}
+                state={{ from: previousLocation }}
+              >
                 Advanced Search
               </Link>
             </NavbarItem>
             <NavbarItem className="lg:flex">
-              <Link className="text-black" to={`/prices`} state={{ from: previousLocation }}>
+              <Link className="text-default hover:text-white transition duration-300" to={`/prices`} state={{ from: previousLocation }}>
                 Prices
               </Link>
             </NavbarItem>
@@ -44,7 +48,7 @@ const NavigationBar: React.FC<Props> = ({ isAuthenticated }) => {
             )}
             {isAuthenticated && (
               <NavbarItem isActive>
-                <Link to="/profile" aria-current="page">
+                <Link className="text-default hover:text-white transition duration-300" to="/profile" aria-current="page">
                   Profile
                 </Link>
               </NavbarItem>

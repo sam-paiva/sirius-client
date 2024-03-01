@@ -2,6 +2,7 @@ import { animated, useSpring } from '@react-spring/web';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../core/hooks/storeHooks';
+import Empty from '../../shared/components/Empty';
 import JobCard from '../../shared/components/JobCard';
 import PrimaryButton from '../../shared/components/PrimaryButton';
 
@@ -35,8 +36,8 @@ const Home: React.FC = () => {
         <animated.div style={props} className={'mx-auto my-0 max-w-5xl px-8 w-[100%]'}>
           <h1 className="text-white font-bold">Search for your positions</h1>
           <div className="flex items-center">
-            {jobs && <span className="text-orange-300 text-2xl font-medium mr-1">{displayPositionsCount()}</span>}
-            <h2 className="text-white text-2xl font-medium">opened position(s)🚀</h2>
+            {jobs && jobs.total! > 0 && <span className="text-orange-300 text-2xl font-medium mr-1">{displayPositionsCount()}</span>}
+            {jobs?.total! > 0 && <h2 className="text-white text-2xl font-medium">opened position(s)🚀</h2>}
           </div>
           <h2 className="text-white mt-4 text-2xl">
             Discover a seamless IT job-hunting experience with our user-friendly platform. Uncover a plethora of career opportunities
@@ -50,6 +51,7 @@ const Home: React.FC = () => {
       <div className="flex flex-col justify-center mx-auto my-0 max-w-5xl px-8 w-[100%] mt-14">
         <h1 className="text-2xl font-bold">Recent Positions</h1>
         <div className="mt-10">{!isLoading && jobs && jobs?.items?.map((job, key) => <JobCard job={job} key={key} />)}</div>
+        {jobs?.items.length === 0 && <Empty />}
       </div>
     </div>
   );

@@ -1,19 +1,19 @@
 import { Button, Image } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../assets/background-dark.png';
 import { useAppDispatch } from '../../core/hooks/storeHooks';
 import { loginCallbackAction } from '../../core/store/users/usersActions';
 import GoogleIcon from '../../shared/Icons/GoogleIcon';
 import LinkedinIcon from '../../shared/Icons/LinkedinIcon';
 import MicrosoftIcon from '../../shared/Icons/MicrosoftIcon';
+import { scrollToTop } from '../../shared/utils/scrollUtils';
 
 const SignIn: React.FC = () => {
   const apiURL = import.meta.env.VITE_API_URL;
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const [originalBackgroundColor, setOriginalBackgroundColor] = useState('');
   const buttonClass = 'text-black flex';
 
@@ -43,10 +43,18 @@ const SignIn: React.FC = () => {
   }, [dispatch]);
 
   const handleExternalSignIn = (provider: string) => {
+    var screenWidth = window.innerWidth;
+    var screenHeight = window.innerHeight;
+    var windowWidth = 520;
+    var windowHeight = 570;
+
+    var leftPosition = (screenWidth - windowWidth) / 2;
+    var topPosition = (screenHeight - windowHeight) / 2;
+
     window.open(
       `${apiURL}/auth/external-signin?returnUrl=${'/home'}&provider=${provider}`,
       '_blank',
-      'location=yes,height=570,width=520,scrollbars=yes,status=yes'
+      `location=yes,height=${windowHeight},width=${windowWidth},left=${leftPosition},top=${topPosition}, scrollbars=yes,status=yes`
     );
   };
   return (
@@ -55,8 +63,13 @@ const SignIn: React.FC = () => {
         <div className="flex justify-center flex-col items-center p-4">
           <Image onClick={() => navigate('/home')} alt="logo" src={logo} width={180} className="mt-2 cursor-pointer" />
           <h1 className="font-medium text-2xl">Create an account or sign in.</h1>
-          <span className="text-sm text-justify">By creating an account or signing in, you understand and agree to Unjobless's Terms.</span>
-          <span className="text-sm text-justify">You also acknowledge our Cookie and Privacy policies.</span>
+          <span className="text-sm text-justify">
+            By creating an account or signing in, you understand and agree to Unjobless's{' '}
+            <Link onClick={scrollToTop} to={'/privacy-and-terms'}>
+              Privacy and Terms.
+            </Link>
+          </span>
+          <span className="text-sm text-justify"> Also you agree with our cookies policy</span>
         </div>
 
         <div className="my-8 p-5 text-center w-[100%]">

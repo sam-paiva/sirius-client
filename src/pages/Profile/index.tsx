@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../core/hooks/storeHooks';
 import { getJobsByUserAction, updatePositionFilledAction } from '../../core/store/jobs/jobsActions';
 import { logoutAction } from '../../core/store/users/usersActions';
 import { getDecodedToken } from '../../infra/services/auth/authService';
+import Empty from '../../shared/components/Empty';
 import JobCard from '../../shared/components/JobCard';
 import { Spinner } from '../../shared/components/Spinner';
 
@@ -30,12 +31,7 @@ const Profile: React.FC = () => {
   };
 
   const renderJobs = () => {
-    if (userJobs?.items.length == 0)
-      return (
-        <>
-          <p className="text-center">No jobs found</p>
-        </>
-      );
+    if (userJobs?.items.length == 0) return <Empty />;
 
     return userJobs?.items.map((job, key) => <JobCard key={key} job={job} onSwitch={handleDisableJob} />);
   };

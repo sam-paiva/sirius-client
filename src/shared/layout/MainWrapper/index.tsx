@@ -6,6 +6,7 @@ import { updateBundlesAfterPayment } from '../../../core/store/users/userSlice';
 import Router from '../../../infra/routes';
 import signalRService from '../../../infra/services/signalr/signalRService';
 import { showToast } from '../../utils/toast';
+import Footer from '../Footer';
 import NavigationBar from '../NavigationBar';
 
 const MainWrapper: React.FC = () => {
@@ -31,8 +32,9 @@ const MainWrapper: React.FC = () => {
   return (
     <BrowserRouter>
       <NavigationBar isAuthenticated={isAuthenticated} />
-      <main className="flex justify-start flex-col">
+      <main className="flex justify-start flex-col h-full">
         <Router />
+        <Footer />
       </main>
     </BrowserRouter>
   );
