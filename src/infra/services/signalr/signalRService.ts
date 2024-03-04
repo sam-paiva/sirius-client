@@ -3,9 +3,13 @@ import * as signalR from '@microsoft/signalr';
 class SignalRService {
   private hubConnection: signalR.HubConnection | null = null;
   private onReceiveMessageCallbacks: ((message: string) => void)[] = [];
+  public isDisconnected: boolean = this.hubConnection?.state === signalR.HubConnectionState.Disconnected;
 
   startConnection = () => {
-    this.hubConnection = new signalR.HubConnectionBuilder().withUrl(import.meta.env.VITE_SIGNALR_ENDPOINT, {}).build();
+    this.hubConnection = new signalR.HubConnectionBuilder()
+      .withAutomaticReconnect()
+      .withUrl(import.meta.env.VITE_SIGNALR_ENDPOINT, {})
+      .build();
 
     this.hubConnection
       .start()
@@ -14,6 +18,8 @@ class SignalRService {
         this.startListening();
       })
       .catch((err) => console.error(`Error starting connection: ${err}`));
+
+    this.hubConnection.on;
   };
 
   private startListening = () => {

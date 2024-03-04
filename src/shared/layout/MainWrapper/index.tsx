@@ -11,14 +11,19 @@ import NavigationBar from '../NavigationBar';
 
 const MainWrapper: React.FC = () => {
   const isAuthenticated = useAppSelector((c) => c.users.isAuthenticated);
+  const jobs = useAppSelector((c) => c.jobs.userJobs);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const filter = '$orderby=UserBundle/Sponsored desc, CreatedDate desc&count=true&top=30&filter=PositionFilled eq false';
     dispatch(getJobsAction(filter));
+  }, [isAuthenticated, jobs]);
 
-    signalRService.startConnection();
-    signalRService.subscribeToReceiveMessage(handlePaymentProcessedMessage);
+  useEffect(() => {
+    if (signalRService.isDisconnected) {
+      signalRService.startConnection();
+      signalRService.subscribeToReceiveMessage(handlePaymentProcessedMessage);
+    }
     return () => {
       signalRService.stopConnection();
     };

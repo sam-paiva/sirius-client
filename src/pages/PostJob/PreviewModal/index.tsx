@@ -1,6 +1,6 @@
 import { Divider, Modal, ModalBody, ModalContent } from '@nextui-org/react';
 import moment from 'moment';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BsBuilding } from 'react-icons/bs';
 import { GiAncientSword, GiMoneyStack } from 'react-icons/gi';
 import { IoLocationOutline } from 'react-icons/io5';
@@ -21,6 +21,18 @@ interface Props {
 }
 
 const PreviewModal: React.FC<Props> = ({ show, job, onClose, onConfirm, isLoading }) => {
+  const onPopulateLogo = () => {
+    if (job.companyLogo) {
+      const imageURL = URL.createObjectURL(job.companyLogo);
+      const img = document.getElementById('preview-logo') as HTMLImageElement;
+      img.src = imageURL;
+    }
+  };
+
+  useEffect(() => {
+    if (job) onPopulateLogo();
+  }, [job]);
+
   return (
     <Modal size={'full'} isOpen={show} onClose={onClose}>
       <ModalContent>
@@ -46,6 +58,10 @@ const PreviewModal: React.FC<Props> = ({ show, job, onClose, onConfirm, isLoadin
 
                   <div className="flex items-start w-[100%] gap-3 mt-6">
                     <div className="flex items-center gap-1">
+                      {job.companyLogo ? <img id="preview-logo" className="w-[13px] h-[17px]" /> : <BsBuilding />}
+                      <span className="text-gray-500">{job.companyName}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
                       <GiMoneyStack />
                       <span className="text-gray-500">{job!.budget}</span>
                     </div>
@@ -54,10 +70,6 @@ const PreviewModal: React.FC<Props> = ({ show, job, onClose, onConfirm, isLoadin
                       <span className="text-gray-500">
                         {job!.country}/{job!.city}
                       </span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <BsBuilding />
-                      <span className="text-gray-500">{job!.companyName}</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <LiaFileContractSolid />
