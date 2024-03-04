@@ -17,7 +17,7 @@ const Filters: React.FC<Props> = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid }
+    formState: { isValid }
   } = useForm<FilterFormValues>();
 
   return (
