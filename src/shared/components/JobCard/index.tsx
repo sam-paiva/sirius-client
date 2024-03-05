@@ -20,8 +20,8 @@ interface Props {
 const JobCard: React.FC<Props> = ({ job, onSwitch }) => {
   const navigate = useNavigate();
   return (
-    <Card className="mb-6 max-h-[400px] h-[400px]">
-      <CardHeader className={`flex gap-3 ${job.userBundle.sponsored && 'bg-orange-200'}`}>
+    <Card className="mb-6 max-h-[400px] h-[400px] shadow-none rounded-none border-1">
+      <CardHeader className={`flex gap-3 ${job.userBundle.sponsored && 'bg-orange-200'} rounded-none`}>
         <div className="flex flex-col gap-2 w-full">
           <div className="flex justify-between w-full">
             <h1 onClick={() => navigate(`/position-details/${job.id}`)} className="text-2xl text-sky-500 font-bold cursor-pointer">

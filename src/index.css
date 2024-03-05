@@ -23,6 +23,16 @@
   }
 }
 
+.gradient {
+  background: linear-gradient(
+    180deg,
+    hsla(221, 39%, 11%, 1) 0%,
+    hsla(228, 45%, 38%, 1) 47%,
+    hsla(227, 25%, 67%, 1) 94%,
+    hsla(0, 0%, 94%, 1) 100%
+  );
+}
+
 a {
   font-weight: 500;
   color: #646cff;

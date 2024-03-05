@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Callback from '../../pages/Callback';
 import Checkout from '../../pages/Checkout';
@@ -121,6 +122,15 @@ const routes: CustomRoute[] = [
 ];
 
 const Router: React.FC = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // Optionally, you can use smooth scrolling
+    });
+  }, [location]);
+
   return (
     <Routes>
       {routes.map((route, key) => (

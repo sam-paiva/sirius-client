@@ -287,6 +287,7 @@ const Form: React.FC<Props> = ({
             >
               <div className="flex flex-col items-center cursor-pointer">
                 <p>Drag and drop your Company's logo or click to select a file</p>
+                <p>Recommended size: 100px x 100px</p>
                 {companyLogo ? <p>{companyLogo.name}</p> : <p className="text-default-400">Acceptable formats: .jpg, .png, .ico, .jpeg'</p>}
                 {companyLogo && <img className="w-[100px]" src={URL.createObjectURL(companyLogo)} id="logo-content" alt="Preview" />}
               </div>

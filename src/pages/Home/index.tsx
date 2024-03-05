@@ -2,6 +2,9 @@ import { animated, useSpring } from '@react-spring/web';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../core/hooks/storeHooks';
+import GoogleIcon from '../../shared/Icons/GoogleIcon';
+import LinkedinIcon from '../../shared/Icons/LinkedinIcon';
+import MicrosoftIcon from '../../shared/Icons/MicrosoftIcon';
 import Empty from '../../shared/components/Empty';
 import JobCard from '../../shared/components/JobCard';
 import PrimaryButton from '../../shared/components/PrimaryButton';
@@ -28,7 +31,8 @@ const Home: React.FC = () => {
         style={{
           width: '100%',
           height: '500px',
-          background: 'linear-gradient(90deg, rgba(27,69,124,1) 0%, rgba(222,38,7,1) 100%)',
+          background:
+            'linear-gradient(90deg, hsla(235, 46%, 16%, 1) 13%, hsla(228, 45%, 38%, 1) 40%, hsla(218, 52%, 54%, 1) 61%, hsla(213, 79%, 72%, 1) 77%, hsla(208, 82%, 82%, 1) 88%, hsla(204, 31%, 94%, 1) 100%)',
           paddingInline: '8px'
         }}
         className="flex justify-center items-center flex-col"
@@ -49,7 +53,13 @@ const Home: React.FC = () => {
         </animated.div>
       </div>
       <div className="flex flex-col justify-center mx-auto my-0 max-w-5xl px-8 w-[100%] mt-14">
-        <h1 className="text-2xl font-bold">Recent Positions</h1>
+        <span className="text-default-500 text-center text-xl">Companies that trust on us</span>
+        <div className="flex w-full mt-8 justify-center gap-8 mb-20">
+          <GoogleIcon />
+          <MicrosoftIcon />
+          <LinkedinIcon />
+        </div>
+        <h1 className="text-2xl font-semibold">Last opened positions</h1>
         <div className="mt-10">{!isLoading && jobs && jobs?.items?.map((job, key) => <JobCard job={job} key={key} />)}</div>
         {jobs?.items.length === 0 && <Empty />}
       </div>
