@@ -1,9 +1,6 @@
 {
   "name": "sirius-client",
   "private": true,
-  "engines": {
-    "node": "18.14.0"
-  },
   "type": "module",
   "scripts": {
     "dev": "vite --port 3000",
