@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import * as authApi from '../../../infra/services/auth/authApi';
-import { getJwtToken } from '../../../infra/services/auth/authService';
+import { getJwtToken, removeToken, saveJwtTokenToLocal } from '../../../infra/services/auth/authService';
 import { CreateCompanyRequest } from '../../../infra/services/users/requests/createCompanyRequest';
 import * as usersApi from '../../../infra/services/users/userApi';
 import { showToast } from '../../../shared/utils/toast';
@@ -8,8 +8,8 @@ import { handleError } from '../errorHandler';
 
 export const logoutAction = createAsyncThunk('users/logout', async (_, thunkAPI) => {
   try {
+    removeToken();
     const response = await authApi.logout();
-
     if (response.status === 200) {
       window.location.href = '/home';
       window.location.reload();
@@ -24,6 +24,7 @@ export const logoutAction = createAsyncThunk('users/logout', async (_, thunkAPI)
 
 export const loginCallbackAction = createAsyncThunk('users/login-callback', async ({ navigate, from }: any, thunkAPI) => {
   try {
+    saveJwtTokenToLocal();
     const token = getJwtToken();
 
     if (token) {

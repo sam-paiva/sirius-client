@@ -10,7 +10,9 @@ interface UserClaims {
   email: string;
 }
 
-export const getJwtToken = () => Cookies.get('Token');
+const TOKEN = 'token';
+
+const getJwtTokenFromCookie = () => Cookies.get('Token');
 
 export const checkifUserIsAuthenticated = () => {
   const token = getJwtToken();
@@ -33,3 +35,14 @@ export const getDecodedToken = (): UserClaims | null => {
 
   return decodedToken;
 };
+
+export const saveJwtTokenToLocal = () => {
+  const token = getJwtTokenFromCookie();
+
+  if (!token) return;
+
+  localStorage.setItem(TOKEN, token);
+};
+
+export const getJwtToken = () => localStorage.getItem(TOKEN);
+export const removeToken = () => localStorage.removeItem(TOKEN);
