@@ -39,7 +39,10 @@ export const getDecodedToken = (): UserClaims | null => {
 export const saveJwtTokenToLocal = () => {
   const token = getJwtTokenFromCookie();
 
-  if (!token) return;
+  if (!token) {
+    console.log('cookie cant be accessed in the server', token);
+    return;
+  }
 
   localStorage.setItem(TOKEN, token);
 };
