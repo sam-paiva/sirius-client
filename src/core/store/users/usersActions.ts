@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import * as authApi from '../../../infra/services/auth/authApi';
-import { getDecodedToken } from '../../../infra/services/auth/authService';
+import { getJwtToken } from '../../../infra/services/auth/authService';
 import { CreateCompanyRequest } from '../../../infra/services/users/requests/createCompanyRequest';
 import * as usersApi from '../../../infra/services/users/userApi';
 import { showToast } from '../../../shared/utils/toast';
@@ -24,7 +24,7 @@ export const logoutAction = createAsyncThunk('users/logout', async (_, thunkAPI)
 
 export const loginCallbackAction = createAsyncThunk('users/login-callback', async ({ navigate, from }: any, thunkAPI) => {
   try {
-    const token = getDecodedToken();
+    const token = getJwtToken();
 
     if (token) {
       if (from && from !== '/home') navigate(from);
