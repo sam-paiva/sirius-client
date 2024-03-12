@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import * as authApi from '../../../infra/services/auth/authApi';
 import { getJwtToken, removeToken } from '../../../infra/services/auth/authService';
 import { CreateCompanyRequest } from '../../../infra/services/users/requests/createCompanyRequest';
 import * as usersApi from '../../../infra/services/users/userApi';
@@ -9,14 +8,9 @@ import { handleError } from '../errorHandler';
 export const logoutAction = createAsyncThunk('users/logout', async (_, thunkAPI) => {
   try {
     removeToken();
-    const response = await authApi.logout();
-    if (response.status === 200) {
-      window.location.href = '/home';
-      window.location.reload();
-      return response.data;
-    }
-
-    return thunkAPI.rejectWithValue({});
+    window.location.href = '/home';
+    window.location.reload();
+    return thunkAPI.fulfillWithValue({});
   } catch (error) {
     return thunkAPI.rejectWithValue({});
   }
