@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 
 interface UserClaims {
@@ -11,8 +10,6 @@ interface UserClaims {
 }
 
 const TOKEN = 'token';
-
-const getJwtTokenFromCookie = () => Cookies.get('Token');
 
 export const checkifUserIsAuthenticated = () => {
   const token = getJwtToken();
@@ -36,11 +33,9 @@ export const getDecodedToken = (): UserClaims | null => {
   return decodedToken;
 };
 
-export const saveJwtTokenToLocal = () => {
-  const token = getJwtTokenFromCookie();
-
+export const saveJwtTokenToLocal = (token: string) => {
   if (!token) {
-    console.log('cookie cant be accessed in the server', token);
+    console.log('token not found', token);
     return;
   }
 

@@ -41,7 +41,7 @@ const NavigationBar: React.FC<Props> = ({ isAuthenticated }) => {
             </NavbarItem>
             {!isAuthenticated && !isSignIn && (
               <NavbarItem className="lg:flex">
-                <Link to={`/sign-in`} state={{ from: previousLocation }}>
+                <Link className="text-default hover:text-white transition duration-300" to={`/sign-in`} state={{ from: previousLocation }}>
                   Sign In
                 </Link>
               </NavbarItem>
