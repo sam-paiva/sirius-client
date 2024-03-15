@@ -21,28 +21,30 @@ const Filters: React.FC<Props> = ({ onSubmit }) => {
   } = useForm<FilterFormValues>();
 
   return (
-    <div className="flex justify-center mx-auto my-0 max-w-5xl w-[100%] mt-14">
-      <form className="w-[100%] flex gap-1 items-center" onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          startContent={<BsSearch />}
-          {...register('searchText', { required: true, maxLength: 70 })}
-          size="lg"
-          className="w-[100%]"
-          type="text"
-          label="Search for your position"
-          placeholder="type here..."
-        />
-        <Input
-          startContent={<IoLocationOutline />}
-          isRequired={false}
-          {...register('location', { required: false })}
-          size="lg"
-          className="w-[100%]"
-          type="text"
-          label="Location"
-          placeholder="type here..."
-        />
-        <Button disabled={!isValid} type="submit" className="h-[90%] w-[20%] bg-sky-400 text-white">
+    <div className="flex justify-center mx-auto my-0 max-w-5xl w-[100%]">
+      <form className="w-[100%] flex flex-col gap-1 items-start" onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex gap-4 items-center w-full">
+          <Input
+            startContent={<BsSearch />}
+            {...register('searchText', { required: true, maxLength: 70 })}
+            size="sm"
+            className="w-[60%] rounded-full shadow-xl"
+            type="text"
+            label="Search for your position"
+            placeholder="type here..."
+          />
+          <Input
+            startContent={<IoLocationOutline />}
+            isRequired={false}
+            {...register('location', { required: false })}
+            size="sm"
+            className="w-[40%] rounded-full shadow-xl"
+            type="text"
+            label="Location"
+            placeholder="type here..."
+          />
+        </div>
+        <Button disabled={!isValid} type="submit" className="h-[30px] w-[150px] bg-cyan-500 text-white self-end mt-3 shadow-xl">
           Search
         </Button>
       </form>

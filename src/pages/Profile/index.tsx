@@ -54,7 +54,7 @@ const Profile: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center mx-auto my-0 max-w-5xl px-8 w-[100%] mt-14">
+    <div className="flex flex-col justify-center mx-auto my-0 max-w-7xl px-8 w-[100%] mt-14">
       <div className="grid grid-cols-5 gap-4 w-[100%]">
         <div className="col-span-2 overflow-hidden sticky top-[80px] max-h-[500px]">
           {buyBundlesBanner()}

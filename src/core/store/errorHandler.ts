@@ -9,6 +9,6 @@ export const handleError = (error: any, reject: (problems: Problem[]) => void) =
     return reject(problems);
   }
 
-  showToast('An unexpected error occurred during the process, please try it later', 'error');
+  showToast('An unexpected error occurred during the process, please try again later', 'error');
   return reject([]);
 };

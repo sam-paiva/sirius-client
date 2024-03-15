@@ -1,18 +1,33 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../core/hooks/storeHooks';
+import useSignalR, { METHOD_NAMES } from '../../../core/hooks/useSignalR';
 import { getJobsAction } from '../../../core/store/jobs/jobsActions';
 import { updateBundlesAfterPayment } from '../../../core/store/users/userSlice';
 import Router from '../../../infra/routes';
-import signalRService from '../../../infra/services/signalr/signalRService';
 import { showToast } from '../../utils/toast';
 import Footer from '../Footer';
 import NavigationBar from '../NavigationBar';
+
+const Initializer = () => {
+  const isAuthenticated = useAppSelector((c) => c.users.isAuthenticated);
+  return (
+    <div className="flex flex-col min-h-screen">
+      <NavigationBar isAuthenticated={isAuthenticated} />
+      <main className="min-h-[853px]">
+        <Router />
+      </main>
+      <Footer />
+    </div>
+  );
+};
 
 const MainWrapper: React.FC = () => {
   const isAuthenticated = useAppSelector((c) => c.users.isAuthenticated);
   const jobs = useAppSelector((c) => c.jobs.userJobs);
   const dispatch = useAppDispatch();
+
+  const { subscribeToHub, isConnected } = useSignalR();
 
   useEffect(() => {
     const filter = '$orderby=UserBundle/Sponsored desc, CreatedDate desc&count=true&top=30&filter=PositionFilled eq false';
@@ -20,14 +35,8 @@ const MainWrapper: React.FC = () => {
   }, [isAuthenticated, jobs]);
 
   useEffect(() => {
-    if (signalRService.isDisconnected) {
-      signalRService.startConnection();
-      signalRService.subscribeToReceiveMessage(handlePaymentProcessedMessage);
-    }
-    return () => {
-      signalRService.stopConnection();
-    };
-  }, [isAuthenticated]);
+    if (isConnected) subscribeToHub(METHOD_NAMES.sendPaymentProcessCompleted, handlePaymentProcessedMessage);
+  }, [isConnected]);
 
   const handlePaymentProcessedMessage = (message: string) => {
     showToast('Bundle Added', 'success');
@@ -36,11 +45,7 @@ const MainWrapper: React.FC = () => {
 
   return (
     <BrowserRouter>
-      <NavigationBar isAuthenticated={isAuthenticated} />
-      <main className="flex justify-start flex-col h-full">
-        <Router />
-        <Footer />
-      </main>
+      <Initializer />
     </BrowserRouter>
   );
 };

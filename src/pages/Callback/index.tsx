@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { saveJwtTokenToLocal } from '../../infra/services/auth/authService';
 import api from '../../infra/services/axios';
+import { Spinner } from '../../shared/components/Spinner';
 const Callback: React.FC = () => {
   const [searchParams, _] = useSearchParams();
   const redirectUrl = searchParams.get('returnUrl');
@@ -16,7 +17,11 @@ const Callback: React.FC = () => {
     });
   }, []);
 
-  return <div />;
+  return (
+    <>
+      <Spinner />
+    </>
+  );
 };
 
 export default Callback;

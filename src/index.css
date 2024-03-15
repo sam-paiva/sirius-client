@@ -82,11 +82,3 @@ h1 {
     background-color: #f9f9f9;
   }
 }
-
-.ql-container {
-  height: auto !important;
-  min-height: 400px;
-  color: #333;
-  font-weight: 500;
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-}

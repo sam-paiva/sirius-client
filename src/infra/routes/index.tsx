@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Callback from '../../pages/Callback';
 import Checkout from '../../pages/Checkout';
-import CheckoutSuccess from '../../pages/Checkout/CheckoutSuccess';
 import Home from '../../pages/Home';
 import PositionDetails from '../../pages/JobDetails';
 import PostJob from '../../pages/PostJob';
@@ -96,15 +95,6 @@ const routes: CustomRoute[] = [
     element: (
       <ProtectedRoute>
         <MyBundles />
-      </ProtectedRoute>
-    ),
-    children: []
-  },
-  {
-    path: '/checkout/success',
-    element: (
-      <ProtectedRoute>
-        <CheckoutSuccess />
       </ProtectedRoute>
     ),
     children: []

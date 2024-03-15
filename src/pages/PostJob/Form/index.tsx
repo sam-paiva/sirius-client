@@ -6,6 +6,7 @@ import { ContractTypes } from '../../../core/enums/contractTypes';
 import { PositionLevels } from '../../../core/enums/positionLevels';
 import { useGetCompaniesQuery } from '../../../infra/services/companies/companiesApi';
 import SubmitButton from '../../../shared/components/PrimaryButton';
+import { contractTypes, levels, salaryRanges } from '../../../shared/utils/enums';
 import { urlToFile } from '../../../shared/utils/fileUtils';
 import { isValidUrl } from '../../../shared/utils/stringUtils';
 
@@ -52,19 +53,6 @@ const Form: React.FC<Props> = ({
   isBundleSelected,
   setLogo
 }) => {
-  const contractTypes = [
-    { label: 'On Site', value: 1 },
-    { label: 'Hybrid', value: 2 },
-    { label: 'Remote', value: 3 }
-  ];
-
-  const levels = [
-    { label: 'Junior', value: 1 },
-    { label: 'Mid-Level', value: 2 },
-    { label: 'Senior', value: 3 },
-    { label: 'Principal', value: 4 }
-  ];
-
   const {
     register,
     handleSubmit,
@@ -75,7 +63,6 @@ const Form: React.FC<Props> = ({
   } = useForm<FormValues>({ mode: 'onChange' });
 
   const requiredMessage = 'Field is required';
-  const salaryRanges = ['$45000.000 - $75000.00', '$75000.000 - $95000.00', '$95000.000 - $130000.00', 'Not available'];
   const disableFormSubmit = () => {
     return Object.keys(errors).length > 0 || !quillRef.current?.value || !isDirty || !isBundleSelected;
   };
