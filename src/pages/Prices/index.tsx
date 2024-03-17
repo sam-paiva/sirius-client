@@ -5,12 +5,14 @@ import { useAppDispatch, useAppSelector } from '../../core/hooks/storeHooks';
 import { getBundlesAction } from '../../core/store/bundles/bundlesActions';
 import { selectBundleAction } from '../../core/store/checkout/checkoutSlice';
 import ContainerWrapper from '../../shared/components/ContainerWrapper';
+import PriceSkeleton from '../../shared/components/Skeletons/PriceSkeleton';
 import { formatter } from '../../shared/utils/currencyFormatter';
 import PriceCard from './PriceCard';
 
 const Prices: React.FC = () => {
   const dispatch = useAppDispatch();
   const bundles = useAppSelector((c) => c.bundles.bundles);
+  const isLoading = useAppSelector((c) => c.bundles.isLoading);
   const navigate = useNavigate();
 
   const goToCheckout = (selectedId: string) => {
@@ -114,7 +116,18 @@ const Prices: React.FC = () => {
         </span>
         <span className="text-lg text-gray-500 text-center">Please find which most fits your demand.</span>
       </div>
-      <div className="flex items-center sm:flex-col justify-around gap-6 mt-12">{displayBundles()}</div>
+
+      <div className="flex items-center sm:flex-col justify-around gap-6 mt-12">
+        {!isLoading ? (
+          displayBundles()
+        ) : (
+          <>
+            <PriceSkeleton />
+            <PriceSkeleton />
+            <PriceSkeleton />
+          </>
+        )}
+      </div>
     </ContainerWrapper>
   );
 };

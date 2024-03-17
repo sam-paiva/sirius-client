@@ -10,7 +10,7 @@ import { logoutAction } from '../../core/store/users/usersActions';
 import { getDecodedToken } from '../../infra/services/auth/authService';
 import Empty from '../../shared/components/Empty';
 import JobCard from '../../shared/components/JobCard';
-import { Spinner } from '../../shared/components/Spinner';
+import CardSkeleton from '../../shared/components/Skeletons/CardSkeleton';
 
 const Profile: React.FC = () => {
   const user = getDecodedToken()!;
@@ -104,7 +104,17 @@ const Profile: React.FC = () => {
             </CardFooter>
           </Card>
         </div>
-        <div className="col-span-3">{!isLoading ? renderJobs() : <Spinner />}</div>
+        <div className="col-span-3">
+          {!isLoading ? (
+            renderJobs()
+          ) : (
+            <div className="flex flex-col gap-8">
+              <CardSkeleton />
+              <CardSkeleton />
+              <CardSkeleton />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

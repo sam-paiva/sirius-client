@@ -8,7 +8,7 @@ import { getJobsAction } from '../../core/store/jobs/jobsActions';
 import Empty from '../../shared/components/Empty';
 import Filters from '../../shared/components/Filters';
 import JobCard from '../../shared/components/JobCard';
-import { Spinner } from '../../shared/components/Spinner';
+import CardSkeleton from '../../shared/components/Skeletons/CardSkeleton';
 import { getEnumKey } from '../../shared/utils/enumUtils';
 import { contractTypes, levels, salaryRanges } from '../../shared/utils/enums';
 
@@ -152,7 +152,13 @@ const SearchJobs: React.FC = () => {
                 <Filters register={register} />
               </div>
               {!isLoading && jobs?.items.map((job) => <JobCard job={job} key={job.id} />)}
-              {isLoading && <Spinner />}
+              {isLoading && (
+                <div className="flex flex-col gap-8">
+                  <CardSkeleton />
+                  <CardSkeleton />
+                  <CardSkeleton />
+                </div>
+              )}
               {!isLoading && jobs?.items.length === 0 && <Empty />}
             </div>
           </div>
