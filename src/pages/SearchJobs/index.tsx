@@ -1,4 +1,4 @@
-import { Button, Checkbox, CheckboxGroup, Select, SelectItem } from '@nextui-org/react';
+import { Checkbox, CheckboxGroup, Select, SelectItem } from '@nextui-org/react';
 import React, { useEffect } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { ContractTypes } from '../../core/enums/contractTypes';
@@ -54,7 +54,7 @@ const SearchJobs: React.FC = () => {
     }
 
     if (data?.budget) {
-      filter += ` and (Budget eq '${data.budget}')`;
+      filter += ` and (Budget eq '${salaryRanges[Number(data.budget)].label}')`;
     }
 
     dispatch(getJobsAction(filter));
@@ -77,33 +77,32 @@ const SearchJobs: React.FC = () => {
             <div className="bg-white p-8 w-[30%] sm:w-full h-auto shadow-md rounded-3xl flex flex-col">
               <div className="flex justify-between items-center sm:flex-col sm:items-start sm:justify-start">
                 <h3 className="font-semibold text-default-600">Advanced Search</h3>
-                <Button id="submit1" className="h-[40px] min-w-[150px] bg-cyan-900 text-white sm:mt-2 lg:self-end shadow-lg" type="submit">
-                  Apply filters
-                </Button>
               </div>
-              <span onClick={resetFilters} className="hover:border-b-1 hover:transition w-fit cursor-pointer">
-                Clear Filters
-              </span>
+              <div className="flex items-center gap-4 mt-2">
+                <span onClick={resetFilters} className="hover:border-b-1 hover:transition w-fit cursor-pointer">
+                  Clear Filters
+                </span>
+                <span onClick={handleSubmit(handleSearch)} className="hover:border-b-1 hover:transition w-fit cursor-pointer">
+                  Apply Filters
+                </span>
+              </div>
               <div className="mt-8">
                 <span className="text-cyan-900 font-semibold">Salary</span>
                 <Controller
                   name="budget"
                   control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <Select
-                      placeholder="Select the salary range"
-                      className="max-w-xs mt-2"
-                      {...field}
-                      onChange={(e) => field.onChange(salaryRanges[Number(e.target.value)])}
-                    >
-                      {salaryRanges.slice(0, -1).map((range, key) => (
-                        <SelectItem key={key} value={range}>
-                          {range}
-                        </SelectItem>
-                      ))}
-                    </Select>
-                  )}
+                  render={({ field }) => {
+                    console.log(field.value);
+                    return (
+                      <Select placeholder="Select the salary range" className="max-w-xs mt-2" {...field} selectedKeys={field.value ?? []}>
+                        {salaryRanges.slice(0, -1).map((range, key) => (
+                          <SelectItem key={key} value={range.value}>
+                            {range.label}
+                          </SelectItem>
+                        ))}
+                      </Select>
+                    );
+                  }}
                 />
               </div>
 

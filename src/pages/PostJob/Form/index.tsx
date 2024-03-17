@@ -126,8 +126,8 @@ const Form: React.FC<Props> = ({
                 errorMessage={errors.positionLevel && 'Field is required'}
               >
                 {salaryRanges.map((range, key) => (
-                  <SelectItem key={key} value={range}>
-                    {range}
+                  <SelectItem key={key} value={range.label}>
+                    {range.label}
                   </SelectItem>
                 ))}
               </Select>

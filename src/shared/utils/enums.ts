@@ -1,10 +1,10 @@
 export const salaryRanges = [
-  '$20000.000 - $45000.00',
-  '$45000.000 - $75000.00',
-  '$75000.000 - $95000.00',
-  '$95000.000 - $130000.00',
-  '$130000.000 or more',
-  'Prefer not to share'
+  { label: '$20000.000 - $45000.00', value: 1 },
+  { label: '$45000.000 - $75000.00', value: 3 },
+  { label: '$75000.000 - $95000.00', value: 4 },
+  { label: '$95000.000 - $130000.00', value: 5 },
+  { label: '$130000.000 or more', value: 6 },
+  { label: 'Prefer not to share', value: 7 }
 ];
 
 export const levels = [
