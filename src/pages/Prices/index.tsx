@@ -29,6 +29,7 @@ const Prices: React.FC = () => {
         handleSubmit={goToCheckout}
         selectedId={c.id}
         title={c.name}
+        svgIcon={c.name}
         description={getBundleDescription(c.name)}
         price={formatter.format(c.price)}
       />
@@ -54,11 +55,11 @@ const Prices: React.FC = () => {
         <ul>
           <div className="flex items-baseline">
             <BsCheck className="bg-green" />
-            <li>Post up to 1 job positions</li>
+            <li className="text-[#415A77]">Post up to 1 job positions</li>
           </div>
           <div className="flex items-baseline">
             <BsCheck className="bg-green" />
-            <li>Logo Included</li>
+            <li className="text-[#415A77]">Logo Included</li>
           </div>
         </ul>
       </>
@@ -71,11 +72,11 @@ const Prices: React.FC = () => {
         <ul>
           <div className="flex items-baseline">
             <BsCheck className="bg-green" />
-            <li>Post up to 3 job positions</li>
+            <li className="text-[#415A77]">Post up to 3 job positions</li>
           </div>
           <div className="flex items-baseline">
             <BsCheck className="bg-green" />
-            <li>Logo Included</li>
+            <li className="text-[#415A77]">Logo Included</li>
           </div>
         </ul>
       </>
@@ -88,16 +89,16 @@ const Prices: React.FC = () => {
         <ul>
           <div className="flex items-baseline">
             <BsCheck className="bg-green" />
-            <li>Post up to 5 job positions</li>
+            <li className="text-[#415A77]">Post up to 5 job positions</li>
           </div>
           <div className="flex items-baseline">
             <BsCheck className="bg-green" />
-            <li>Logo Included</li>
+            <li className="text-[#415A77]">Logo Included</li>
           </div>
 
           <div className="flex items-baseline">
             <BsCheck className="bg-green" />
-            <li className="text-center">Sponsored tag</li>
+            <li className="text-center text-[#415A77]">Sponsored tag</li>
           </div>
         </ul>
       </>
@@ -106,12 +107,14 @@ const Prices: React.FC = () => {
 
   return (
     <ContainerWrapper>
-      <div className="flex flex-col items-center w-[100%] justify-center">
-        <h1 className="font-medium">Pricing Tickets</h1>
-        <span className="mt-6 text-lg text-gray-500">After choosing one of our tickets, you can start to post job positions.</span>
-        <span className="text-lg text-gray-500">Please find which most fits your demand.</span>
+      <div className="flex flex-col items-center w-full justify-center">
+        <h1 className="font-medium text-[#415A77] text-center">Pricing Tickets</h1>
+        <span className="mt-6 text-lg text-gray-500 text-center">
+          After choosing one of our tickets, you can start to post job positions.
+        </span>
+        <span className="text-lg text-gray-500 text-center">Please find which most fits your demand.</span>
       </div>
-      <div className="flex items-center justify-around gap-6 mt-12">{displayBundles()}</div>
+      <div className="flex items-center sm:flex-col justify-around gap-6 mt-12">{displayBundles()}</div>
     </ContainerWrapper>
   );
 };

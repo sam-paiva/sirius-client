@@ -36,7 +36,7 @@ const CheckoutForm: React.FC = () => {
           {(_) => (
             <>
               <ModalBody>
-                <h1 className="text-center mt-10 text-green-500">Payment Succeeded</h1>
+                <h1 className="text-center mt-10 text-cyan-900">Payment Succeeded</h1>
                 <animated.div style={props} className={'mx-auto my-0 max-w-5xl px-8 w-[100%]'}>
                   <img src={gifSuccess} />
                 </animated.div>
@@ -87,6 +87,7 @@ const CheckoutForm: React.FC = () => {
 
     if (paymentIntent && paymentIntent.status === 'succeeded') {
       setShowSuccessDialog(true);
+      setMessage(null);
     }
 
     setIsLoading(false);
@@ -104,7 +105,7 @@ const CheckoutForm: React.FC = () => {
             <MessageBanner problems={[{ propertyName: 'card', errorMessage: message ?? '' }]} />
           </div>
         )}
-        <PaymentElement id="payment-element" options={paymentElementOptions} />
+        <PaymentElement data-locale="fr" id="payment-element" options={paymentElementOptions} />
 
         <div className="mt-10">
           <PrimaryButton isLoading={isLoading} type="submit" disabled={!stripe || !elements}>

@@ -4,4 +4,5 @@ export interface Bundle {
   price: number;
   active: boolean;
   sponsored: boolean;
+  positionsCreation: number;
 }

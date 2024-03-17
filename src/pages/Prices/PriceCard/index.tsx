@@ -1,5 +1,8 @@
 import { Button, Card, CardBody, CardFooter, CardHeader } from '@nextui-org/react';
 import { ReactNode } from 'react';
+import goldenSvg from '../../../assets/golden.svg';
+import premiumSvg from '../../../assets/premium.svg';
+import silverSvg from '../../../assets/silver.svg';
 
 interface Props {
   title: string;
@@ -7,18 +10,35 @@ interface Props {
   price: string;
   selectedId: string;
   handleSubmit: (selectedId: string) => void;
+  svgIcon: 'Silver' | 'Gold' | 'Premium' | string;
 }
 
 const PriceCard: React.FC<Props> = (props) => {
+  const getIcon = () => {
+    switch (props.svgIcon) {
+      case 'Silver':
+        return silverSvg;
+      case 'Gold':
+        return goldenSvg;
+      case 'Premium':
+        return premiumSvg;
+      default:
+        break;
+    }
+  };
+
   return (
-    <Card className="h-[300px] w-[500px] border transition ease-in-out delay-80 hover:border-sky-500 duration-300">
+    <Card className="h-[400px] w-80 border transition ease-in-out delay-80 hover:border-cyan-500 duration-300">
       <CardHeader className="flex flex-col items-center min-h-[100px]">
-        <h1 className="text-2xl font-semibold">{props.title}</h1>
-        {props.price && <span>{props.price}</span>}
+        <div className="flex items-center justify-center gap-2 text-[#6787AD]">
+          <img src={getIcon()} width={20} />
+          <h1 className="text-2xl font-semibold">{props.title}</h1>
+        </div>
+        {props.price && <span className="text-[#6787AD]">{props.price}</span>}
       </CardHeader>
-      <CardBody className="text-gray-600">{props.description}</CardBody>
+      <CardBody className="text-gray-600 flex justify-center items-center">{props.description}</CardBody>
       <CardFooter>
-        <Button onClick={() => props.handleSubmit(props.selectedId)} className="bg-sky-500 text-white w-[100%] text-xl">
+        <Button onClick={() => props.handleSubmit(props.selectedId)} className="bg-cyan-900 text-white w-[100%] h-[50px] text-xl">
           Buy now
         </Button>
       </CardFooter>
