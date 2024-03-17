@@ -14,6 +14,7 @@ import { getUserBundlesAction } from '../../core/store/users/usersActions';
 import { AddJobRequest } from '../../infra/services/jobs/requests/addJobRequest';
 import MessageBanner from '../../shared/components/MessageBanner';
 import { Spinner } from '../../shared/components/Spinner';
+import { formatter } from '../../shared/utils/currencyFormatter';
 import { isValidUUID } from '../../shared/utils/stringUtils';
 import { showToast } from '../../shared/utils/toast';
 import Form, { FormValues } from './Form';
@@ -42,13 +43,11 @@ const PostJob: React.FC = () => {
     e.preventDefault();
 
     if (e.dataTransfer.items) {
-      // Use DataTransferItemList interface to access the file(s)
       for (let i = 0; i < e.dataTransfer.items.length; i++) {
         const file = e.dataTransfer.items[i].getAsFile();
         processFile(file);
       }
     } else {
-      // Use DataTransfer interface to access the file(s)
       for (let i = 0; i < e.dataTransfer.files.length; i++) {
         const file = e.dataTransfer.files[i];
         processFile(file);
@@ -92,6 +91,14 @@ const PostJob: React.FC = () => {
   const handlePreSaveJob = (data: FormValues) => {
     if (!description) showToast("Job description can't be blank", 'warning');
     if (!selectedBundle) showToast('Please select a bundle to complete the operation', 'warning');
+
+    if (Array.isArray(data.budget)) {
+      const value1 = formatter.format(data.budget[0]);
+      const value2 = formatter.format(data.budget[1]);
+
+      const budget = `${value1} - ${value2}`;
+      data.budget = budget;
+    }
 
     const job: PreSavedJob = {
       title: data.title,

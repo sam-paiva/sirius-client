@@ -67,6 +67,7 @@ const Form: React.FC<Props> = ({
     return Object.keys(errors).length > 0 || !quillRef.current?.value || !isDirty || !isBundleSelected;
   };
   const [selectedFile, _] = useState<File | null>(null);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const companyNameField = watch('companyName');
   const { data, isLoading } = useGetCompaniesQuery(`$filter=contains(toLower(Name), '${companyNameField?.toLowerCase()}')&$top=10`, {
