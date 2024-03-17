@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../core/hooks/storeHooks';
+import useContentLoader from '../../../core/hooks/useContentLoader';
 import useSignalR, { METHOD_NAMES } from '../../../core/hooks/useSignalR';
 import { getJobsAction } from '../../../core/store/jobs/jobsActions';
 import { updateBundlesAfterPayment } from '../../../core/store/users/userSlice';
@@ -26,6 +27,7 @@ const MainWrapper: React.FC = () => {
   const isAuthenticated = useAppSelector((c) => c.users.isAuthenticated);
   const jobs = useAppSelector((c) => c.jobs.userJobs);
   const dispatch = useAppDispatch();
+  const isLoaded = useContentLoader();
 
   const { subscribeToHub, isConnected } = useSignalR();
 
@@ -43,11 +45,7 @@ const MainWrapper: React.FC = () => {
     dispatch(updateBundlesAfterPayment(JSON.parse(message)));
   };
 
-  return (
-    <BrowserRouter>
-      <Initializer />
-    </BrowserRouter>
-  );
+  return <BrowserRouter>{isLoaded && <Initializer />}</BrowserRouter>;
 };
 
 export default MainWrapper;
