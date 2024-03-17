@@ -86,12 +86,6 @@ const Profile: React.FC = () => {
                     Buy Bundle
                   </Link>
                 </div>
-                {/* <div className="flex w-[100%] items-center">
-                  <BsTools />
-                  <Link to={'/profile/bundles'} className={linkClass}>
-                    Settings
-                  </Link>
-                </div> */}
               </div>
             </CardBody>
             <CardFooter>

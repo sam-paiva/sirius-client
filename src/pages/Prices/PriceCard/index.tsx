@@ -38,7 +38,7 @@ const PriceCard: React.FC<Props> = (props) => {
       </CardHeader>
       <CardBody className="text-gray-600 flex justify-center items-center">{props.description}</CardBody>
       <CardFooter>
-        <Button onClick={() => props.handleSubmit(props.selectedId)} className="bg-cyan-900 text-white w-[100%] h-[50px] text-xl">
+        <Button onClick={() => props.handleSubmit(props.selectedId)} className="bg-[#6787AD] text-white w-[100%] h-[50px] text-xl">
           Buy now
         </Button>
       </CardFooter>

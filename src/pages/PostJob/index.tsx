@@ -14,7 +14,7 @@ import { getUserBundlesAction } from '../../core/store/users/usersActions';
 import { AddJobRequest } from '../../infra/services/jobs/requests/addJobRequest';
 import MessageBanner from '../../shared/components/MessageBanner';
 import { Spinner } from '../../shared/components/Spinner';
-import { formatter } from '../../shared/utils/currencyFormatter';
+import { salaryRanges } from '../../shared/utils/enums';
 import { isValidUUID } from '../../shared/utils/stringUtils';
 import { showToast } from '../../shared/utils/toast';
 import Form, { FormValues } from './Form';
@@ -92,18 +92,10 @@ const PostJob: React.FC = () => {
     if (!description) showToast("Job description can't be blank", 'warning');
     if (!selectedBundle) showToast('Please select a bundle to complete the operation', 'warning');
 
-    if (Array.isArray(data.budget)) {
-      const value1 = formatter.format(data.budget[0]);
-      const value2 = formatter.format(data.budget[1]);
-
-      const budget = `${value1} - ${value2}`;
-      data.budget = budget;
-    }
-
     const job: PreSavedJob = {
       title: data.title,
       description: getHtml()!,
-      budget: data.budget,
+      budget: salaryRanges[Number(data.budget)].label,
       companyName: data.companyName,
       contractType: Number(data.contractType) as ContractTypes,
       positionLevels: Number(data.positionLevel) as PositionLevels,

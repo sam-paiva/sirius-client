@@ -92,7 +92,6 @@ const SearchJobs: React.FC = () => {
                   name="budget"
                   control={control}
                   render={({ field }) => {
-                    console.log(field.value);
                     return (
                       <Select placeholder="Select the salary range" className="max-w-xs mt-2" {...field} selectedKeys={field.value ?? []}>
                         {salaryRanges.slice(0, -1).map((range, key) => (

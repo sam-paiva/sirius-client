@@ -16,7 +16,7 @@ const PrimaryButton: React.FC<Props> = ({ children, onClick, disabled, type, isL
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className="text-md bg-cyan-900 text-white rounded-md shadow-2xl min-w-[200px]"
+      className="text-md bg-[#6787AD] text-white rounded-md shadow-2xl min-w-[200px] w-auto"
     >
       {children}
     </Button>

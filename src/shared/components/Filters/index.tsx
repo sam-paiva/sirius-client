@@ -35,7 +35,7 @@ const Filters: React.FC<Props> = ({ register }) => {
           placeholder="type here..."
         />
       </div>
-      <Button id="submit2" type="submit" className="h-[40px] w-[150px] bg-cyan-900 text-white self-end mt-3 shadow-xl">
+      <Button type="submit" className="h-[40px] w-[150px] bg-[#6787AD] text-white self-end mt-3 shadow-xl">
         Search
       </Button>
     </div>

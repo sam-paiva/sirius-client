@@ -29,7 +29,7 @@ const MainWrapper: React.FC = () => {
   const dispatch = useAppDispatch();
   const isLoaded = useContentLoader();
 
-  const { subscribeToHub, isConnected } = useSignalR();
+  const { subscribeToHub } = useSignalR();
 
   useEffect(() => {
     const filter = '$orderby=UserBundle/Sponsored desc, CreatedDate desc&count=true&top=30&filter=PositionFilled eq false';
@@ -37,8 +37,8 @@ const MainWrapper: React.FC = () => {
   }, [isAuthenticated, jobs]);
 
   useEffect(() => {
-    if (isConnected) subscribeToHub(METHOD_NAMES.sendPaymentProcessCompleted, handlePaymentProcessedMessage);
-  }, [isConnected]);
+    subscribeToHub(METHOD_NAMES.sendPaymentProcessCompleted, handlePaymentProcessedMessage);
+  }, []);
 
   const handlePaymentProcessedMessage = (message: string) => {
     showToast('Bundle Added', 'success');

@@ -116,13 +116,13 @@ const Form: React.FC<Props> = ({
             name="budget"
             control={control}
             rules={{ required: true }} // Add your validation rules here
-            render={({ field: { onChange, onBlur } }) => (
+            render={({ field }) => (
               <Select
                 isRequired
+                {...field}
                 placeholder="Select the salary range"
                 className="max-w-xs"
-                onBlur={onBlur}
-                onChange={(e) => onChange(salaryRanges[Number(e.target.value)])}
+                selectedKeys={field.value ?? []}
                 errorMessage={errors.positionLevel && 'Field is required'}
               >
                 {salaryRanges.map((range, key) => (

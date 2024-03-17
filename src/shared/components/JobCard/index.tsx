@@ -16,8 +16,8 @@ interface Props {
 const JobCard: React.FC<Props> = ({ job }) => {
   const navigate = useNavigate();
   return (
-    <Card className="mb-2 h-auto rounded-xl shadow-sm">
-      <CardHeader className={`flex gap-3  bg-cyan-900 rounded-xl`}>
+    <Card className="mb-8 h-auto rounded-xl shadow-sm">
+      <CardHeader className={`flex gap-3  bg-[#415A77] rounded-xl`}>
         <div className="flex flex-col gap-2 w-full rounded-xl">
           <div className="flex justify-between w-full rounded-xl">
             <div className="flex justify-between w-full rounded-xl">
