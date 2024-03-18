@@ -1,4 +1,5 @@
 import * as signalR from '@microsoft/signalr';
+import { getJwtToken } from '../auth/authService';
 
 class SignalRService {
   private hubConnection: signalR.HubConnection | null = null;
@@ -7,7 +8,7 @@ class SignalRService {
   startConnection = () => {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withAutomaticReconnect()
-      .withUrl(import.meta.env.VITE_SIGNALR_ENDPOINT, {})
+      .withUrl(import.meta.env.VITE_SIGNALR_ENDPOINT, { accessTokenFactory: () => getJwtToken() ?? '' })
       .build();
 
     this.hubConnection

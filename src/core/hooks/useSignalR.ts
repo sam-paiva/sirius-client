@@ -1,5 +1,6 @@
 import * as signalR from '@microsoft/signalr';
 import { useEffect, useRef, useState } from 'react';
+import { getJwtToken } from '../../infra/services/auth/authService';
 
 export const METHOD_NAMES = {
   sendPaymentProcessCompleted: 'SendPaymentProcessCompleted'
@@ -13,7 +14,7 @@ const useSignalR = () => {
   const hubUrl = import.meta.env.VITE_SIGNALR_ENDPOINT;
 
   useEffect(() => {
-    connectionRef.current = new signalR.HubConnectionBuilder().withUrl(hubUrl).build();
+    connectionRef.current = new signalR.HubConnectionBuilder().withUrl(hubUrl, { accessTokenFactory: () => getJwtToken()! }).build();
 
     connectionRef.current
       .start()

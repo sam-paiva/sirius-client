@@ -1,10 +1,11 @@
-import { Button, Card, CardBody, CardFooter, CardHeader, Divider } from '@nextui-org/react';
+import { Button, Card, CardBody, CardFooter, CardHeader, Divider, Pagination } from '@nextui-org/react';
 import React, { useEffect } from 'react';
 import { BsCurrencyEuro, BsTicket } from 'react-icons/bs';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { LiaPlusCircleSolid } from 'react-icons/lia';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../core/hooks/storeHooks';
+import { usePagination } from '../../core/hooks/usePagination';
 import { getJobsByUserAction, updatePositionFilledAction } from '../../core/store/jobs/jobsActions';
 import { logoutAction } from '../../core/store/users/usersActions';
 import { getDecodedToken } from '../../infra/services/auth/authService';
@@ -20,11 +21,12 @@ const Profile: React.FC = () => {
   const isLoading = useAppSelector((c) => c.jobs.isLoading);
   const userBundles = useAppSelector((c) => c.users.userBundles);
   const linkClass = 'cursor-pointer text-md text-black font-light p-1';
+  const { page, setPage, limit } = usePagination(20);
 
   useEffect(() => {
-    const filter = `$orderby=PositionFilled asc,CreatedDate desc&$count=true`;
+    const filter = `$orderby=PositionFilled asc,CreatedDate desc&$count=true&$top=${limit}&$skip=${(page - 1) * limit}`;
     dispatch(getJobsByUserAction(filter));
-  }, []);
+  }, [page]);
 
   const handleDisableJob = (jobId: string) => {
     dispatch(updatePositionFilledAction(jobId));
@@ -33,7 +35,23 @@ const Profile: React.FC = () => {
   const renderJobs = () => {
     if (userJobs?.items.length == 0) return <Empty />;
 
-    return userJobs?.items.map((job, key) => <JobCard key={key} job={job} onSwitch={handleDisableJob} />);
+    return (
+      <>
+        {userJobs?.items.map((job, key) => (
+          <JobCard key={key} job={job} onSwitch={handleDisableJob} />
+        ))}
+        {userJobs?.total! > 0 && Math.ceil(userJobs?.total! / limit) !== 1 && (
+          <Pagination
+            isDisabled={Math.ceil(userJobs?.total! / limit) === 1}
+            color="primary"
+            page={page}
+            total={Math.ceil(userJobs?.total! / limit)}
+            onChange={(page) => setPage(page)}
+            isCompact={false}
+          />
+        )}
+      </>
+    );
   };
 
   const buyBundlesBanner = () => {

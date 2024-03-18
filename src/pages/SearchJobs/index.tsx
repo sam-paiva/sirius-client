@@ -1,9 +1,10 @@
-import { Checkbox, CheckboxGroup, Select, SelectItem } from '@nextui-org/react';
+import { Checkbox, CheckboxGroup, Pagination, Select, SelectItem } from '@nextui-org/react';
 import React, { useEffect } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { ContractTypes } from '../../core/enums/contractTypes';
 import { PositionLevels } from '../../core/enums/positionLevels';
 import { useAppDispatch, useAppSelector } from '../../core/hooks/storeHooks';
+import { usePagination } from '../../core/hooks/usePagination';
 import { getJobsAction } from '../../core/store/jobs/jobsActions';
 import Empty from '../../shared/components/Empty';
 import Filters from '../../shared/components/Filters';
@@ -25,11 +26,14 @@ const SearchJobs: React.FC = () => {
   const isLoading = useAppSelector((c) => c.jobs.isLoading);
   const dispatch = useAppDispatch();
   const { register, handleSubmit, control, reset } = useForm<FiltersFormValues>();
+  const { page, setPage, limit } = usePagination(20);
 
   useEffect(() => {
-    const filter = '$orderby=UserBundle/Sponsored desc, CreatedDate desc&count=true&top=30&$filter=PositionFilled eq false';
+    const filter = `$orderby=UserBundle/Sponsored desc, CreatedDate desc&count=true&$top=${limit}&$skip=${
+      (page - 1) * limit
+    }&$filter=PositionFilled eq false`;
     dispatch(getJobsAction(filter));
-  }, []);
+  }, [page]);
 
   const handleSearch: SubmitHandler<FiltersFormValues> = (data, event) => {
     event?.preventDefault();
@@ -65,6 +69,26 @@ const SearchJobs: React.FC = () => {
     handleSubmit(handleSearch);
   };
 
+  const displayJobs = () => {
+    return (
+      <>
+        {jobs?.items.map((job) => (
+          <JobCard job={job} key={job.id} />
+        ))}
+        {jobs?.total! > 0 && Math.ceil(jobs?.total! / limit) !== 1 && (
+          <Pagination
+            isDisabled={Math.ceil(jobs?.total! / limit) === 1}
+            color="primary"
+            page={page}
+            total={Math.ceil(jobs?.total! / limit)}
+            onChange={(page) => setPage(page)}
+            isCompact={false}
+          />
+        )}
+      </>
+    );
+  };
+
   return (
     <>
       <div className="flex flex-col gap-10 justify-between mx-auto max-w-7xl px-8 h-full w-[100%] mt-12">
@@ -74,7 +98,7 @@ const SearchJobs: React.FC = () => {
         </div>
         <form onSubmit={handleSubmit(handleSearch)}>
           <div className="flex gap-20 sm:flex-col w-full">
-            <div className="bg-white p-8 w-[30%] sm:w-full h-auto shadow-md rounded-3xl flex flex-col">
+            <div className="bg-white p-8 w-[30%] sm:w-full h-auto shadow-md rounded-3xl flex flex-col top-12">
               <div className="flex justify-between items-center sm:flex-col sm:items-start sm:justify-start">
                 <h3 className="font-semibold text-default-600">Advanced Search</h3>
               </div>
@@ -150,7 +174,7 @@ const SearchJobs: React.FC = () => {
               <div className="mb-12">
                 <Filters register={register} />
               </div>
-              {!isLoading && jobs?.items.map((job) => <JobCard job={job} key={job.id} />)}
+              {!isLoading && displayJobs()}
               {isLoading && (
                 <div className="flex flex-col gap-8">
                   <CardSkeleton />
