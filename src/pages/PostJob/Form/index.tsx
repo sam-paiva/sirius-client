@@ -266,20 +266,20 @@ const Form: React.FC<Props> = ({
             placeholder="Example: https://youwebsite.com/your-position"
           />
 
-          <div className="flex flex-col w-full mb-12">
-            <h2 className="mb-8 mt-10">Job Description*</h2>
+          <div className="flex flex-col max-h-[300px] w-full gap-6">
+            <h2 className="mt-10 text-[#415A77]">Job Description*</h2>
+            <ReactQuill
+              modules={modules}
+              formats={formats}
+              className="max-h-[300px] h-[300px] sm:h-[120px] text-default-800 font-normal text-lg"
+              ref={quillRef}
+              placeholder="place your description here"
+              theme="snow"
+              onChange={(e) => setDescription(e)}
+            />
           </div>
-          <ReactQuill
-            modules={modules}
-            formats={formats}
-            className="h-auto text-default-800 font-normal text-lg"
-            ref={quillRef}
-            placeholder="place your description here"
-            theme="snow"
-            onChange={(e) => setDescription(e)}
-          />
-          <div className="flex flex-col w-full mt-16 gap-3">
-            <h2>Company Details</h2>
+          <div className="flex flex-col w-full mt-40 gap-6">
+            <h2 className="text-[#415A77]">Company Details</h2>
             <Controller
               name="companyName"
               control={control}
@@ -326,10 +326,14 @@ const Form: React.FC<Props> = ({
               onDrop={handleDrop}
               onDragOver={onDragOver}
             >
-              <div className="flex flex-col items-center cursor-pointer">
-                <p>Drag and drop your Company's logo or click to select a file</p>
-                <p>Recommended size: 100px x 100px</p>
-                {companyLogo ? <p>{companyLogo.name}</p> : <p className="text-default-400">Acceptable formats: .jpg, .png, .ico, .jpeg'</p>}
+              <div className="flex flex-col items-center justify-center cursor-pointer p-4">
+                <p className="text-center">Drag and drop your Company's logo or click to select a file</p>
+                <p className="text-center">Recommended size: 100px x 100px</p>
+                {companyLogo ? (
+                  <p className="text-center">{companyLogo.name}</p>
+                ) : (
+                  <p className="text-default-400 text-center">Acceptable formats: .jpg, .png, .ico, .jpeg'</p>
+                )}
                 {companyLogo && <img className="w-[100px] mt-5" src={URL.createObjectURL(companyLogo)} id="logo-content" alt="Preview" />}
               </div>
             </div>
