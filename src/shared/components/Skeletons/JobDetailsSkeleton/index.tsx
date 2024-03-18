@@ -22,7 +22,7 @@ const JobDetailsSkeleton: React.FC = () => {
       <div className="bg-white p-12 rounded-md shadow-sm mb-10 w-[100%] flex-wrap">
         <div className="flex justify-between">
           <div>{displayHeaderLines()}</div>
-          <div>
+          <div className="sm:hidden">
             <Skeleton isLoaded={false} className="flex rounded-full w-36 h-36" />
           </div>
         </div>

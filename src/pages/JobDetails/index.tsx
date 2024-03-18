@@ -38,7 +38,7 @@ const JobDetails = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center mx-auto my-0 max-w-7xl px-8 w-[100%] mt-14 border-gray-300 rounded">
+    <div className="flex flex-col justify-center mx-auto my-0 max-w-7xl px-8 sm:px-1 w-[100%] mt-14 border-gray-300 rounded">
       {!loading && job ? (
         <div className="bg-white p-12 rounded-md shadow-sm mb-10 w-[100%] flex-wrap">
           <div className="flex justify-between items-start">
@@ -66,7 +66,7 @@ const JobDetails = () => {
               </div>
             </div>
 
-            <div>
+            <div className="sm:hidden">
               <Avatar src={job.company.logoUrl} className="bg-gray-100 w-[150px] h-[150px]" />
             </div>
           </div>
@@ -82,7 +82,7 @@ const JobDetails = () => {
             <div className="w-[100%] overflow-ellipsis max-w-full" dangerouslySetInnerHTML={{ __html: job!.description }} />
           </div>
 
-          <div className="mt-10 flex justify-end">
+          <div className="mt-10 flex justify-end sm:justify-center">
             <PrimaryButton onClick={handleButtonClick}>{getApplyButtonText()}</PrimaryButton>
           </div>
           {/* <ApplyModal show={showApplyModal} onClose={() => setShowApplyModal(false)} onApply={handleApply} job={job} /> */}
