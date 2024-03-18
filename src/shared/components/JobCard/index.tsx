@@ -1,4 +1,4 @@
-import { Avatar, Card, CardBody, CardHeader, Divider } from '@nextui-org/react';
+import { Avatar, Button, Card, CardBody, CardHeader, Divider } from '@nextui-org/react';
 import moment from 'moment';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -13,11 +13,11 @@ interface Props {
   onSwitch?: (jobId: string) => void;
 }
 
-const JobCard: React.FC<Props> = ({ job }) => {
+const JobCard: React.FC<Props> = ({ job, onSwitch }) => {
   const navigate = useNavigate();
   return (
     <Card className="mb-8 h-auto rounded-xl shadow-sm">
-      <CardHeader className={`flex gap-3  bg-[#415A77] rounded-xl`}>
+      <CardHeader className={`flex gap-3 ${job.positionFilled ? 'bg-[#D2D0D0]' : 'bg-[#415A77]'} rounded-xl`}>
         <div className="flex flex-col gap-2 w-full rounded-xl">
           <div className="flex justify-between w-full rounded-xl">
             <div className="flex justify-between w-full rounded-xl">
@@ -30,7 +30,13 @@ const JobCard: React.FC<Props> = ({ job }) => {
               </div>
               <div className="flex gap-1 rounded-xl">
                 <Badge fontColor="text-default-500 text-center" color="bg-white" content={moment(job.createdDate).fromNow()} />
-                {job.userBundle.sponsored && <Badge color="bg-orange-400 text-center" content={'Sponsored'} />}
+                {job.userBundle.sponsored && <Badge color="bg-orange-400 text-center" content={'Promoted'} />}
+                {job.positionFilled && <Badge color="bg-red-400 text-center" content={'Fulfilled'} />}
+                {onSwitch && !job.positionFilled && (
+                  <Button className="rounded-3xl bg-cyan-900 text-white" onClick={() => onSwitch(job.id)}>
+                    Fullfill
+                  </Button>
+                )}
               </div>
             </div>
           </div>
@@ -39,7 +45,8 @@ const JobCard: React.FC<Props> = ({ job }) => {
       <Divider />
       <CardBody className="rounded-xl">
         <div className="flex items-start w-[100%] gap-3">
-          <div className="flex items-center gap-1">
+          <div className="flex flex-col items-start gap-1">
+            <span className="text-[#415A77]">{job.budget}</span>
             <span className="text-default-800">{job.company.name}</span>
           </div>
         </div>
@@ -52,7 +59,6 @@ const JobCard: React.FC<Props> = ({ job }) => {
           <div className="bg-[#6787AD] max-w-[100px text-tiny text-default rounded-3xl px-2 py-1 m-1">
             {getEnumKey(ContractTypes, job.contractType)}
           </div>
-          <div className="bg-[#6787AD] max-w-[100px text-tiny text-default rounded-3xl px-2 py-1 m-1 sm:hidden">{job.budget}</div>
         </div>
       </CardBody>
       <Divider />

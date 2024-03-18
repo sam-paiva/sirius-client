@@ -22,7 +22,7 @@ const Profile: React.FC = () => {
   const linkClass = 'cursor-pointer text-md text-black font-light p-1';
 
   useEffect(() => {
-    const filter = `$orderby=CreatedDate desc&$count=true`;
+    const filter = `$orderby=PositionFilled asc,CreatedDate desc&$count=true`;
     dispatch(getJobsByUserAction(filter));
   }, []);
 
@@ -62,7 +62,6 @@ const Profile: React.FC = () => {
             <CardHeader className="flex gap-3 items-centers justify-start">
               <div className="flex flex-col items-start justify-start">
                 <p className="text-md text-default-500">{`${user.unique_name}`}</p>
-                {/* <p className="text-md text-default-500">{`${user.email}`}</p> */}
               </div>
             </CardHeader>
             <Divider />

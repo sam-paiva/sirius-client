@@ -25,7 +25,7 @@ const NavigationBar: React.FC<Props> = ({ isAuthenticated }) => {
             <Image onClick={() => navigate('/home')} alt="logo" src={logo} width={180} className="mt-2 cursor-pointer" />
           </NavbarBrand>
           <NavbarContent className="sm:flex gap-4" justify="center"></NavbarContent>
-          <NavbarContent justify="end" className="gap-8">
+          <NavbarContent justify="end" className="gap-20 sm:gap-4">
             <NavbarItem className="lg:flex">
               <Link className={linkClass} to={`/search-jobs`} state={{ from: previousLocation }}>
                 Search
