@@ -64,7 +64,7 @@ const Form: React.FC<Props> = ({
 
   const requiredMessage = 'Field is required';
   const disableFormSubmit = () => {
-    return Object.keys(errors).length > 0 || !quillRef.current?.value || !isDirty || !isBundleSelected;
+    return Object.keys(errors).length > 0 || !quillRef.current?.value || !isDirty || !isBundleSelected || !companyLogo;
   };
   const [selectedFile, _] = useState<File | null>(null);
 
@@ -74,12 +74,54 @@ const Form: React.FC<Props> = ({
     skip: !companyNameField
   });
 
-  const setCompanyAfterSelection = (value: string) => {
-    const company = data?.find((c) => c.id === value);
-    if (company) {
-      setValue('companyWebsite', company?.websiteUrl!, { shouldDirty: true, shouldValidate: true, shouldTouch: true });
-      urlToFile(company.logoUrl, setLogo);
-      onSelectCompanyId(value.toString());
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+      ['blockquote'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
+      [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
+      [{ direction: 'rtl' }], // text direction
+
+      // Add color options to the toolbar
+      [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+      [{ font: [] }],
+      [{ align: [] }],
+      ['link', 'image'],
+      ['clean'] // remove formatting button
+    ]
+  };
+
+  const formats = [
+    'header',
+    'font',
+    'size',
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    'blockquote',
+    'list',
+    'bullet',
+    'indent',
+    'link',
+    'image',
+    'color',
+    'background',
+    'align',
+    'script',
+    'direction'
+  ];
+
+  const setCompanyAfterSelection = (value: string | null) => {
+    if (value) {
+      const company = data?.find((c) => c.id === value);
+      if (company) {
+        setValue('companyWebsite', company?.websiteUrl!, { shouldDirty: true, shouldValidate: true, shouldTouch: true });
+        urlToFile(company.logoUrl, setLogo);
+        onSelectCompanyId(value.toString());
+      }
     }
   };
 
@@ -101,7 +143,7 @@ const Form: React.FC<Props> = ({
   return (
     <>
       <form onKeyDown={handleKeyDown} className="mt-12" onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+        <div className="flex w-full flex-wrap gap-4">
           <Input
             isRequired
             isInvalid={errors.title?.message ? true : false}
@@ -115,15 +157,16 @@ const Form: React.FC<Props> = ({
           <Controller
             name="budget"
             control={control}
-            rules={{ required: true }} // Add your validation rules here
+            rules={{ required: requiredMessage }} // Add your validation rules here
             render={({ field }) => (
               <Select
-                isRequired
+                isRequired={true}
+                isInvalid={errors.budget?.message ? true : false}
                 {...field}
                 placeholder="Select the salary range"
                 className="max-w-xs"
                 selectedKeys={field.value ?? []}
-                errorMessage={errors.positionLevel && 'Field is required'}
+                errorMessage={errors.budget?.message}
               >
                 {salaryRanges.map((range, key) => (
                   <SelectItem key={key} value={range.label}>
@@ -137,15 +180,16 @@ const Form: React.FC<Props> = ({
           <Controller
             name="contractType"
             control={control}
-            rules={{ required: true }} // Add your validation rules here
+            rules={{ required: requiredMessage }} // Add your validation rules here
             render={({ field: { onChange, onBlur, value } }) => (
               <Select
                 isRequired
+                isInvalid={errors.contractType?.message ? true : false}
                 placeholder="Select the contract type"
                 className="max-w-xs"
                 onBlur={onBlur}
                 onChange={onChange}
-                errorMessage={errors.contractType && 'Field is required'}
+                errorMessage={errors.contractType?.message}
                 selectedKeys={value ? [value] : []}
               >
                 {contractTypes.map((contract) => (
@@ -159,15 +203,16 @@ const Form: React.FC<Props> = ({
           <Controller
             name="positionLevel"
             control={control}
-            rules={{ required: true }} // Add your validation rules here
+            rules={{ required: requiredMessage }} // Add your validation rules here
             render={({ field: { onChange, onBlur, value } }) => (
               <Select
                 isRequired
+                isInvalid={errors.positionLevel?.message ? true : false}
                 placeholder="Select a position level"
                 className="max-w-xs"
                 onBlur={onBlur}
                 onChange={onChange}
-                errorMessage={errors.positionLevel && 'Field is required'}
+                errorMessage={errors.positionLevel?.message}
                 selectedKeys={value ? [value] : []}
               >
                 {levels.map((level) => (
@@ -221,23 +266,31 @@ const Form: React.FC<Props> = ({
             placeholder="Example: https://youwebsite.com/your-position"
           />
 
-          <div className="group flex flex-col w-full">
+          <div className="flex flex-col w-full mb-12">
             <h2 className="mb-8 mt-10">Job Description*</h2>
-            <ReactQuill ref={quillRef} placeholder="place your description here" theme="snow" onChange={(e) => setDescription(e)} />
           </div>
-
-          <div className="group flex flex-col w-full gap-3">
-            <h2 className="mb-8 mt-10">Company Details</h2>
+          <ReactQuill
+            modules={modules}
+            formats={formats}
+            className="h-auto text-default-800 font-normal text-lg"
+            ref={quillRef}
+            placeholder="place your description here"
+            theme="snow"
+            onChange={(e) => setDescription(e)}
+          />
+          <div className="flex flex-col w-full mt-16 gap-3">
+            <h2>Company Details</h2>
             <Controller
               name="companyName"
               control={control}
-              rules={{ required: true }}
+              rules={{ required: requiredMessage }}
               render={({ field: { onChange } }) => (
                 <Autocomplete
                   allowsCustomValue
                   isRequired
+                  isInvalid={errors.companyName?.message ? true : false}
                   onKeyDown={(e: any) => e.continuePropagation()}
-                  onSelectionChange={(value) => setCompanyAfterSelection(value.toString())}
+                  onSelectionChange={(value) => setCompanyAfterSelection(value?.toString())}
                   onInputChange={onChange}
                   isLoading={isLoading}
                   label="Company Name"
@@ -251,7 +304,7 @@ const Form: React.FC<Props> = ({
 
             <Input
               isRequired
-              isInvalid={errors.companyName?.message ? true : false}
+              isInvalid={errors.companyWebsite?.message ? true : false}
               {...register('companyWebsite', { required: true, validate: (value) => isValidUrl(value) || 'Enter a valid URL' })}
               type="text"
               label="Company Website"
@@ -277,7 +330,7 @@ const Form: React.FC<Props> = ({
                 <p>Drag and drop your Company's logo or click to select a file</p>
                 <p>Recommended size: 100px x 100px</p>
                 {companyLogo ? <p>{companyLogo.name}</p> : <p className="text-default-400">Acceptable formats: .jpg, .png, .ico, .jpeg'</p>}
-                {companyLogo && <img className="w-[100px]" src={URL.createObjectURL(companyLogo)} id="logo-content" alt="Preview" />}
+                {companyLogo && <img className="w-[100px] mt-5" src={URL.createObjectURL(companyLogo)} id="logo-content" alt="Preview" />}
               </div>
             </div>
           </div>

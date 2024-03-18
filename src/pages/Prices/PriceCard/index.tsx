@@ -30,9 +30,9 @@ const PriceCard: React.FC<Props> = (props) => {
   return (
     <Card className="h-[400px] w-80 border transition ease-in-out delay-80 hover:border-cyan-500 duration-300">
       <CardHeader className="flex flex-col items-center min-h-[100px]">
-        <div className="flex items-center justify-center gap-2 text-[#6787AD]">
-          <img src={getIcon()} width={20} />
-          <h1 className="text-2xl font-semibold">{props.title}</h1>
+        <div className="flex items-center justify-center text-[#6787AD]">
+          <img className="mr-1" src={getIcon()} width={20} />
+          <h1 className="text-2xl font-semibold text-center mr-6">{props.title}</h1>
         </div>
         {props.price && <span className="text-[#6787AD]">{props.price}</span>}
       </CardHeader>

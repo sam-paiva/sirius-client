@@ -74,17 +74,17 @@ const Profile: React.FC = () => {
   return (
     <div className="flex flex-col justify-center mx-auto my-0 max-w-7xl px-8 w-[100%] mt-14">
       <div className="grid grid-cols-5 gap-4 w-[100%]">
-        <div className="col-span-2 overflow-hidden sticky top-[80px] max-h-[500px]">
+        <div className="col-span-2 overflow-hidden sticky top-[100px] max-h-[500px]">
           {buyBundlesBanner()}
-          <Card className="max-w-[400px] h-[400px] border-1 border-gray-300 rounded" radius="none">
+          <Card className="max-w-[400px] h-[400px] rounded-3xl shadow-xl">
             <CardHeader className="flex gap-3 items-centers justify-start">
               <div className="flex flex-col items-start justify-start">
-                <p className="text-md text-default-500">{`${user.unique_name}`}</p>
+                <p className="text-lg text-default-500">{`${user.unique_name}`}</p>
               </div>
             </CardHeader>
             <Divider />
             <CardBody className="flex flex-col justify-between">
-              <div className="flex flex-col w-[100%]">
+              <div className="flex flex-col w-[100%] gap-3">
                 <div className="flex w-[100%] items-center">
                   <LiaPlusCircleSolid />
                   <Link to={'/post-job'} className={linkClass}>

@@ -54,7 +54,7 @@ const Prices: React.FC = () => {
   const silverPlanDescription = () => {
     return (
       <>
-        <ul>
+        <ul className="flex flex-col gap-3">
           <div className="flex items-baseline">
             <BsCheck className="bg-green" />
             <li className="text-[#415A77]">Post up to 1 job positions</li>
@@ -71,7 +71,7 @@ const Prices: React.FC = () => {
   const goldPlanDescription = () => {
     return (
       <>
-        <ul>
+        <ul className="flex flex-col gap-3">
           <div className="flex items-baseline">
             <BsCheck className="bg-green" />
             <li className="text-[#415A77]">Post up to 3 job positions</li>
@@ -88,7 +88,7 @@ const Prices: React.FC = () => {
   const premiumPlanDescription = () => {
     return (
       <>
-        <ul>
+        <ul className="flex flex-col gap-3">
           <div className="flex items-baseline">
             <BsCheck className="bg-green" />
             <li className="text-[#415A77]">Post up to 5 job positions</li>

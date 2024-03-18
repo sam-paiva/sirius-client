@@ -1,4 +1,4 @@
-import { Image } from '@nextui-org/react';
+import { Avatar } from '@nextui-org/react';
 import moment from 'moment';
 import { useEffect } from 'react';
 import { BsEnvelopePaper } from 'react-icons/bs';
@@ -10,10 +10,10 @@ import { PositionLevels } from '../../core/enums/positionLevels';
 import { useAppDispatch, useAppSelector } from '../../core/hooks/storeHooks';
 import { getJobByIdAction } from '../../core/store/jobs/jobsActions';
 import PrimaryButton from '../../shared/components/PrimaryButton';
-import { Spinner } from '../../shared/components/Spinner';
+import JobDetailsSkeleton from '../../shared/components/Skeletons/JobDetailsSkeleton';
 import { getEnumKey } from '../../shared/utils/enumUtils';
 
-const PositionDetails = () => {
+const JobDetails = () => {
   let { jobId } = useParams();
   const dispatch = useAppDispatch();
   const job = useAppSelector((c) => c.jobs.selectedJob);
@@ -66,8 +66,8 @@ const PositionDetails = () => {
               </div>
             </div>
 
-            <div className="self-start">
-              <Image src={job.company.logoUrl} width={150} className="bg-gray-100 rounded-full" />
+            <div>
+              <Avatar src={job.company.logoUrl} className="bg-gray-100 w-[150px] h-[150px]" />
             </div>
           </div>
 
@@ -88,10 +88,10 @@ const PositionDetails = () => {
           {/* <ApplyModal show={showApplyModal} onClose={() => setShowApplyModal(false)} onApply={handleApply} job={job} /> */}
         </div>
       ) : (
-        <Spinner />
+        <JobDetailsSkeleton />
       )}
     </div>
   );
 };
 
-export default PositionDetails;
+export default JobDetails;

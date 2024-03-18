@@ -173,13 +173,13 @@ const PostJob: React.FC = () => {
         ) : (
           <>
             <div className="flex justify-between">
-              <h1>New Job Position</h1>
+              <h1 className="text-[#415A77]">New Job Position</h1>
             </div>
             <div className="flex mt-5 mb-2">
               {tags.map((tag, index) => (
                 <div
                   key={index}
-                  className="bg-blue-500 max-w-[100px] text-white rounded px-2 py-1 m-1 cursor-pointer"
+                  className="bg-[#6787AD] w-auto text-2xl h-auto text-white border-1 rounded-3xl px-2 py-1 m-1"
                   onClick={() => removeTag(tag)}
                 >
                   {tag}

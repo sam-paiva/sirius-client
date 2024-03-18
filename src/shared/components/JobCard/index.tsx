@@ -50,13 +50,13 @@ const JobCard: React.FC<Props> = ({ job, onSwitch }) => {
             <span className="text-default-800">{job.company.name}</span>
           </div>
         </div>
-        <div className="flex items-end justify-start">
+        <div className="flex items-end justify-start mt-2">
           {job.tags.map((tag, key) => (
-            <div key={key} className="bg-[#6787AD] max-w-[100px text-tiny text-default border-1 rounded-3xl px-2 py-1 m-1">
+            <div key={key} className="bg-[#6787AD] text-sm text-white border-1 rounded-3xl px-2 py-1 m-1">
               {tag}
             </div>
           ))}
-          <div className="bg-[#6787AD] max-w-[100px text-tiny text-default rounded-3xl px-2 py-1 m-1">
+          <div className="bg-[#6787AD] text-sm text-white border-1 rounded-3xl px-2 py-1 m-1">
             {getEnumKey(ContractTypes, job.contractType)}
           </div>
         </div>

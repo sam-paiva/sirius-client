@@ -1,5 +1,5 @@
 import { Checkbox, CheckboxGroup, Pagination, Select, SelectItem } from '@nextui-org/react';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { ContractTypes } from '../../core/enums/contractTypes';
 import { PositionLevels } from '../../core/enums/positionLevels';
@@ -25,6 +25,7 @@ const SearchJobs: React.FC = () => {
   const jobs = useAppSelector((c) => c.jobs.jobs);
   const isLoading = useAppSelector((c) => c.jobs.isLoading);
   const dispatch = useAppDispatch();
+  const formRef = useRef<HTMLFormElement>(null);
   const { register, handleSubmit, control, reset } = useForm<FiltersFormValues>();
   const { page, setPage, limit } = usePagination(20);
 
@@ -33,11 +34,14 @@ const SearchJobs: React.FC = () => {
       (page - 1) * limit
     }&$filter=PositionFilled eq false`;
     dispatch(getJobsAction(filter));
+
+    return () => {
+      const filter = '$orderby=UserBundle/Sponsored desc, CreatedDate desc&count=true&top=30&filter=PositionFilled eq false';
+      dispatch(getJobsAction(filter));
+    };
   }, [page]);
 
-  const handleSearch: SubmitHandler<FiltersFormValues> = (data, event) => {
-    event?.preventDefault();
-
+  const handleSearch: SubmitHandler<FiltersFormValues> = (data) => {
     let filter = `$orderby=UserBundle/Sponsored desc, CreatedDate desc&count=true&top=50&$filter=PositionFilled eq false`;
 
     if (data?.searchText)
@@ -66,7 +70,7 @@ const SearchJobs: React.FC = () => {
 
   const resetFilters = () => {
     reset();
-    handleSubmit(handleSearch);
+    formRef.current!.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
   };
 
   const displayJobs = () => {
@@ -96,7 +100,7 @@ const SearchJobs: React.FC = () => {
           <h1 className="text-left text-cyan-800 font-medium w-auto">Search for your positions</h1>
           <span className="text-end text-cyan-600">Find your new job today</span>
         </div>
-        <form onSubmit={handleSubmit(handleSearch)}>
+        <form ref={formRef} id="search-form" onSubmit={handleSubmit(handleSearch)}>
           <div className="flex gap-20 sm:flex-col w-full">
             <div className="bg-white p-8 w-[30%] sm:w-full h-auto shadow-md rounded-3xl flex flex-col top-12">
               <div className="flex justify-between items-center sm:flex-col sm:items-start sm:justify-start">

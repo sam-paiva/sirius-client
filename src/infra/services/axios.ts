@@ -1,12 +1,10 @@
 import axios from 'axios';
-import { logout } from './auth/authApi';
 import { checkifUserIsAuthenticated, getJwtToken } from './auth/authService';
 
 console.log(import.meta.env.VITE_API_URL);
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  withCredentials: true,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -23,10 +21,8 @@ api.interceptors.response.use(
       if ((error?.response?.status === 401 || !checkifUserIsAuthenticated()) && !config?.sent) {
         config.sent = true;
 
-        logout().then(() => {
-          window.location.href = 'sign-in';
-          window.location.reload();
-        });
+        window.location.href = 'sign-in';
+        window.location.reload();
 
         return axios(config);
       }
