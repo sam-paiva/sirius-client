@@ -23,14 +23,17 @@ const JobCard: React.FC<Props> = ({ job, onSwitch }) => {
             <div className="flex justify-between w-full rounded-xl">
               <div className="flex justify-start items-center gap-4 rounded-xl">
                 <Avatar className="bg-white" src={job.company.logoUrl} />
-                <h1 onClick={() => navigate(`/position-details/${job.id}`)} className="text-2xl text-default-100 font-bold cursor-pointer">
+                <h1
+                  onClick={() => navigate(`/position-details/${job.id}`)}
+                  className="text-2xl sm:text-xl text-default-100 font-bold cursor-pointer"
+                >
                   {job.title}
                 </h1>
                 {job.userBundle.sponsored && <img src={premiumImage} />}
               </div>
               <div className="flex gap-1 rounded-xl">
                 <Badge fontColor="text-default-500 text-center" color="bg-white" content={moment(job.createdDate).fromNow()} />
-                {job.userBundle.sponsored && <Badge color="bg-orange-400 text-center" content={'Promoted'} />}
+                {job.userBundle.sponsored && <Badge color="bg-orange-400 sm:hidden text-center" content={'Promoted'} />}
                 {job.positionFilled && <Badge color="bg-red-400 text-center" content={'Fulfilled'} />}
                 {onSwitch && !job.positionFilled && (
                   <Button className="rounded-3xl bg-cyan-900 text-white" onClick={() => onSwitch(job.id)}>
