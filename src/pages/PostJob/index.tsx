@@ -166,16 +166,17 @@ const PostJob: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center mx-auto my-0 max-w-5xl px-8 w-[100%] mt-14">
-      <div className="bg-white p-8 font-semibold text-sky-600 rounded-xl shadow-sm">
+    <div className="flex flex-col justify-center mx-auto my-0 max-w-7xl px-8 sm:px-1 w-[100%] mt-14">
+      <div className="flex flex-col justify-between w-fit">
+        <h1 className="text-[#415A77] font-semibold">New Job Position</h1>
+        <span className="text-[#6787AD] self-end">Submit your job description</span>
+      </div>
+      <div className="bg-white p-8 font-semibold text-sky-600 rounded-xl shadow-sm mt-8">
         {isLoading ? (
           <Spinner />
         ) : (
           <>
-            <div className="flex justify-between">
-              <h1 className="text-[#415A77]">New Job Position</h1>
-            </div>
-            <div className="flex mt-5 mb-2">
+            <div className="flex mb-2">
               {tags.map((tag, index) => (
                 <div
                   key={index}

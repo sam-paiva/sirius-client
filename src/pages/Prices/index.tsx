@@ -100,7 +100,12 @@ const Prices: React.FC = () => {
 
           <div className="flex items-baseline">
             <BsCheck className="bg-green" />
-            <li className="text-center text-[#415A77]">Sponsored tag</li>
+            <li className="text-center text-[#415A77]">Promoted icon</li>
+          </div>
+
+          <div className="flex items-baseline">
+            <BsCheck className="bg-green" />
+            <li className="text-center text-[#415A77]">Priority in the list</li>
           </div>
         </ul>
       </>

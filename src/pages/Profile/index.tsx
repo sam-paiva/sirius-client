@@ -37,6 +37,7 @@ const Profile: React.FC = () => {
 
     return (
       <>
+        <h2 className="text-[#415A77] text-2xl font-light mb-8">Manage your posts</h2>
         {userJobs?.items.map((job, key) => (
           <JobCard key={key} job={job} onSwitch={handleDisableJob} />
         ))}
@@ -73,13 +74,14 @@ const Profile: React.FC = () => {
 
   return (
     <div className="flex flex-col justify-center mx-auto my-0 max-w-7xl px-8 w-[100%] mt-14">
+      <h1 className="text-[#415A77] font-semibold p-8">Profile</h1>
       <div className="grid grid-cols-5 gap-4 w-[100%]">
         <div className="col-span-2 overflow-hidden sticky top-[100px] max-h-[500px]">
           {buyBundlesBanner()}
-          <Card className="max-w-[400px] h-[400px] rounded-3xl shadow-xl">
+          <Card className="max-w-[400px] h-[400px] rounded-3xl shadow-xl p-8">
             <CardHeader className="flex gap-3 items-centers justify-start">
               <div className="flex flex-col items-start justify-start">
-                <p className="text-lg text-default-500">{`${user.unique_name}`}</p>
+                <p className="text-xl text-default-500">Welcome {`${user.unique_name}`}</p>
               </div>
             </CardHeader>
             <Divider />

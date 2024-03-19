@@ -142,7 +142,8 @@ const Form: React.FC<Props> = ({
 
   return (
     <>
-      <form onKeyDown={handleKeyDown} className="mt-12" onSubmit={handleSubmit(onSubmit)}>
+      <h2 className="mt-10 text-[#415A77]">Fill the details below</h2>
+      <form onKeyDown={handleKeyDown} className="mt-8" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex w-full flex-wrap gap-4">
           <Input
             isRequired
@@ -322,11 +323,11 @@ const Form: React.FC<Props> = ({
             />
             <div
               onClick={openFileSelection}
-              className="drop-area bg-gray-100 h-56 flex justify-center items-center"
+              className="drop-area bg-gray-100 h-60 flex justify-center items-center"
               onDrop={handleDrop}
               onDragOver={onDragOver}
             >
-              <div className="flex flex-col items-center justify-center cursor-pointer p-4">
+              <div className="flex flex-col items-center h-auto justify-center cursor-pointer p-4">
                 <p className="text-center">Drag and drop your Company's logo or click to select a file</p>
                 <p className="text-center">Recommended size: 100px x 100px</p>
                 {companyLogo ? (
