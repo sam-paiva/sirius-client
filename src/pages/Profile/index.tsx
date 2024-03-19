@@ -37,7 +37,7 @@ const Profile: React.FC = () => {
 
     return (
       <>
-        <h2 className="text-[#415A77] text-2xl font-light mb-8">Manage your posts</h2>
+        <h2 className="text-[#415A77] text-2xl font-light mb-8 sm:mt-10">Manage your posts</h2>
         {userJobs?.items.map((job, key) => (
           <JobCard key={key} job={job} onSwitch={handleDisableJob} />
         ))}
@@ -76,10 +76,10 @@ const Profile: React.FC = () => {
     <div className="flex flex-col justify-center mx-auto my-0 max-w-7xl px-8 w-[100%] mt-14">
       <div className="flex flex-col w-fit p-8">
         <h1 className="text-[#415A77] font-semibold">Profile</h1>
-        <span className="self-end pl-8 text-cyan-800">Empowering careers, one post at a time.</span>
+        <span className="self-end pl-8 sm:pl-0 text-cyan-800">Empowering careers, one post at a time.</span>
       </div>
-      <div className="grid grid-cols-5 gap-4 w-[100%]">
-        <div className="col-span-2 overflow-hidden sticky top-[100px] max-h-[500px]">
+      <div className="flex gap-4 sm:flex-col w-[100%]">
+        <div className="w-[40%] sm:w-full overflow-hidden lg:sticky md:sticky top-[100px] max-h-[500px]">
           {buyBundlesBanner()}
           <Card className="max-w-[400px] h-[400px] rounded-3xl shadow-xl p-8">
             <CardHeader className="flex gap-3 items-centers justify-start">
@@ -120,7 +120,7 @@ const Profile: React.FC = () => {
             </CardFooter>
           </Card>
         </div>
-        <div className="col-span-3">
+        <div className="w-[60%] sm:w-full">
           {!isLoading ? (
             renderJobs()
           ) : (

@@ -32,7 +32,7 @@ const JobCard: React.FC<Props> = ({ job, onSwitch }) => {
                 {job.userBundle.sponsored && <img src={premiumImage} />}
               </div>
               <div className="flex gap-1 rounded-xl">
-                <Badge fontColor="text-default-500 text-center" color="bg-white" content={moment(job.createdDate).fromNow()} />
+                <Badge fontColor="sm:hidden text-default-500 text-center" color="bg-white" content={moment(job.createdDate).fromNow()} />
                 {job.userBundle.sponsored && <Badge color="bg-orange-400 sm:hidden text-center" content={'Promoted'} />}
                 {job.positionFilled && <Badge color="bg-red-400 text-center" content={'Fulfilled'} />}
                 {onSwitch && !job.positionFilled && (
@@ -49,6 +49,7 @@ const JobCard: React.FC<Props> = ({ job, onSwitch }) => {
       <CardBody className="rounded-xl">
         <div className="flex items-start w-[100%] gap-3">
           <div className="flex flex-col items-start gap-1">
+            <span className="text-[#415A77] hidden sm:block">Posted {moment(job.createdDate).fromNow()}</span>
             <span className="text-[#415A77]">{job.budget}</span>
             <span className="text-default-800">{job.company.name}</span>
           </div>

@@ -67,6 +67,7 @@ const Form: React.FC<Props> = ({
     return Object.keys(errors).length > 0 || !quillRef.current?.value || !isDirty || !isBundleSelected || !companyLogo;
   };
   const [selectedFile, _] = useState<File | null>(null);
+  const [isPopoverVisible, setIsPopoverVisible] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const companyNameField = watch('companyName');
@@ -225,11 +226,14 @@ const Form: React.FC<Props> = ({
             )}
           />
 
+          <span className="text-default-400 text-sm mt-5">The tags will display in the top page</span>
+
           <Input
             value={tagValue}
             onChange={(e) => setTagValue(e.target.value)}
             onKeyDown={handleKeyDown}
             type="text"
+            onFocus={() => setIsPopoverVisible(true)}
             label="Tags (optional)"
             placeholder="Tap the tag name and press Enter"
           />
