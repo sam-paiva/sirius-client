@@ -1,7 +1,7 @@
 import { Button, Image } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from '../../assets/logo-light.png';
+import logo from '../../assets/logo-light.svg';
 import { useAppDispatch } from '../../core/hooks/storeHooks';
 import { loginCallbackAction } from '../../core/store/users/usersActions';
 import GoogleIcon from '../../shared/Icons/GoogleIcon';

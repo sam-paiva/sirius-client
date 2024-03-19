@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxGroup, Pagination, Select, SelectItem } from '@nextui-org/react';
+import { Checkbox, CheckboxGroup, Select, SelectItem } from '@nextui-org/react';
 import React, { useEffect, useRef } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { ContractTypes } from '../../core/enums/contractTypes';
@@ -9,6 +9,7 @@ import { getJobsAction } from '../../core/store/jobs/jobsActions';
 import Empty from '../../shared/components/Empty';
 import Filters from '../../shared/components/Filters';
 import JobCard from '../../shared/components/JobCard';
+import Pagination from '../../shared/components/Pagination';
 import CardSkeleton from '../../shared/components/Skeletons/CardSkeleton';
 import { getEnumKey } from '../../shared/utils/enumUtils';
 import { contractTypes, levels, salaryRanges } from '../../shared/utils/enums';
@@ -28,6 +29,10 @@ const SearchJobs: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const { register, handleSubmit, control, reset } = useForm<FiltersFormValues>();
   const { page, setPage, limit } = usePagination(20);
+
+  const displayPositionsCount = () => {
+    return jobs!.total;
+  };
 
   useEffect(() => {
     const filter = `$orderby=UserBundle/Sponsored desc, CreatedDate desc&count=true&$top=${limit}&$skip=${
@@ -81,12 +86,13 @@ const SearchJobs: React.FC = () => {
         ))}
         {jobs?.total! > 0 && Math.ceil(jobs?.total! / limit) !== 1 && (
           <Pagination
-            isDisabled={Math.ceil(jobs?.total! / limit) === 1}
-            color="primary"
             page={page}
-            total={Math.ceil(jobs?.total! / limit)}
-            onChange={(page) => setPage(page)}
-            isCompact={false}
+            total={jobs?.total!}
+            topLimit={limit}
+            onChange={(page) => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              setPage(page);
+            }}
           />
         )}
       </>
@@ -97,12 +103,16 @@ const SearchJobs: React.FC = () => {
     <>
       <div className="flex flex-col gap-10 justify-between mx-auto max-w-7xl px-8 h-full w-[100%] mt-12">
         <div className="flex flex-col w-fit">
-          <h1 className="text-left text-cyan-800 font-medium w-auto">Search for your positions</h1>
+          <h1 className="text-[#415A77] font-semibold">Search for your positions</h1>
           <span className="text-end text-cyan-600">Find your new job today</span>
+        </div>
+        <div className="flex items-center p-2">
+          {jobs && jobs.total! > 0 && <span className="text-cyan-900 text-2xl font-medium mr-1">{displayPositionsCount()}</span>}
+          {jobs?.total! > 0 && <h2 className="text-2xl font-medium text-cyan-900">opened position(s)🚀</h2>}
         </div>
         <form ref={formRef} id="search-form" onSubmit={handleSubmit(handleSearch)}>
           <div className="flex gap-20 sm:flex-col w-full">
-            <div className="bg-white p-8 w-[30%] sm:w-full h-auto shadow-md rounded-3xl flex flex-col top-12 sm:hidden">
+            <div className="bg-white p-8 w-[30%] sm:w-full h-auto shadow-md rounded-3xl flex flex-col top-12">
               <div className="flex justify-between items-center sm:flex-col sm:items-start sm:justify-start">
                 <h3 className="font-semibold text-default-600">Advanced Search</h3>
               </div>

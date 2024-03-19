@@ -16,7 +16,7 @@ const Filters: React.FC<Props> = ({ register }) => {
         <Input
           startContent={<BsSearch />}
           {...register('searchText', { required: false, maxLength: 70 })}
-          size="sm"
+          size="md"
           className="w-[60%] rounded-full shadow-xl"
           classNames={{ inputWrapper: ['bg-white'] }}
           type="text"
@@ -27,7 +27,7 @@ const Filters: React.FC<Props> = ({ register }) => {
           startContent={<IoLocationOutline />}
           isRequired={false}
           {...register('location', { required: false })}
-          size="sm"
+          size="md"
           className="w-[40%] rounded-full shadow-xl"
           classNames={{ inputWrapper: ['bg-white'] }}
           type="text"

@@ -5,7 +5,6 @@ import { BsBox } from 'react-icons/bs';
 import { MdDeveloperMode, MdVerified } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import background from '../../assets/background.png';
-import { useAppSelector } from '../../core/hooks/storeHooks';
 
 const Home: React.FC = () => {
   const props = useSpring({
@@ -20,7 +19,6 @@ const Home: React.FC = () => {
     transform: 'translate(0px, 0px)',
     from: { opacity: 0, transform: 'translate(-500px, 0px)' }
   });
-  const jobs = useAppSelector((c) => c.jobs.jobs);
   const navigate = useNavigate();
   const [text, setText] = useState('');
   const [index, setIndex] = useState(0);
@@ -47,12 +45,6 @@ const Home: React.FC = () => {
 
     return () => clearInterval(cursorInterval);
   }, []);
-
-  const displayPositionsCount = () => {
-    if (jobs!.total! >= 300) return '+300';
-
-    return jobs!.total;
-  };
 
   const box = (icon: JSX.Element, title: string, text: string) => {
     return (
@@ -82,10 +74,6 @@ const Home: React.FC = () => {
             {text}
             <span className={showCursor ? 'opacity-100' : 'opacity-0'}>|</span>
           </h1>
-          <div className="flex items-center">
-            {jobs && jobs.total! > 0 && <span className="text-orange-300 text-2xl font-medium mr-1">{displayPositionsCount()}</span>}
-            {jobs?.total! > 0 && <h2 className="text-white text-2xl font-medium">opened position(s)🚀</h2>}
-          </div>
           <h2 className="text-white mt-4 text-2xl text-center">
             Discover a seamless IT job-hunting experience with our user-friendly platform. Uncover a plethora of career opportunities
             tailored to your skills and aspirations.

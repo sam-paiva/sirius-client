@@ -1,7 +1,7 @@
 import { Image, Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/react';
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import logo from '../../../assets/logo-light.png';
+import logo from '../../../assets/logo-light.svg';
 import usePreviousLocation from '../../../core/hooks/usePreviousLocation';
 
 interface Props {

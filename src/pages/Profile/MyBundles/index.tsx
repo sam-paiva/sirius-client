@@ -1,14 +1,18 @@
-import { Pagination, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
+import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../core/hooks/storeHooks';
 import { getUserBundlesAction } from '../../../core/store/users/usersActions';
+import Pagination from '../../../shared/components/Pagination';
+import PrimaryButton from '../../../shared/components/PrimaryButton';
 const MyBundles: React.FC = () => {
   const userBundles = useAppSelector((c) => c.users.userBundles);
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(1);
   const topLimit = 15;
   const filter = `$orderby=CreatedDate desc,RemainingPositions desc&$top=${topLimit}&$skip=${(page - 1) * topLimit}&$count=true`;
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getUserBundlesAction(filter));
@@ -38,45 +42,48 @@ const MyBundles: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col bg-white h-auto justify-center mx-auto my-0 max-w-5xl px-8 w-[100%] mt-14 p-8 border-gray-300 rounded border-1">
-      <h1>My Bundles</h1>
-
-      <Table
-        bottomContent={
-          <div className="flex w-full justify-center">
-            {userBundles && (
-              <Pagination
-                isDisabled={Math.ceil(userBundles?.total! / topLimit) === 1}
-                color="primary"
-                page={page}
-                total={Math.ceil(userBundles?.total! / topLimit)}
-                onChange={(page) => setPage(page)}
-                isCompact={false}
-              />
-            )}
-          </div>
-        }
-        className="mt-10"
-      >
+    <div className="flex flex-col h-auto justify-center mx-auto my-0 max-w-7xl px-8 w-[100%] mt-14">
+      <div className="flex flex-col w-fit">
+        <h1 className="text-[#415A77] font-semibold">My Bundles</h1>
+        <span className="self-end text-[#6787AD]">Track Your Purchases</span>
+      </div>
+      <div className="flex justify-end">
+        <PrimaryButton onClick={() => navigate('/prices')}>Get More Bundles</PrimaryButton>
+      </div>
+      <Table classNames={{ wrapper: ['p-1'] }} className="mt-2">
         <TableHeader>
           {columns.map((column) => (
-            <TableColumn key={column.key}>{column.label}</TableColumn>
+            <TableColumn className="bg-[#415A77] text-white text-xl p-6 h-32" key={column.key}>
+              {column.label}
+            </TableColumn>
           ))}
         </TableHeader>
         <TableBody emptyContent={'No bundles found'}>
           {userBundles! &&
             userBundles!.items.map((row) => (
               <TableRow key={row.id}>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.remainingPositions}</TableCell>
-                <TableCell>{row.remainingPositions > 0 ? 'YES' : 'NO'}</TableCell>
-                <TableCell>{row.sponsored ? 'YES' : 'NO'}</TableCell>
-
-                <TableCell>{moment(row.createdDate).format('DD-MM-yyyy HH:mm')}</TableCell>
+                <TableCell className="px-6 py-4 text-lg ">{row.name}</TableCell>
+                <TableCell className="px-6 py-4 text-lg ">{row.remainingPositions}</TableCell>
+                <TableCell className="px-6 py-4 text-lg ">{row.remainingPositions > 0 ? 'YES' : 'NO'}</TableCell>
+                <TableCell className="px-6 py-4 text-lg ">{row.sponsored ? 'YES' : 'NO'}</TableCell>
+                <TableCell className="px-6 py-4 text-lg ">{moment(row.createdDate).format('DD-MM-yyyy HH:mm')}</TableCell>
               </TableRow>
             ))}
         </TableBody>
       </Table>
+      <div className="flex w-full justify-center mt-10">
+        {userBundles && (
+          <Pagination
+            page={page}
+            total={userBundles.total}
+            topLimit={topLimit}
+            onChange={(page) => {
+              setPage(page);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        )}
+      </div>
     </div>
   );
 };

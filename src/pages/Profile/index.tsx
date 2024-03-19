@@ -74,7 +74,10 @@ const Profile: React.FC = () => {
 
   return (
     <div className="flex flex-col justify-center mx-auto my-0 max-w-7xl px-8 w-[100%] mt-14">
-      <h1 className="text-[#415A77] font-semibold p-8">Profile</h1>
+      <div className="flex flex-col w-fit p-8">
+        <h1 className="text-[#415A77] font-semibold">Profile</h1>
+        <span className="self-end pl-8 text-cyan-800">Empowering careers, one post at a time.</span>
+      </div>
       <div className="grid grid-cols-5 gap-4 w-[100%]">
         <div className="col-span-2 overflow-hidden sticky top-[100px] max-h-[500px]">
           {buyBundlesBanner()}
