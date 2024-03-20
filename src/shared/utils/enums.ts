@@ -20,6 +20,5 @@ export const levels = [
 export const contractTypes = [
   { label: 'On Site', value: 1 },
   { label: 'Hybrid', value: 2 },
-  { label: 'Remote', value: 3 },
-  { label: 'Anywhere', value: 4 }
+  { label: 'Remote', value: 3 }
 ];

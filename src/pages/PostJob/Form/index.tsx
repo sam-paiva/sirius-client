@@ -67,7 +67,6 @@ const Form: React.FC<Props> = ({
     return Object.keys(errors).length > 0 || !quillRef.current?.value || !isDirty || !isBundleSelected || !companyLogo;
   };
   const [selectedFile, _] = useState<File | null>(null);
-  const [isPopoverVisible, setIsPopoverVisible] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const companyNameField = watch('companyName');
@@ -182,10 +181,10 @@ const Form: React.FC<Props> = ({
           <Controller
             name="contractType"
             control={control}
-            rules={{ required: requiredMessage }} // Add your validation rules here
+            rules={{ required: true }} // Add your validation rules here
             render={({ field: { onChange, onBlur, value } }) => (
               <Select
-                isRequired
+                isRequired={true}
                 isInvalid={errors.contractType?.message ? true : false}
                 placeholder="Select the contract type"
                 className="max-w-xs"
@@ -233,7 +232,6 @@ const Form: React.FC<Props> = ({
             onChange={(e) => setTagValue(e.target.value)}
             onKeyDown={handleKeyDown}
             type="text"
-            onFocus={() => setIsPopoverVisible(true)}
             label="Tags (optional)"
             placeholder="Tap the tag name and press Enter"
           />

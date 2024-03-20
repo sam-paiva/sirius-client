@@ -59,7 +59,7 @@ const Profile: React.FC = () => {
     return (
       <>
         {userBundles?.items.every((c) => c.remainingPositions === 0) && !isLoading && (
-          <div className="flex flex-col justify-start bg-orange-200 w-[100%] h-auto p-4 rounded mb-1">
+          <div className="flex flex-col justify-start bg-orange-200 w-auto h-auto p-4 rounded mb-1">
             <div className="flex items-center justify-between gap-1">
               <p className="text-orange-600 font-bold">You have no valid bundles</p>
               <Button onClick={() => navigate('/prices')} className="bg-orange-300">
