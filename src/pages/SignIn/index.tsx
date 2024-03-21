@@ -1,5 +1,5 @@
 import { Button, Image } from '@nextui-org/react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo-light.svg';
 import { useAppDispatch } from '../../core/hooks/storeHooks';
@@ -14,7 +14,6 @@ const SignIn: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [originalBackgroundColor, setOriginalBackgroundColor] = useState('');
   const buttonClass = 'text-black flex';
 
   const handleUnload = () => {
@@ -23,9 +22,6 @@ const SignIn: React.FC = () => {
   };
 
   useEffect(() => {
-    const root = document.getElementById('root');
-    setOriginalBackgroundColor(root?.style.backgroundColor!);
-    if (root) root.style.backgroundColor = 'white';
     // Add a message event listener to receive messages from child windows
     const handleMessage = (event: any) => {
       if (event.origin === window.location.origin) {
@@ -36,9 +32,7 @@ const SignIn: React.FC = () => {
     window.addEventListener('message', handleMessage);
 
     return () => {
-      // Remove the event listener when the component is unmounted
       window.removeEventListener('message', handleMessage);
-      if (root) root.style.backgroundColor = originalBackgroundColor;
     };
   }, [dispatch]);
 
@@ -59,7 +53,7 @@ const SignIn: React.FC = () => {
   };
   return (
     <div className="flex flex-col w-[100%]">
-      <div className="bg-white mt-12 mx-auto max-w-screen-lg min-w-[30%] min-h-full">
+      <div className="mt-12 mx-auto max-w-screen-lg min-w-[30%] min-h-full">
         <div className="flex justify-center flex-col items-center p-4">
           <Image onClick={() => navigate('/home')} alt="logo" src={logo} width={180} className="mt-2 cursor-pointer" />
           <h1 className="font-medium text-2xl">Create an account or sign in.</h1>
