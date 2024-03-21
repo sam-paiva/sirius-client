@@ -25,7 +25,7 @@ const JobCard: React.FC<Props> = ({ job, onFulFill }) => {
                 <Avatar className="bg-white" src={job.company.logoUrl} />
                 <h1
                   onClick={() => navigate(`/position-details/${job.id}`)}
-                  className="text-xl sm:text-xl max-w-[60%] overflow-ellipsis overflow-hidden text-default-100 font-bold cursor-pointer"
+                  className="text-xl sm:text-xl w-full overflow-ellipsis overflow-hidden text-default-100 font-bold cursor-pointer"
                 >
                   {job.title}
                 </h1>
