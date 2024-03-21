@@ -1,6 +1,6 @@
 import { Autocomplete, AutocompleteItem, Input, Select, SelectItem } from '@nextui-org/react';
 import React, { ChangeEvent, useRef, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, FieldError, useForm } from 'react-hook-form';
 import ReactQuill from 'react-quill';
 import { ContractTypes } from '../../../core/enums/contractTypes';
 import { PositionLevels } from '../../../core/enums/positionLevels';
@@ -22,6 +22,14 @@ export interface FormValues {
   positionUrl: string;
   companyLogo: string;
   companyWebsite: string;
+}
+
+interface FieldDefinitions {
+  [key: string]: {
+    isRequired: boolean;
+    maxLength: number;
+    // Add other properties if needed
+  };
 }
 
 interface Props {
@@ -114,6 +122,25 @@ const Form: React.FC<Props> = ({
     'direction'
   ];
 
+  const fieldDefinitions: FieldDefinitions = {
+    title: {
+      isRequired: true,
+      maxLength: 70
+    },
+    country: {
+      isRequired: true,
+      maxLength: 50
+    },
+    city: {
+      isRequired: true,
+      maxLength: 50
+    },
+    companyName: {
+      isRequired: true,
+      maxLength: 70
+    }
+  };
+
   const setCompanyAfterSelection = (value: string | null) => {
     if (value) {
       const company = data?.find((c) => c.id === value);
@@ -140,16 +167,30 @@ const Form: React.FC<Props> = ({
     }
   };
 
+  const getErrorMessage = (field: FieldError | undefined, fieldName: string) => {
+    if (field) {
+      const type = field?.type;
+      switch (type) {
+        case 'required':
+          return requiredMessage;
+        case 'maxLength':
+          return `Max length field is ${fieldDefinitions[fieldName].maxLength}`;
+        default:
+          return '';
+      }
+    }
+  };
+
   return (
     <>
       <h2 className="mt-10 text-[#415A77]">Fill the details below</h2>
       <form onKeyDown={handleKeyDown} className="mt-8" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex w-full flex-wrap gap-4">
           <Input
-            isRequired
-            isInvalid={errors.title?.message ? true : false}
-            errorMessage={errors.title?.message}
-            {...register('title', { required: requiredMessage, maxLength: 70 })}
+            isRequired={fieldDefinitions.title.isRequired}
+            isInvalid={errors.title ? true : false}
+            errorMessage={getErrorMessage(errors.title, 'title')}
+            {...register('title', { required: requiredMessage, maxLength: fieldDefinitions.title.maxLength })}
             type="text"
             label="Title"
             placeholder="Example: Software Engineer, QA Tester"
@@ -237,10 +278,11 @@ const Form: React.FC<Props> = ({
           />
 
           <Input
-            isRequired
-            isInvalid={errors.country?.message ? true : false}
+            isRequired={fieldDefinitions.country.isRequired}
+            isInvalid={errors.country ? true : false}
+            errorMessage={getErrorMessage(errors.country, 'country')}
             required
-            {...register('country', { required: requiredMessage, maxLength: 50 })}
+            {...register('country', { required: requiredMessage, maxLength: fieldDefinitions.country.maxLength })}
             type="text"
             label="Country"
             placeholder=""
@@ -248,9 +290,10 @@ const Form: React.FC<Props> = ({
 
           <Input
             isRequired
-            isInvalid={errors.city?.message ? true : false}
+            isInvalid={errors.city ? true : false}
             required
-            {...register('city', { required: requiredMessage, maxLength: 50 })}
+            errorMessage={getErrorMessage(errors.city, 'city')}
+            {...register('city', { required: requiredMessage, maxLength: fieldDefinitions.city.maxLength })}
             type="text"
             label="City"
             placeholder=""
@@ -286,12 +329,13 @@ const Form: React.FC<Props> = ({
             <Controller
               name="companyName"
               control={control}
-              rules={{ required: requiredMessage }}
+              rules={{ required: requiredMessage, maxLength: fieldDefinitions.companyName.maxLength }}
               render={({ field: { onChange } }) => (
                 <Autocomplete
                   allowsCustomValue
                   isRequired
-                  isInvalid={errors.companyName?.message ? true : false}
+                  errorMessage={getErrorMessage(errors.companyName, 'companyName')}
+                  isInvalid={errors.companyName ? true : false}
                   onKeyDown={(e: any) => e.continuePropagation()}
                   onSelectionChange={(value) => setCompanyAfterSelection(value?.toString())}
                   onInputChange={onChange}

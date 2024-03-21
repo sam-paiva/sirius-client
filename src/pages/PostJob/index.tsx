@@ -134,6 +134,7 @@ const PostJob: React.FC = () => {
     };
 
     dispatch(addJobAction({ request, navigate }));
+    setTags([]);
   };
 
   const getHtml = () => {
