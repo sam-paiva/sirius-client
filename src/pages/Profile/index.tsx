@@ -1,5 +1,18 @@
-import { Button, Card, CardBody, CardFooter, CardHeader, Divider, Pagination } from '@nextui-org/react';
-import React, { useEffect } from 'react';
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Divider,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Pagination
+} from '@nextui-org/react';
+import React, { useEffect, useState } from 'react';
 import { BsCurrencyEuro, BsTicket } from 'react-icons/bs';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { LiaPlusCircleSolid } from 'react-icons/lia';
@@ -13,6 +26,12 @@ import Empty from '../../shared/components/Empty';
 import JobCard from '../../shared/components/JobCard';
 import CardSkeleton from '../../shared/components/Skeletons/CardSkeleton';
 
+interface FulFillModalProps {
+  jobId: string | null;
+  open: boolean;
+  jobDescription: string | null;
+}
+
 const Profile: React.FC = () => {
   const user = getDecodedToken()!;
   const dispatch = useAppDispatch();
@@ -20,6 +39,7 @@ const Profile: React.FC = () => {
   const userJobs = useAppSelector((c) => c.jobs.userJobs);
   const isLoading = useAppSelector((c) => c.jobs.isLoading);
   const userBundles = useAppSelector((c) => c.users.userBundles);
+  const [fulFillModal, setFulFillModal] = useState<FulFillModalProps>({ open: false, jobId: null, jobDescription: null });
   const linkClass = 'cursor-pointer text-md text-black font-light p-1';
   const { page, setPage, limit } = usePagination(20);
 
@@ -39,7 +59,7 @@ const Profile: React.FC = () => {
       <>
         <h2 className="text-[#415A77] text-2xl font-light mb-8 sm:mt-10">Manage your posts</h2>
         {userJobs?.items.map((job, key) => (
-          <JobCard key={key} job={job} onSwitch={handleDisableJob} />
+          <JobCard key={key} job={job} onFulFill={(jobId, jobDescription) => setFulFillModal({ open: true, jobId, jobDescription })} />
         ))}
         {userJobs?.total! > 0 && Math.ceil(userJobs?.total! / limit) !== 1 && (
           <Pagination
@@ -52,6 +72,38 @@ const Profile: React.FC = () => {
           />
         )}
       </>
+    );
+  };
+  const modalFullfiled = () => {
+    return (
+      <Modal placement="top-center" isOpen={fulFillModal.open}>
+        <ModalContent>
+          {(_) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Attention</ModalHeader>
+              <ModalBody>
+                <p>
+                  Are you sure you want to mark <b>{fulFillModal.jobDescription}</b> as fulfilled? the action can't be undone
+                </p>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={() => setFulFillModal({ jobId: null, open: false, jobDescription: null })}>
+                  Cancel
+                </Button>
+                <Button
+                  color="primary"
+                  onPress={() => {
+                    handleDisableJob(fulFillModal.jobId!);
+                    setFulFillModal({ open: false, jobDescription: null, jobId: null });
+                  }}
+                >
+                  Confirm
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     );
   };
 
@@ -132,6 +184,7 @@ const Profile: React.FC = () => {
           )}
         </div>
       </div>
+      {modalFullfiled()}
     </div>
   );
 };
