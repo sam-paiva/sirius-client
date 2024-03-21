@@ -21,7 +21,7 @@ const JobCard: React.FC<Props> = ({ job, onFulFill }) => {
         <CardHeader className={`flex gap-3 ${job.positionFilled ? 'bg-[#D2D0D0]' : 'bg-[#415A77]'} rounded-xl`}>
           <div className="flex flex-col gap-2 w-full rounded-xl">
             <div className="flex justify-between w-full rounded-xl">
-              <div className="flex justify-start items-center gap-4 rounded-xl">
+              <div className="flex justify-start items-center gap-4 rounded-xl px-4">
                 <Avatar className="bg-white" src={job.company.logoUrl} />
                 <h1
                   onClick={() => navigate(`/position-details/${job.id}`)}
