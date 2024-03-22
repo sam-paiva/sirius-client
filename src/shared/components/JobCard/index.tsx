@@ -25,14 +25,18 @@ const JobCard: React.FC<Props> = ({ job, onFulFill }) => {
                 <Avatar className="bg-white" src={job.company.logoUrl} />
                 <h1
                   onClick={() => navigate(`/position-details/${job.id}`)}
-                  className="text-xl sm:text-xl w-full overflow-ellipsis overflow-hidden text-default-100 font-bold cursor-pointer"
+                  className="text-xl sm:max-w-[200px] md:max-w-[200px] w-full overflow-ellipsis overflow-hidden text-default-100 font-bold cursor-pointer"
                 >
                   {job.title}
                 </h1>
               </div>
               <div className="flex gap-1 rounded-xl items-center">
-                <Badge fontColor="sm:hidden text-default-500 text-center" color="bg-white" content={moment(job.createdDate).fromNow()} />
-                {job.userBundle.sponsored && <Badge color="bg-orange-400 sm:hidden text-center" content={'Promoted'} />}
+                <Badge
+                  fontColor="sm:hidden md:hidden text-default-500 text-center"
+                  color="bg-white"
+                  content={moment(job.createdDate).fromNow()}
+                />
+                {job.userBundle.sponsored && <Badge color="bg-orange-400 sm:hidden md:hidden text-center" content={'Promoted'} />}
                 {job.positionFilled && <Badge color="bg-red-400 text-center" content={'Fulfilled'} />}
               </div>
             </div>
@@ -47,14 +51,14 @@ const JobCard: React.FC<Props> = ({ job, onFulFill }) => {
                   Mark as Fulfilled
                 </Button>
               )}
-              <span className="hidden sm:flex text-[#415A77] items-center gap-1">
+              <span className="hidden sm:flex md:flex text-[#415A77] items-center gap-1">
                 {job.userBundle.sponsored && (
                   <>
                     <img src={premiumImage} /> <p>Promoted</p>
                   </>
                 )}
               </span>
-              <span className="text-[#415A77] hidden sm:block">Posted {moment(job.createdDate).fromNow()}</span>
+              <span className="text-[#415A77] hidden md:block sm:block">Posted {moment(job.createdDate).fromNow()}</span>
               <span className="text-[#415A77]">{job.budget}</span>
               <div className="flex justify-center gap-2">
                 <span className="text-default-800 w-fit flex gap-1">
@@ -63,15 +67,12 @@ const JobCard: React.FC<Props> = ({ job, onFulFill }) => {
               </div>
             </div>
           </div>
-          <div className="flex items-end justify-start mt-2 w-32">
+          <div className="flex flex-wrap items-start justify-start mt-2 w-full">
             {job.tags.map((tag, key) => (
-              <div key={key} className="bg-[#6787AD] w-auto text-sm text-white border-1 rounded-3xl px-2 py-1 m-1">
+              <div key={key} className="bg-[#6787AD] text-center w-auto text-sm text-white border-1 rounded-3xl px-2 py-1 m-1">
                 {tag}
               </div>
             ))}
-            <div className="bg-[#6787AD] text-sm w-auto text-white border-1 rounded-3xl px-2 py-1 m-1">
-              {getEnumKey(ContractTypes, job.contractType)}
-            </div>
           </div>
         </CardBody>
         <Divider />

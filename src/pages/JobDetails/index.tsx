@@ -40,11 +40,13 @@ const JobDetails = () => {
   return (
     <div className="flex flex-col justify-center mx-auto my-0 max-w-7xl px-8 sm:px-1 w-[100%] mt-14 border-gray-300 rounded">
       {!loading && job ? (
-        <div className="bg-white p-12 rounded-md shadow-sm mb-10 w-[100%] flex-wrap">
-          <div className="flex justify-between items-start">
-            <div className="flex flex-col gap-2">
+        <div className="bg-white p-12 sm:p-2 rounded-md shadow-sm mb-10 w-[100%] flex-wrap">
+          <div className="flex justify-between items-start w-full">
+            <div className="flex flex-col gap-2 w-full">
               <span>Job From {moment(job!.createdDate).format('LL')}</span>
-              <h1 className="text-4xl text-[#415A77] font-bold">{job!.title}</h1>
+              <h1 className="text-4xl sm:max-w-[300px] md:max-w-[350px] text-[#415A77] font-bold w-full overflow-ellipsis overflow-hidden">
+                {job!.title}
+              </h1>
               <span className="">{job.budget}</span>
               <span className="">{job.company.name}</span>
               <div className="flex items-start flex-col gap-3">
@@ -71,7 +73,7 @@ const JobDetails = () => {
             </div>
           </div>
 
-          <div className="flex items-end justify-start mt-4">
+          <div className="flex flex-wrap items-end justify-start mt-4 w-full">
             {job.tags.map((tag, key) => (
               <div key={key} className="bg-[#6787AD] text-tiny text-white border-1 rounded-xl px-2 py-1 m-1">
                 {tag}
