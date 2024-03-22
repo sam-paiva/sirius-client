@@ -65,7 +65,8 @@ const Home: React.FC = () => {
           width: '100%',
           minHeight: '500px',
           background: `url(${background})`,
-          backgroundPosition: 'center'
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
         }}
         className="flex justify-center items-center flex-col sm:p-8"
       >
