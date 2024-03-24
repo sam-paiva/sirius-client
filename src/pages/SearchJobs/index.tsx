@@ -108,7 +108,7 @@ const SearchJobs: React.FC = () => {
         </div>
         <div className="flex items-center p-2">
           {jobs && jobs.total! > 0 && <span className="text-cyan-900 text-2xl font-medium mr-1">{displayPositionsCount()}</span>}
-          {jobs?.total! > 0 && <h2 className="text-2xl font-medium text-cyan-900">opened position(s)🚀</h2>}
+          {jobs?.total! > 0 && <h2 className="text-2xl font-medium text-cyan-900">open position(s)🚀</h2>}
         </div>
         <form ref={formRef} id="search-form" onSubmit={handleSubmit(handleSearch)}>
           <div className="flex gap-20 sm:flex-col w-full">
