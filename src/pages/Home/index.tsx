@@ -77,11 +77,11 @@ const Home: React.FC = () => {
           style={props}
           className={'mx-auto my-0 max-w-5xl sm:px-2 md:px-4 px-8 w-[100%] flex flex-col justify-center items-center'}
         >
-          <h1 className="text-white sm:text-2xl font-bold text-center">
+          <h1 className="text-white sm:text-4xl font-bold text-center">
             {text}
             <span className={showCursor ? 'opacity-100' : 'opacity-0'}>|</span>
           </h1>
-          <h2 className="text-white mt-4 text-2xl sm:text-lg text-center">
+          <h2 className="text-white mt-4 text-2xl sm:text-xl text-center">
             Discover a seamless IT job-hunting experience with our user-friendly platform. Uncover a plethora of career opportunities
             tailored to your skills and aspirations.
           </h2>
@@ -99,7 +99,7 @@ const Home: React.FC = () => {
         style={secondProps}
         className="flex flex-col justify-start items-start mx-auto my-0 max-w-7xl px-12 sm:px-4 pb-16 w-full mt-10 h-full"
       >
-        <h1 className="text-default-700 text-center text-4xl">Unlock your dream job with us</h1>
+        <h1 className="text-default-700 text-center text-4xl sm:text-3xl sm:px-6">Unlock your dream job with us</h1>
         <div className="mt-10 flex sm:flex-col items-center justify-center gap-6">
           {box(
             <BsBox />,
