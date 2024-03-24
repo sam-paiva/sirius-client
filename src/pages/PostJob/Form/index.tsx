@@ -266,7 +266,9 @@ const Form: React.FC<Props> = ({
             )}
           />
 
-          <span className="text-default-400 text-sm mt-5">The tags will display in the top page</span>
+          <span className="text-default-400 text-sm mt-5">
+            Tags will be displayed on the top of this page. To remove, just click on the tag
+          </span>
 
           <Input
             value={tagValue}
