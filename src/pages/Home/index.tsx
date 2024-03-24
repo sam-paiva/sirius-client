@@ -24,7 +24,7 @@ const Home: React.FC = () => {
   const [index, setIndex] = useState(0);
   const [showCursor, setShowCursor] = useState(true);
   const speed = 100;
-  const fullText = 'Search new Positions';
+  const fullText = 'Search New Positions';
 
   useEffect(() => {
     const interval = setTimeout(() => {
