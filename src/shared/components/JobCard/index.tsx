@@ -46,7 +46,7 @@ const JobCard: React.FC<Props> = ({ job, onFulFill }) => {
                 </Button>
               )}
               {job.positionFilled && <Badge color="bg-[#6787AD] text-center" content={'Fulfilled'} />}
-              <span className="text-[#415A77]">{job.budget}</span>
+              {job.budget !== 'Prefer not to share' && <span className="text-[#415A77]">{job.budget}</span>}
               <div className="flex justify-center gap-2">
                 {job.userBundle.sponsored && <img src={sponsoredCrown} />}
                 <div className="flex items-center gap-2">

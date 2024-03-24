@@ -48,7 +48,7 @@ const JobDetails = () => {
               <h1 className="text-4xl sm:max-w-[300px] md:max-w-[350px] text-[#415A77] font-bold w-full overflow-ellipsis overflow-hidden">
                 {job!.title}
               </h1>
-              <span className="text-[#415A77] font-normal">{job.budget}</span>
+              {job.budget !== 'Prefer not to share' && <span className="text-[#415A77] font-normal">{job.budget}</span>}
               <div className="flex items-center gap-2">
                 <span>{job.company.name}</span>
                 {job.userBundle.sponsored && <img src={sponsoredCrown} />}
