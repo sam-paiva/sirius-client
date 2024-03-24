@@ -3,16 +3,13 @@ import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../../assets/logo-light.svg';
 import usePreviousLocation from '../../../core/hooks/usePreviousLocation';
+import { checkifUserIsAuthenticated } from '../../../infra/services/auth/authService';
 
-interface Props {
-  isAuthenticated: boolean;
-}
-
-const NavigationBar: React.FC<Props> = ({ isAuthenticated }) => {
+const NavigationBar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   let currentPathName = location.pathname;
-  let isSignIn = currentPathName === 'sign-in';
+  const isAuthenticated = checkifUserIsAuthenticated();
   const pagesWithoutNavbar = ['/sign-in', '/callback'];
   const previousLocation = usePreviousLocation();
   const linkClass = 'hover:text-black text-default-500 transition duration-300 hover:border-b-2 hover:border-black';
@@ -36,7 +33,7 @@ const NavigationBar: React.FC<Props> = ({ isAuthenticated }) => {
                 Prices
               </Link>
             </NavbarItem>
-            {!isAuthenticated && !isSignIn && (
+            {!isAuthenticated && (
               <NavbarItem className="lg:flex">
                 <Link className={linkClass} to={`/sign-in`} state={{ from: previousLocation }}>
                   Sign In

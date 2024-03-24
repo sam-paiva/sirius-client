@@ -46,6 +46,8 @@ const Home: React.FC = () => {
     return () => clearInterval(cursorInterval);
   }, []);
 
+  const buttonClass = 'rounded-2xl bg-transparent text-white border-1 w-[250px] sm:w-[140px] sm:text-lg h-[60px] text-2xl';
+
   const box = (icon: JSX.Element, title: string, text: string) => {
     return (
       <div className="bg-[#f8f8f8] flex flex-col w-full h-60 sm:h-auto md:h-[200px] md:justify-center shadow-lg rounded-3xl p-8 hover:bg-[#415A77] hover:text-white transition">
@@ -65,32 +67,29 @@ const Home: React.FC = () => {
           width: '100%',
           minHeight: '500px',
           background: `url(${background})`,
-          backgroundPosition: 'center',
+          backgroundPosition: 'center center',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover'
         }}
         className="flex justify-center items-center flex-col sm:p-8"
       >
-        <animated.div style={props} className={'mx-auto my-0 max-w-5xl px-8 w-[100%] flex flex-col justify-center items-center'}>
-          <h1 className="text-white font-bold text-center">
+        <animated.div
+          style={props}
+          className={'mx-auto my-0 max-w-5xl sm:px-2 md:px-4 px-8 w-[100%] flex flex-col justify-center items-center'}
+        >
+          <h1 className="text-white sm:text-2xl font-bold text-center">
             {text}
             <span className={showCursor ? 'opacity-100' : 'opacity-0'}>|</span>
           </h1>
-          <h2 className="text-white mt-4 text-2xl text-center">
+          <h2 className="text-white mt-4 text-2xl sm:text-lg text-center">
             Discover a seamless IT job-hunting experience with our user-friendly platform. Uncover a plethora of career opportunities
             tailored to your skills and aspirations.
           </h2>
-          <div className="mt-5 gap-4 flex items-center sm:flex-col">
-            <Button
-              className="rounded-2xl bg-transparent text-white border-1 w-[250px] h-[60px] text-2xl"
-              onClick={() => navigate('/search-jobs')}
-            >
+          <div className="mt-5 gap-4 flex items-center">
+            <Button className={buttonClass} onClick={() => navigate('/search-jobs')}>
               View Positions
             </Button>
-            <Button
-              className="rounded-2xl bg-transparent text-white border-1 w-[250px] h-[60px] text-2xl"
-              onClick={() => navigate('/post-job')}
-            >
+            <Button className={buttonClass} onClick={() => navigate('/post-job')}>
               Post a Job
             </Button>
           </div>
@@ -98,7 +97,7 @@ const Home: React.FC = () => {
       </div>
       <animated.div
         style={secondProps}
-        className="flex flex-col justify-start items-start mx-auto my-0 max-w-7xl px-12 pb-16 w-full mt-10 h-full"
+        className="flex flex-col justify-start items-start mx-auto my-0 max-w-7xl px-12 sm:px-4 pb-16 w-full mt-10 h-full"
       >
         <h1 className="text-default-700 text-center text-4xl">Unlock your dream job with us</h1>
         <div className="mt-10 flex sm:flex-col items-center justify-center gap-6">

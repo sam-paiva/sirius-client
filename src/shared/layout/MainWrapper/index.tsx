@@ -11,10 +11,9 @@ import Footer from '../Footer';
 import NavigationBar from '../NavigationBar';
 
 const Initializer = () => {
-  const isAuthenticated = useAppSelector((c) => c.users.isAuthenticated);
   return (
     <div className="flex flex-col min-h-screen">
-      <NavigationBar isAuthenticated={isAuthenticated} />
+      <NavigationBar />
       <main className="min-h-[853px]">
         <Router />
       </main>

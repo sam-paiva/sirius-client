@@ -3,6 +3,7 @@ import moment from 'moment';
 import { useEffect } from 'react';
 import { BsEnvelopePaper } from 'react-icons/bs';
 import { useParams } from 'react-router-dom';
+import sponsoredCrown from '../../assets/card-crown.png';
 import locationSvg from '../../assets/location.svg';
 import skillSvg from '../../assets/skill.svg';
 import { ContractTypes } from '../../core/enums/contractTypes';
@@ -47,9 +48,12 @@ const JobDetails = () => {
               <h1 className="text-4xl sm:max-w-[300px] md:max-w-[350px] text-[#415A77] font-bold w-full overflow-ellipsis overflow-hidden">
                 {job!.title}
               </h1>
-              <span className="">{job.budget}</span>
-              <span className="">{job.company.name}</span>
-              <div className="flex items-start flex-col gap-3">
+              <span className="text-[#415A77] font-normal">{job.budget}</span>
+              <div className="flex items-center gap-2">
+                <span>{job.company.name}</span>
+                {job.userBundle.sponsored && <img src={sponsoredCrown} />}
+              </div>
+              <div className="flex items-start flex-col gap-3 text-[#415A77] font-normal">
                 <div className="flex items-center gap-2">
                   <img src={locationSvg} />
                   <span>

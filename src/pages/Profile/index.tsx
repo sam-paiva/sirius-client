@@ -40,7 +40,7 @@ const Profile: React.FC = () => {
   const isLoading = useAppSelector((c) => c.jobs.isLoading);
   const userBundles = useAppSelector((c) => c.users.userBundles);
   const [fulFillModal, setFulFillModal] = useState<FulFillModalProps>({ open: false, jobId: null, jobDescription: null });
-  const linkClass = 'cursor-pointer text-md text-black font-light p-1';
+  const linkClass = 'cursor-pointer text-md text-[#415A77] font-normal p-1';
   const { page, setPage, limit } = usePagination(20);
 
   useEffect(() => {

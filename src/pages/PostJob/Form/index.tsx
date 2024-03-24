@@ -312,19 +312,19 @@ const Form: React.FC<Props> = ({
             placeholder="Example: https://youwebsite.com/your-position"
           />
 
-          <div className="flex flex-col max-h-[300px] w-full gap-6">
+          <div className="flex flex-col w-full gap-6">
             <h2 className="mt-10 text-[#415A77]">Job Description*</h2>
             <ReactQuill
               modules={modules}
               formats={formats}
-              className="max-h-[300px] h-[300px] sm:h-[120px] text-default-800 font-normal text-lg"
+              className="h-[500px] sm:h-[200px] text-default-800 font-normal text-lg"
               ref={quillRef}
               placeholder="place your description here"
               theme="snow"
               onChange={(e) => setDescription(e)}
             />
           </div>
-          <div className="flex flex-col w-full mt-40 gap-6">
+          <div className="flex flex-col w-full mt-20 sm:mt-40 gap-6">
             <h2 className="text-[#415A77]">Company Details</h2>
             <Controller
               name="companyName"

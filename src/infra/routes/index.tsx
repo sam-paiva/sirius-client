@@ -6,7 +6,7 @@ import Home from '../../pages/Home';
 import PositionDetails from '../../pages/JobDetails';
 import PostJob from '../../pages/PostJob';
 import Prices from '../../pages/Prices';
-import Admin from '../../pages/Profile';
+import Profile from '../../pages/Profile';
 import MyBundles from '../../pages/Profile/MyBundles';
 import SearchJobs from '../../pages/SearchJobs';
 import SignIn from '../../pages/SignIn';
@@ -57,7 +57,7 @@ const routes: CustomRoute[] = [
     path: '/profile',
     element: (
       <ProtectedRoute>
-        <Admin />
+        <Profile />
       </ProtectedRoute>
     ),
     children: []

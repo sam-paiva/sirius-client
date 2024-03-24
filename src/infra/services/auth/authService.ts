@@ -17,6 +17,7 @@ export const checkifUserIsAuthenticated = () => {
     const decodedToken = jwtDecode(getJwtToken()!);
 
     if (decodedToken && decodedToken.exp! * 1000 > Date.now()) return true;
+    else removeToken();
   }
 
   return false;

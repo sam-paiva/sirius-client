@@ -18,8 +18,8 @@ const JobDetailsSkeleton: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center mx-auto my-0 max-w-7xl px-8 w-[100%] mt-14 border-gray-300 rounded">
-      <div className="bg-white p-12 rounded-md shadow-sm mb-10 w-[100%] flex-wrap">
+    <div className="flex flex-col justify-center mx-auto my-0 max-w-7xl px-8 sm:px-1 w-[100%] mt-14 border-gray-300 rounded">
+      <div className="bg-white p-12 sm:p-2 rounded-md shadow-sm mb-10 w-[100%] flex-wrap">
         <div className="flex justify-between">
           <div>{displayHeaderLines()}</div>
           <div className="sm:hidden">
