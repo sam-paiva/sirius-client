@@ -112,7 +112,7 @@ const SearchJobs: React.FC = () => {
         </div>
         <form ref={formRef} id="search-form" onSubmit={handleSubmit(handleSearch)}>
           <div className="flex gap-20 sm:flex-col w-full">
-            <div className="bg-white p-8 w-[30%] sm:w-full h-auto shadow-md rounded-3xl flex flex-col top-12">
+            <div className="bg-white p-8 w-[30%] sm:w-full h-[695px] shadow-md rounded-3xl flex flex-col top-12">
               <div className="flex justify-between items-center sm:flex-col sm:items-start sm:justify-start">
                 <h3 className="font-semibold text-default-600">Advanced Search</h3>
               </div>
