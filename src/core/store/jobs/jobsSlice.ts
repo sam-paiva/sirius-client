@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Job } from '../../models/job';
 import { PaginateResult } from '../../models/paginateResult';
 import { Problem } from '../../models/problem';
-import { addJobAction, getJobByIdAction, getJobsAction, getJobsByUserAction } from './jobsActions';
+import { addJobAction, addViewAction, getJobByIdAction, getJobsAction, getJobsByUserAction } from './jobsActions';
 
 interface State {
   isLoading: boolean;
@@ -78,6 +78,18 @@ export const jobsSlice = createSlice({
     builder.addCase(getJobByIdAction.fulfilled, (state, action) => {
       state.isLoading = false;
       state.selectedJob = action.payload ?? null;
+    });
+
+    builder.addCase(addViewAction.pending, (state) => {
+      state.isLoading = true;
+    });
+
+    builder.addCase(addViewAction.rejected, (state) => {
+      state.isLoading = false;
+    });
+
+    builder.addCase(addViewAction.fulfilled, (state) => {
+      state.isLoading = false;
     });
   }
 });

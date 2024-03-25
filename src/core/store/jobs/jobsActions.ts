@@ -101,3 +101,17 @@ export const updatePositionFilledAction = createAsyncThunk(
     }
   }
 );
+
+export const addViewAction = createAsyncThunk('jobs/add-view', async (jobId: string, { rejectWithValue }) => {
+  try {
+    const response = await jobsApi.addViews(jobId);
+
+    if (response.status === 204) {
+      return rejectWithValue({});
+    }
+
+    return rejectWithValue({});
+  } catch (error) {
+    return handleError(error, rejectWithValue);
+  }
+});

@@ -9,7 +9,7 @@ import skillSvg from '../../assets/skill.svg';
 import { ContractTypes } from '../../core/enums/contractTypes';
 import { PositionLevels } from '../../core/enums/positionLevels';
 import { useAppDispatch, useAppSelector } from '../../core/hooks/storeHooks';
-import { getJobByIdAction } from '../../core/store/jobs/jobsActions';
+import { addViewAction, getJobByIdAction } from '../../core/store/jobs/jobsActions';
 import PrimaryButton from '../../shared/components/PrimaryButton';
 import JobDetailsSkeleton from '../../shared/components/Skeletons/JobDetailsSkeleton';
 import { getEnumKey } from '../../shared/utils/enumUtils';
@@ -21,6 +21,7 @@ const JobDetails = () => {
   const loading = useAppSelector((c) => c.jobs.isLoading);
 
   useEffect(() => {
+    dispatch(addViewAction(jobId!));
     dispatch(getJobByIdAction(jobId!));
   }, []);
 
@@ -45,6 +46,7 @@ const JobDetails = () => {
           <div className="flex justify-between items-start w-full">
             <div className="flex flex-col gap-2 w-full">
               <span>Job From {moment(job!.createdDate).format('LL')}</span>
+              {job.views > 0 && <span className="text-default-500">This position has already been seen by {job.views} job seekers</span>}
               <h1 className="text-4xl sm:max-w-[300px] md:max-w-[350px] text-[#415A77] font-bold w-full overflow-ellipsis overflow-hidden">
                 {job!.title}
               </h1>

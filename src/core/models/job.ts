@@ -18,4 +18,5 @@ export interface Job {
   selectedBundle: string;
   userBundle: UserBundle;
   positionFilled: boolean;
+  views: number;
 }

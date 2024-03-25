@@ -36,3 +36,7 @@ export const updateJob = (request: UpdateJobRequest) => {
 export const updatePositionFilled = (jobId: string) => {
   return api.patch('jobs', { jobId });
 };
+
+export const addViews = (jobId: string) => {
+  return api.patch(`jobs/add-view/${jobId}`);
+};
