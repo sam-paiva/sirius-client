@@ -1,3 +1,4 @@
+import { Adsense } from '@ctrl/react-adsense';
 import { Checkbox, CheckboxGroup, Select, SelectItem } from '@nextui-org/react';
 import React, { useEffect, useRef } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
@@ -182,6 +183,7 @@ const SearchJobs: React.FC = () => {
                   )}
                 />
               </div>
+              <Adsense client="ca-pub-6150895851927867" slot="7259870550" style={{ display: 'block' }} layout="in-article" format="fluid" />
             </div>
 
             <div className="w-[60%] sm:w-full">

@@ -1,3 +1,4 @@
+import { Adsense } from '@ctrl/react-adsense';
 import {
   Button,
   Card,
@@ -131,7 +132,7 @@ const Profile: React.FC = () => {
         <span className="self-end pl-8 sm:pl-0 text-cyan-800">Empowering careers, one post at a time.</span>
       </div>
       <div className="flex gap-4 sm:flex-col w-[100%]">
-        <div className="w-[40%] sm:w-full overflow-hidden lg:sticky md:sticky top-[100px] max-h-[500px]">
+        <div className="w-[40%] sm:w-full overflow-hidden lg:sticky md:sticky top-[100px] max-h-[700px]">
           {buyBundlesBanner()}
           <Card className="max-w-[400px] h-[400px] rounded-3xl shadow-xl p-8">
             <CardHeader className="flex gap-3 items-centers justify-start">
@@ -171,6 +172,7 @@ const Profile: React.FC = () => {
               </div>
             </CardFooter>
           </Card>
+          <Adsense client="ca-pub-6150895851927867" slot="7259870550" style={{ display: 'block' }} layout="in-article" format="fluid" />
         </div>
         <div className="w-[60%] sm:w-full">
           {!isLoading ? (
