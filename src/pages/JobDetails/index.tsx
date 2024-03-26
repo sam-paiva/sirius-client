@@ -59,7 +59,7 @@ const JobDetails = () => {
                 <div className="flex items-center gap-2">
                   <img src={locationSvg} />
                   <span>
-                    {job.location.country} / {job.location.city}
+                    {job.location.country} {Boolean(job.location.city) && `/ ${job.location.city}`}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">

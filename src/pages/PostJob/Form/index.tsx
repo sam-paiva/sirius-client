@@ -132,7 +132,7 @@ const Form: React.FC<Props> = ({
       maxLength: 50
     },
     city: {
-      isRequired: true,
+      isRequired: false,
       maxLength: 50
     },
     companyName: {
@@ -184,6 +184,9 @@ const Form: React.FC<Props> = ({
   return (
     <>
       <h2 className="mt-10 text-[#415A77]">Fill the details below</h2>
+      <h3 className="mt-2 text-[#415A77] text-sm">
+        Required fields<span className="text-red-500">*</span>
+      </h3>
       <form onKeyDown={handleKeyDown} className="mt-8" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex w-full flex-wrap gap-4">
           <Input
@@ -291,11 +294,11 @@ const Form: React.FC<Props> = ({
           />
 
           <Input
-            isRequired
+            isRequired={fieldDefinitions.city.isRequired}
             isInvalid={errors.city ? true : false}
             required
             errorMessage={getErrorMessage(errors.city, 'city')}
-            {...register('city', { required: requiredMessage, maxLength: fieldDefinitions.city.maxLength })}
+            {...register('city', { required: false, maxLength: fieldDefinitions.city.maxLength })}
             type="text"
             label="City"
             placeholder=""

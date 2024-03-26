@@ -3,6 +3,7 @@ import moment from 'moment';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import sponsoredCrown from '../../../assets/card-crown.png';
+import locationSvg from '../../../assets/location.svg';
 import { ContractTypes } from '../../../core/enums/contractTypes';
 import { Job } from '../../../core/models/job';
 import { getEnumKey } from '../../utils/enumUtils';
@@ -53,6 +54,12 @@ const JobCard: React.FC<Props> = ({ job, onFulFill }) => {
                   <span className="text-default-800 w-fit flex items-center gap-1">{job.company.name}</span>
                   <span className="text-[#415A77] text-sm">{getEnumKey(ContractTypes, job.contractType)}</span>
                 </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <img src={locationSvg} />
+                <span>
+                  {job.location.country} {Boolean(job.location.city) && `/ ${job.location.city}`}
+                </span>
               </div>
             </div>
           </div>
