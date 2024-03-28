@@ -10,7 +10,6 @@ import Profile from '../../pages/Profile';
 import MyBundles from '../../pages/Profile/MyBundles';
 import SearchJobs from '../../pages/SearchJobs';
 import SignIn from '../../pages/SignIn';
-import PrivacyAndTerms from '../../shared/components/PrivacyAndTerms';
 import { checkifUserIsAuthenticated } from '../services/auth/authService';
 
 const ProtectedRoute = ({ children }: any) => {
@@ -102,11 +101,6 @@ const routes: CustomRoute[] = [
   {
     path: '/search-jobs',
     element: <SearchJobs />,
-    children: []
-  },
-  {
-    path: '/privacy-and-terms',
-    element: <PrivacyAndTerms />,
     children: []
   }
 ];
