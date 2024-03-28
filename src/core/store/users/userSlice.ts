@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { checkifUserIsAuthenticated } from '../../../infra/services/auth/authService';
+import { getCookieConsent } from '../../../infra/services/localStorage/localStorage';
 import { PaginateResult } from '../../models/paginateResult';
 import { createCompanyAction, getUserBundlesAction, loginCallbackAction, logoutAction } from './usersActions';
 
@@ -7,12 +8,14 @@ interface State {
   isLoading: boolean;
   isAuthenticated: boolean;
   userBundles: PaginateResult<UserBundle> | null;
+  cookiesConsent: boolean;
 }
 
 const initialState: State = {
   isLoading: false,
   isAuthenticated: checkifUserIsAuthenticated() ? true : false,
-  userBundles: null
+  userBundles: null,
+  cookiesConsent: getCookieConsent()
 };
 
 export const usersSlice = createSlice({
@@ -24,6 +27,9 @@ export const usersSlice = createSlice({
     },
     updateBundlesAfterPayment: (state, action) => {
       state.userBundles?.items.push(action.payload);
+    },
+    setCookieConsent: (state, action) => {
+      state.cookiesConsent = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -82,6 +88,6 @@ export const usersSlice = createSlice({
   }
 });
 
-export const { loginSuccessAction, updateBundlesAfterPayment } = usersSlice.actions;
+export const { loginSuccessAction, updateBundlesAfterPayment, setCookieConsent } = usersSlice.actions;
 
 export default usersSlice.reducer;

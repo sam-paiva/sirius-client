@@ -2,20 +2,24 @@ import React, { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../core/hooks/storeHooks';
 import useContentLoader from '../../../core/hooks/useContentLoader';
+import { useCookies } from '../../../core/hooks/useCookies';
 import useSignalR, { METHOD_NAMES } from '../../../core/hooks/useSignalR';
 import { getJobsAction } from '../../../core/store/jobs/jobsActions';
 import { updateBundlesAfterPayment } from '../../../core/store/users/userSlice';
 import Router from '../../../infra/routes';
+import CookieBanner from '../../components/CookieBanner';
 import { showToast } from '../../utils/toast';
 import Footer from '../Footer';
 import NavigationBar from '../NavigationBar';
 
 const Initializer = () => {
+  const { userAgreed, handleAccept, handleDecline } = useCookies();
   return (
     <div className="flex flex-col min-h-screen">
       <NavigationBar />
       <main className="min-h-[853px]">
         <Router />
+        {!userAgreed && <CookieBanner handleAccept={handleAccept} handleDecline={handleDecline} />}
       </main>
       <Footer />
     </div>

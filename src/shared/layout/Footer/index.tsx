@@ -35,7 +35,11 @@ const Footer = () => {
           <div className="w-full sm:w-auto mb-4 sm:mb-0">
             <h3 className="text-lg font-semibold mb-2 text-white">Resources</h3>
             <ul className="text-sm">
-              <Link className={linkClass} onClick={handleLinkClick} to={'privacy-and-terms'}>
+              <Link
+                className={linkClass}
+                onClick={handleLinkClick}
+                to={'https://www.termsfeed.com/live/b59718c0-6e9a-41dc-80fd-d232df8a4f12'}
+              >
                 Privacy and Terms
               </Link>
               {/* <li className="mb-1">

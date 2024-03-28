@@ -5,6 +5,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { ContractTypes } from '../../core/enums/contractTypes';
 import { PositionLevels } from '../../core/enums/positionLevels';
 import { useAppDispatch, useAppSelector } from '../../core/hooks/storeHooks';
+import { useCookies } from '../../core/hooks/useCookies';
 import { usePagination } from '../../core/hooks/usePagination';
 import { getJobsAction } from '../../core/store/jobs/jobsActions';
 import Empty from '../../shared/components/Empty';
@@ -30,6 +31,7 @@ const SearchJobs: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const { register, handleSubmit, control, reset } = useForm<FiltersFormValues>();
   const { page, setPage, limit } = usePagination(20);
+  const { userAgreed } = useCookies();
 
   const displayPositionsCount = () => {
     return jobs!.total;
@@ -183,7 +185,15 @@ const SearchJobs: React.FC = () => {
                   )}
                 />
               </div>
-              <Adsense client="ca-pub-6150895851927867" slot="7259870550" style={{ display: 'block' }} layout="in-article" format="fluid" />
+              {userAgreed && (
+                <Adsense
+                  client="ca-pub-6150895851927867"
+                  slot="7259870550"
+                  style={{ display: 'block' }}
+                  layout="in-article"
+                  format="fluid"
+                />
+              )}
             </div>
 
             <div className="w-[60%] sm:w-full">
