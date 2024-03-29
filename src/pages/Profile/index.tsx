@@ -1,4 +1,3 @@
-import { Adsense } from '@ctrl/react-adsense';
 import {
   Button,
   Card,
@@ -172,7 +171,7 @@ const Profile: React.FC = () => {
               </div>
             </CardFooter>
           </Card>
-          <Adsense client="ca-pub-6150895851927867" slot="7259870550" style={{ display: 'block' }} layout="in-article" format="fluid" />
+          {/* <Adsense client="ca-pub-6150895851927867" slot="7259870550" style={{ display: 'block' }} layout="in-article" format="fluid" /> */}
         </div>
         <div className="w-[60%] sm:w-full">
           {!isLoading ? (
