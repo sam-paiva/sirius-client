@@ -25,7 +25,7 @@ const NavigationBar: React.FC = () => {
           <NavbarContent justify="end" className="gap-20 sm:gap-4">
             <NavbarItem className="lg:flex">
               <Link className={linkClass} to={`/search-jobs`} state={{ from: previousLocation }}>
-                Search
+                Jobs
               </Link>
             </NavbarItem>
             <NavbarItem className="lg:flex">
